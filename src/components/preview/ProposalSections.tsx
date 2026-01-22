@@ -107,7 +107,7 @@ export const ExecutiveSummary: React.FC<{ proposal: Proposal; index: number }> =
 );
 
 export const ScopeOfWork: React.FC<{ proposal: Proposal; index: number }> = ({ proposal, index }) => (
-  <div className="mb-12 pt-4 border-t-4 border-gray-100 border-dotted">
+  <div className="mb-12 pt-4 border-t-4 border-gray-100 border-dotted print:border-0">
     <SectionHeading title="Scope of Work" number={index} />
     <div className="space-y-8">
       {proposal.scope.map((section) => (
@@ -118,7 +118,7 @@ export const ScopeOfWork: React.FC<{ proposal: Proposal; index: number }> = ({ p
             dangerouslySetInnerHTML={{ __html: section.description }}
           />
           
-          <div className="bg-gray-50 rounded-lg p-4 break-inside-auto">
+          <div className="bg-gray-50 rounded-lg p-4 break-inside-avoid print:break-inside-avoid">
             <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3 break-after-avoid">Deliverables</h4>
             <ul className="grid grid-cols-1 gap-2">
               {section.deliverables.map((del) => (
@@ -136,7 +136,7 @@ export const ScopeOfWork: React.FC<{ proposal: Proposal; index: number }> = ({ p
 );
 
 export const Requirements: React.FC<{ proposal: Proposal; index: number }> = ({ proposal, index }) => (
-  <div className="mb-12 pt-4 border-t-4 border-gray-100 border-dotted break-inside-avoid break-before-page">
+  <div className="mb-12 pt-4 border-t-4 border-gray-100 border-dotted break-inside-avoid break-before-page print:border-0">
     <SectionHeading title="Client Requirements" number={index} />
     <ul className="list-disc list-inside space-y-2 text-gray-700">
       {proposal.clientResponsibilities.map((req, i) => (
@@ -147,7 +147,7 @@ export const Requirements: React.FC<{ proposal: Proposal; index: number }> = ({ 
 );
 
 export const OutOfScope: React.FC<{ proposal: Proposal; index: number }> = ({ proposal, index }) => (
-  <div className="mb-12 pt-4 border-t-4 border-gray-100 border-dotted break-inside-avoid break-before-page">
+  <div className="mb-12 pt-4 border-t-4 border-gray-100 border-dotted break-inside-avoid break-before-page print:border-0">
     <SectionHeading title="Out of Scope" number={index} />
     <ul className="list-disc list-inside space-y-2 text-gray-700">
       {proposal.outOfScope.map((item, i) => (
@@ -161,38 +161,40 @@ export const Team: React.FC<{ proposal: Proposal; index: number }> = ({ proposal
   const totalFTE = proposal.team.reduce((acc, member) => acc + member.allocation, 0) / 100;
 
   return (
-    <div className="mb-12 pt-4 border-t-4 border-gray-100 border-dotted break-before-page">
+    <div className="mb-12 pt-4 border-t-4 border-gray-100 border-dotted break-before-page print:border-0">
       <SectionHeading title="Proposed Team" number={index} />
       <div className="space-y-4">
         {proposal.team.map((member) => (
-          <div key={member.id} className="flex gap-4 border border-gray-200 rounded-lg p-4 bg-white break-inside-avoid shadow-sm print:break-inside-avoid">
-            <div className="flex-shrink-0">
-              <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-100 border border-gray-200">
-                {member.image ? (
-                  <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center text-gray-300 font-bold text-lg">
-                    {member.name.charAt(0)}
+          <div key={member.id} className="break-inside-avoid print:break-inside-avoid">
+            <div className="flex gap-4 border border-gray-200 rounded-lg p-4 bg-white shadow-sm">
+              <div className="flex-shrink-0">
+                <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-100 border border-gray-200">
+                  {member.image ? (
+                    <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-gray-300 font-bold text-lg">
+                      {member.name.charAt(0)}
+                    </div>
+                  )}
+                </div>
+              </div>
+              
+              <div className="flex-1">
+                <div className="flex justify-between items-start mb-1">
+                  <div>
+                    <h4 className="font-bold text-gray-900 text-base">{member.name}</h4>
+                    <p className="text-blue-600 font-medium text-sm">{member.role}</p>
                   </div>
-                )}
-              </div>
-            </div>
-            
-            <div className="flex-1">
-              <div className="flex justify-between items-start mb-1">
-                <div>
-                  <h4 className="font-bold text-gray-900 text-base">{member.name}</h4>
-                  <p className="text-blue-600 font-medium text-sm">{member.role}</p>
+                  <div className="text-right">
+                    <span className="inline-block bg-blue-50 text-blue-700 text-[10px] font-bold px-2 py-0.5 rounded-full border border-blue-100">
+                      {member.allocation}% Time
+                    </span>
+                  </div>
                 </div>
-                <div className="text-right">
-                  <span className="inline-block bg-blue-50 text-blue-700 text-[10px] font-bold px-2 py-0.5 rounded-full border border-blue-100">
-                    {member.allocation}% Time
-                  </span>
-                </div>
+                <p className="text-xs text-gray-600 leading-normal">
+                  {member.description}
+                </p>
               </div>
-              <p className="text-xs text-gray-600 leading-normal">
-                {member.description}
-              </p>
             </div>
           </div>
         ))}
@@ -215,7 +217,7 @@ export const Commercials: React.FC<{ proposal: Proposal; index: number }> = ({ p
   );
 
   return (
-    <div className="mb-12 pt-4 border-t-4 border-gray-100 border-dotted break-before-page">
+    <div className="mb-12 pt-4 border-t-4 border-gray-100 border-dotted break-before-page print:border-0">
       <SectionHeading title="Commercials" number={index} />
       <div className="space-y-6">
         {proposal.costing.map((section) => (
@@ -260,7 +262,7 @@ export const Commercials: React.FC<{ proposal: Proposal; index: number }> = ({ p
 };
 
 export const TermsAndSignOff: React.FC<{ proposal: Proposal; indexTerms: number; indexSign: number }> = ({ proposal, indexTerms, indexSign }) => (
-  <div className="mb-12 pt-4 border-t-4 border-gray-100 border-dotted break-before-page">
+  <div className="mb-12 pt-4 border-t-4 border-gray-100 border-dotted break-before-page print:border-0">
     <div className="break-inside-avoid mb-12">
       <SectionHeading title="Terms & Conditions" number={indexTerms} />
       <div 
