@@ -1,0 +1,95 @@
+{
+  "proposal_id": "123e4567-e89b-12d3-a456-426614174000",
+  "user_id": "am_001",
+  "created_at": "2025-05-04T10:00:00Z",
+  "view_count": 0,
+  "client_name": "Acme Corp",
+  "executive_summary": "Acme Corp is a leading retailer in the FMCG sector, known for innovative products and a strong online presence. This proposal outlines a social media campaign and performance creatives to boost brand engagement.",
+  "objective": "Increase brand engagement through social media and performance campaigns",
+  "scope_of_services": [
+    {
+      "service": "Social Media",
+      "platforms": ["Facebook", "Instagram", "X"],
+      "details": "Includes social strategy, page management, content calendar creation, asset creation, and monthly reporting."
+    },
+    {
+      "service": "Performance Creatives",
+      "details": "Includes banner masters and adapts for digital ad campaigns."
+    }
+  ],
+  "quantified_scope": [
+    {
+      "service": "Social Media",
+      "items": [
+        {"type": "static_creatives", "quantity": 8},
+        {"type": "video_creatives", "quantity": 7, "duration": "30s"}
+      ]
+    },
+    {
+      "service": "Performance Creatives",
+      "items": [
+        {"type": "banner_masters", "quantity": 2},
+        {"type": "banner_adapts", "quantity": 10}
+      ],
+      "custom_items": [
+        {"description": "Custom performance banner for Google Ads", "quantity": 1}
+      ]
+    }
+  ],
+  "associated_team": [
+    {"role": "Account Manager", "description": "Oversees client communication"},
+    {"role": "Copywriter", "description": "Creates content for posts and ads"},
+    {"role": "Designer", "description": "Designs static, video, and banner creatives"},
+    {"role": "Senior Management", "description": "Provides strategic oversight"}
+  ],
+  "sla": {
+    "working_hours": "9 AM - 6 PM, Monday to Friday",
+    "holidays": "Standard public holidays observed",
+    "turnaround_times": [
+      {"asset": "Static Creatives", "time": "3 business days"},
+      {"asset": "Video Creatives", "time": "5 business days"},
+      {"asset": "Banner Adapts", "time": "2 business days"}
+    ],
+    "iterations_per_creative": 2,
+    "brief_deadline": "Changes or briefs submitted after 4 PM will be addressed the next business day",
+    "job_lists": "Daily job lists shared with client by 10 AM",
+    "account_reports": "Monthly account performance reports delivered by the 5th of each month",
+    "sop": "All assets reviewed by client within 48 hours of delivery",
+    "standard_asset_definitions": [
+      {
+        "asset": "Video Creatives",
+        "definition": "Up to 30 seconds of animation using stock imagery or footage with basic animation and typography. Excludes illustrated videos and complex animations."
+      }
+    ]
+  },
+  "inclusions": [
+    "Social media strategy development",
+    "Up to 15 social media creatives (8 static, 7 videos)",
+    "Performance banner masters and adapts",
+    "Monthly performance reports"
+  ],
+  "exclusions": [
+    "Paid media budget",
+    "Third-party influencer fees"
+  ],
+  "commercial_proposal": [
+    {
+      "service": "Social Media",
+      "quantity": "15 creatives (8 static, 7 videos)",
+      "price": "INR 225000",
+      "comments": "Includes strategy, page management, and reporting"
+    },
+    {
+      "service": "Performance Creatives",
+      "quantity": "2 banner masters, 10 adapts",
+      "price": "INR 50000",
+      "comments": "Custom banner included at no extra cost"
+    }
+  ],
+  "notes": "Client to provide brand guidelines by May 10, 2025.",
+  "payment_details": {
+    "terms": "50% upfront, 50% on completion",
+    "method": "Bank transfer",
+    "account_details": "TBD"
+  }
+}

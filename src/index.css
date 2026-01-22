@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .break-before-page {
+    break-before: page;
+  }
+  .break-inside-avoid {
+    break-inside: avoid;
+  }
+  .break-after-avoid {
+    break-after: avoid;
+  }
+}
+
+/* Custom List Styling for Proposals */
+@layer components {
+  /* Editor & Preview Lists */
+  .prose ul, .prose ol {
+    padding-left: 1.5rem !important; /* Force initial indent */
+    margin-top: 0.5em !important;
+    margin-bottom: 0.5em !important;
+  }
+
+  .prose li {
+    margin-top: 0.25em !important;
+    margin-bottom: 0.25em !important;
+  }
+
+  /* Nested Lists Indentation */
+  .prose ul ul, .prose ul ol, .prose ol ul, .prose ol ol {
+    margin-top: 0.25em !important;
+    margin-bottom: 0.25em !important;
+    padding-left: 1.5rem !important; /* Force nested indent */
+  }
+
+  /* Ordered List Markers: 1 -> a -> i */
+  .prose ol {
+    list-style-type: decimal;
+  }
+  .prose ol > li > ol {
+    list-style-type: lower-alpha; /* a, b, c */
+  }
+  .prose ol > li > ol > li > ol {
+    list-style-type: lower-roman; /* i, ii, iii */
+  }
+  
+  /* Bullet List Markers */
+  .prose ul {
+    list-style-type: disc;
+  }
+  .prose ul > li > ul {
+    list-style-type: circle;
+  }
+
+  /* Paragraph Spacing Fix */
+  .prose p {
+    margin-bottom: 1em !important;
+    line-height: 1.6;
+  }
+  
+  /* Fix: Remove bottom margin for paragraphs inside lists to avoid double spacing */
+  .prose li p {
+    margin-top: 0;
+    margin-bottom: 0 !important;
+  }
+  
+  /* Remove bottom margin from last element to avoid extra space */
+  .prose > *:last-child {
+    margin-bottom: 0 !important;
+  }
+}
+
+/* PRINT MEDIA QUERIES */
+@media print {
+  @page {
+    margin: 0;
+    size: auto;
+  }
+
+  body {
+    background: white;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Reset all scrolling/clipping for print */
+  html, body, #root {
+    height: auto !important;
+    overflow: visible !important;
+    min-height: 0 !important;
+  }
+
+  /* Ensure background colors print */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
