@@ -1,7 +1,7 @@
 2026-01-26
 
-- Added: Section visibility toggle in `Sidebar.tsx` with Eye icons (Blue for included, Red for excluded); "Hidden from proposal" warning banner in `Layout.tsx` for hidden sections; `sectionVisibility` property to `Proposal` type and `initialProposal`.
-- Changed: Split `TermsAndSignOff` into independent `Terms` and `SignOffSection` components in `ProposalSections.tsx`; refactored `Preview.tsx` to dynamically render content and Table of Contents based on visibility settings; updated `ProposalContext.tsx` with data migration logic for `sectionVisibility`.
+- Added: "Rate Card" section with categories and line items (Description, Comment, Qty, Unit Cost); reordering (Up/Down) for both Rate Card categories and deliverables in "Scope of Work"; Section visibility toggle in `Sidebar.tsx` with Eye icons; "Hidden from proposal" warning banner in `Layout.tsx`.
+- Changed: Split `TermsAndSignOff` into independent `Terms` and `SignOffSection` components; refactored `Preview.tsx` for dynamic rendering; updated `ProposalContext.tsx` with migration logic for `sectionVisibility` and `rateCard`.
 
 2026-01-23
 
