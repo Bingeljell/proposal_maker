@@ -1,6 +1,19 @@
+export type SectionId = 
+  | 'intro' 
+  | 'history' 
+  | 'summary' 
+  | 'scope' 
+  | 'client-req' 
+  | 'out-of-scope' 
+  | 'team' 
+  | 'costing' 
+  | 'terms' 
+  | 'sign-off';
+
 export interface Proposal {
   id: string;
   meta: ProposalMeta;
+  sectionVisibility: Record<SectionId, boolean>;
   versionHistory: VersionHistoryItem[];
   execSummary: ExecSummary;
   scope: ScopeSection[];

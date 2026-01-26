@@ -197,7 +197,7 @@ export const CostingForm: React.FC = () => {
       {proposal.costing.length > 0 && (
         <div className="mt-12 bg-gray-900 rounded-xl p-8 text-white flex justify-between items-center shadow-lg">
           <div>
-            <h4 className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-1">Monthly Retainer</h4>
+            <h4 className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-1">Cost</h4>
             <p className="text-3xl font-extrabold flex items-center gap-2">
               <IndianRupee size={24} className="text-blue-400" />
               {grandTotal.toLocaleString('en-IN')}

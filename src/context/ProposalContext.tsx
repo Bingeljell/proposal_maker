@@ -17,7 +17,15 @@ export const ProposalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [proposal, setProposal] = useState<Proposal>(() => {
     try {
       const saved = localStorage.getItem('currentProposal');
-      return saved ? JSON.parse(saved) : initialProposal;
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        // Migration: Ensure sectionVisibility exists
+        if (!parsed.sectionVisibility) {
+          return { ...parsed, sectionVisibility: initialProposal.sectionVisibility };
+        }
+        return parsed;
+      }
+      return initialProposal;
     } catch (e) {
       return initialProposal;
     }
@@ -40,6 +48,10 @@ export const ProposalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     reader.onload = (e) => {
       try {
         const json = JSON.parse(e.target?.result as string);
+        // Migration: Ensure sectionVisibility exists for uploaded files
+        if (!json.sectionVisibility) {
+          json.sectionVisibility = initialProposal.sectionVisibility;
+        }
         setProposal(json);
       } catch (err) {
         console.error('Failed to parse proposal file', err);

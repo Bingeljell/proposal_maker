@@ -261,18 +261,22 @@ export const Commercials: React.FC<{ proposal: Proposal; index: number }> = ({ p
   );
 };
 
-export const TermsAndSignOff: React.FC<{ proposal: Proposal; indexTerms: number; indexSign: number }> = ({ proposal, indexTerms, indexSign }) => (
+export const Terms: React.FC<{ proposal: Proposal; index: number }> = ({ proposal, index }) => (
   <div className="mb-12 pt-4 border-t-4 border-gray-100 border-dotted break-before-page print:border-0">
-    <div className="break-inside-avoid mb-12">
-      <SectionHeading title="Terms & Conditions" number={indexTerms} />
+    <div className="break-inside-avoid">
+      <SectionHeading title="Terms & Conditions" number={index} />
       <div 
         className="prose prose-sm max-w-none text-gray-600 font-mono bg-gray-50 p-6 rounded-lg"
         dangerouslySetInnerHTML={{ __html: proposal.terms }}
       />
     </div>
+  </div>
+);
 
+export const SignOffSection: React.FC<{ proposal: Proposal; index: number }> = ({ proposal, index }) => (
+  <div className="mb-12 pt-4 border-t-4 border-gray-100 border-dotted break-before-page print:border-0">
     <div className="break-inside-avoid">
-      <SectionHeading title="Sign Off" number={indexSign} />
+      <SectionHeading title="Sign Off" number={index} />
       <div className="bg-white border-2 border-gray-900 p-8 rounded-xl">
         <p className="text-gray-600 italic mb-8 text-center text-sm">
           "{proposal.signOff.disclaimer}"

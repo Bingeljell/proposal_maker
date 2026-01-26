@@ -8,6 +8,18 @@ export const initialProposal: Proposal = {
     date: new Date().toISOString().split('T')[0],
     logo: null,
   },
+  sectionVisibility: {
+    'intro': true,
+    'history': true,
+    'summary': true,
+    'scope': true,
+    'client-req': true,
+    'out-of-scope': true,
+    'team': true,
+    'costing': true,
+    'terms': true,
+    'sign-off': true,
+  },
   versionHistory: [
     {
       id: crypto.randomUUID(),

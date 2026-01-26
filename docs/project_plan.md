@@ -49,8 +49,13 @@ The proposal will consist of the following ordered sections:
 
 ## 4. Technical Stack
 *   **Framework:** React (via Vite).
-*   **Styling:** Tailwind CSS (Crucial for print layout utility classes).
+*   **Styling:** Tailwind CSS (Crucial for print layout utility classes) + `@tailwindcss/typography` plugin.
+*   **Rich Text Editor:** Tiptap (Headless wrapper around ProseMirror).
+    *   `@tiptap/react`: React integration.
+    *   `@tiptap/starter-kit`: Core extensions (Bold, Italic, Lists, etc.).
+    *   `@tiptap/extension-text-style`: For custom styling like font sizes.
 *   **Icons:** Lucide React.
+*   **Utilities:** `clsx` for class name merging.
 *   **Data Format:** JSON (for saving/loading proposals).
 *   **Deployment:** Static hosting (e.g., Vercel/Netlify/GitHub Pages).
 

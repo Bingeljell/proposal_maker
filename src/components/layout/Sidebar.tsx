@@ -9,20 +9,12 @@ import {
   FileSignature, 
   Info,
   ShieldCheck,
-  LayoutTemplate
+  LayoutTemplate,
+  Eye,
+  EyeOff
 } from 'lucide-react';
-
-export type SectionId = 
-  | 'intro' 
-  | 'history' 
-  | 'summary' 
-  | 'scope' 
-  | 'client-req' 
-  | 'out-of-scope' 
-  | 'team' 
-  | 'costing' 
-  | 'terms' 
-  | 'sign-off';
+import { SectionId } from '../../types';
+import { useProposal } from '../../hooks/useProposal';
 
 interface SidebarProps {
   activeSection: SectionId;
@@ -43,6 +35,18 @@ const sections: { id: SectionId; label: string; icon: React.ElementType }[] = [
 ];
 
 export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange }) => {
+  const { proposal, updateProposal } = useProposal();
+
+  const toggleVisibility = (e: React.MouseEvent, sectionId: SectionId) => {
+    e.stopPropagation(); // Prevent navigating when clicking the eye
+    updateProposal({
+      sectionVisibility: {
+        ...proposal.sectionVisibility,
+        [sectionId]: !proposal.sectionVisibility[sectionId]
+      }
+    });
+  };
+
   return (
     <div className="w-64 bg-white border-r border-gray-200 flex flex-col h-full">
       <div className="p-4 border-b border-gray-200">
@@ -52,19 +56,37 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
         {sections.map((section) => {
           const Icon = section.icon;
           const isActive = activeSection === section.id;
+          const isVisible = proposal.sectionVisibility ? proposal.sectionVisibility[section.id] : true; // Fallback for safety
+
           return (
-            <button
+            <div
               key={section.id}
-              onClick={() => onSectionChange(section.id)}
-              className={`w-full flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+              className={`group flex items-center justify-between px-3 py-2 text-sm font-medium rounded-md transition-colors ${
                 isActive 
                   ? 'bg-blue-50 text-blue-700' 
                   : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
               }`}
             >
-              <Icon size={18} />
-              {section.label}
-            </button>
+              <button
+                onClick={() => onSectionChange(section.id)}
+                className="flex items-center gap-3 flex-1 text-left"
+              >
+                <Icon size={18} />
+                <span className={!isVisible ? 'opacity-50 line-through decoration-gray-400' : ''}>
+                  {section.label}
+                </span>
+              </button>
+              
+              <button
+                onClick={(e) => toggleVisibility(e, section.id)}
+                className={`p-1 rounded-md hover:bg-gray-100 transition-colors ${
+                  isVisible ? 'text-blue-600' : 'text-red-500'
+                }`}
+                title={isVisible ? "Included in proposal" : "Excluded from proposal"}
+              >
+                {isVisible ? <Eye size={16} /> : <EyeOff size={16} />}
+              </button>
+            </div>
           );
         })}
       </nav>

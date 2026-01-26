@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useProposal } from '../../hooks/useProposal';
-import { Sidebar, SectionId } from './Sidebar';
+import { Sidebar } from './Sidebar';
+import { SectionId } from '../../types';
 import { Preview } from '../preview/Preview'; // Import the new Preview component
-import { Download, Upload, Trash2, Eye, Edit3, Printer } from 'lucide-react';
+import { Download, Upload, Trash2, Eye, EyeOff, Edit3, Printer } from 'lucide-react';
 
 interface LayoutProps {
   children: (activeSection: SectionId) => React.ReactNode;
@@ -106,7 +107,13 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         <main className="flex-1 overflow-y-auto print:overflow-visible p-8 print:p-0 bg-gray-100 print:bg-white">
           <div className="max-w-4xl mx-auto print:max-w-none print:w-full">
             {viewMode === 'edit' ? (
-              <div className="bg-white rounded-xl shadow-sm border border-gray-200 min-h-[500px] p-8">
+              <div className="bg-white rounded-xl shadow-sm border border-gray-200 min-h-[500px] p-8 relative overflow-hidden">
+                {proposal.sectionVisibility && !proposal.sectionVisibility[activeSection] && (
+                  <div className="absolute top-0 right-0 bg-red-100 text-red-700 px-4 py-1 rounded-bl-lg text-xs font-bold uppercase tracking-wider border-l border-b border-red-200 shadow-sm z-10 flex items-center gap-2">
+                    <EyeOff size={14} />
+                    Hidden from proposal
+                  </div>
+                )}
                 {children(activeSection)}
               </div>
             ) : (
