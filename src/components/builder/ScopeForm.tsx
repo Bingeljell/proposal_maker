@@ -4,7 +4,19 @@ import { RichTextEditor } from '../ui/RichTextEditor';
 import { Plus, Trash2, ArrowUp, ArrowDown } from 'lucide-react';
 
 export const ScopeForm: React.FC = () => {
-  const { proposal, updateSection } = useProposal();
+  const { proposal, updateSection, updateProposal } = useProposal();
+
+  const hasPageBreak = (targetType: string, targetId: string) =>
+    proposal.pageBreaks?.some((b) => b.targetType === targetType && b.targetId === targetId);
+
+  const togglePageBreak = (targetType: string, targetId: string) => {
+    const pageBreaks = proposal.pageBreaks || [];
+    const existing = pageBreaks.find((b) => b.targetType === targetType && b.targetId === targetId);
+    const updated = existing
+      ? pageBreaks.filter((b) => b.id !== existing.id)
+      : [...pageBreaks, { id: crypto.randomUUID(), targetType, targetId }];
+    updateProposal({ pageBreaks: updated });
+  };
 
   const moveSection = (index: number, direction: 'up' | 'down') => {
     if ((direction === 'up' && index === 0) || (direction === 'down' && index === proposal.scope.length - 1)) return;
@@ -209,6 +221,20 @@ export const ScopeForm: React.FC = () => {
 
                     </button>
 
+                    <button
+
+                      onClick={() => togglePageBreak('scope-category', section.id)}
+
+                      className={`text-[10px] font-bold px-1.5 py-0.5 rounded border ${hasPageBreak('scope-category', section.id) ? 'bg-blue-50 text-blue-700 border-blue-200' : 'text-gray-400 border-gray-200 hover:text-blue-600'}`}
+
+                      title="Page break before this category"
+
+                    >
+
+                      PB
+
+                    </button>
+
                   </div>
 
                   <input
@@ -322,6 +348,20 @@ export const ScopeForm: React.FC = () => {
                           >
 
                             <ArrowDown size={12} />
+
+                          </button>
+
+                          <button
+
+                            onClick={() => togglePageBreak('scope-deliverable', del.id)}
+
+                            className={`text-[10px] font-bold px-1.5 py-0.5 rounded border ${hasPageBreak('scope-deliverable', del.id) ? 'bg-blue-50 text-blue-700 border-blue-200' : 'text-gray-300 border-gray-200 hover:text-blue-600'}`}
+
+                            title="Page break before this deliverable"
+
+                          >
+
+                            PB
 
                           </button>
 

@@ -3,7 +3,19 @@ import { useProposal } from '../../hooks/useProposal';
 import { Plus, Trash2, User, Upload, ArrowUp, ArrowDown } from 'lucide-react';
 
 export const TeamForm: React.FC = () => {
-  const { proposal, updateSection } = useProposal();
+  const { proposal, updateSection, updateProposal } = useProposal();
+
+  const hasPageBreak = (targetType: string, targetId: string) =>
+    proposal.pageBreaks?.some((b) => b.targetType === targetType && b.targetId === targetId);
+
+  const togglePageBreak = (targetType: string, targetId: string) => {
+    const pageBreaks = proposal.pageBreaks || [];
+    const existing = pageBreaks.find((b) => b.targetType === targetType && b.targetId === targetId);
+    const updated = existing
+      ? pageBreaks.filter((b) => b.id !== existing.id)
+      : [...pageBreaks, { id: crypto.randomUUID(), targetType, targetId }];
+    updateProposal({ pageBreaks: updated });
+  };
 
   const moveMember = (index: number, direction: 'up' | 'down') => {
     if ((direction === 'up' && index === 0) || (direction === 'down' && index === proposal.team.length - 1)) return;
@@ -83,6 +95,13 @@ export const TeamForm: React.FC = () => {
                   className="text-gray-400 hover:text-blue-600 disabled:opacity-30 disabled:hover:text-gray-400 p-1 bg-gray-50 rounded"
                 >
                   <ArrowDown size={14} />
+                </button>
+                <button
+                  onClick={() => togglePageBreak('team-member', member.id)}
+                  className={`text-[10px] font-bold px-1.5 py-0.5 rounded border ${hasPageBreak('team-member', member.id) ? 'bg-blue-50 text-blue-700 border-blue-200' : 'text-gray-400 border-gray-200 hover:text-blue-600'}`}
+                  title="Page break before this member"
+                >
+                  PB
                 </button>
              </div>
 

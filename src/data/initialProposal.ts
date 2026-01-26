@@ -21,6 +21,7 @@ export const initialProposal: Proposal = {
     'terms': true,
     'sign-off': true,
   },
+  pageBreaks: [],
   versionHistory: [
     {
       id: crypto.randomUUID(),

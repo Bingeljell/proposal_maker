@@ -4,7 +4,19 @@ import { RichTextEditor } from '../ui/RichTextEditor';
 import { Plus, Trash2, ArrowUp, ArrowDown } from 'lucide-react';
 
 export const RateCardForm: React.FC = () => {
-  const { proposal, updateSection } = useProposal();
+  const { proposal, updateSection, updateProposal } = useProposal();
+
+  const hasPageBreak = (targetType: string, targetId: string) =>
+    proposal.pageBreaks?.some((b) => b.targetType === targetType && b.targetId === targetId);
+
+  const togglePageBreak = (targetType: string, targetId: string) => {
+    const pageBreaks = proposal.pageBreaks || [];
+    const existing = pageBreaks.find((b) => b.targetType === targetType && b.targetId === targetId);
+    const updated = existing
+      ? pageBreaks.filter((b) => b.id !== existing.id)
+      : [...pageBreaks, { id: crypto.randomUUID(), targetType, targetId }];
+    updateProposal({ pageBreaks: updated });
+  };
 
   // Ensure rateCard exists (migration safety)
   const rateCardData = proposal.rateCard || [];
@@ -150,6 +162,13 @@ export const RateCardForm: React.FC = () => {
                   >
                     <ArrowDown size={14} />
                   </button>
+                  <button
+                    onClick={() => togglePageBreak('ratecard-category', section.id)}
+                    className={`text-[10px] font-bold px-1.5 py-0.5 rounded border ${hasPageBreak('ratecard-category', section.id) ? 'bg-blue-50 text-blue-700 border-blue-200' : 'text-gray-400 border-gray-200 hover:text-blue-600'}`}
+                    title="Page break before this category"
+                  >
+                    PB
+                  </button>
                 </div>
                 <input
                   type="text"
@@ -219,6 +238,13 @@ export const RateCardForm: React.FC = () => {
                           className="text-gray-300 hover:text-blue-600 disabled:opacity-20 disabled:hover:text-gray-300"
                         >
                           <ArrowDown size={12} />
+                        </button>
+                        <button
+                          onClick={() => togglePageBreak('ratecard-item', item.id)}
+                          className={`text-[10px] font-bold px-1.5 py-0.5 rounded border ${hasPageBreak('ratecard-item', item.id) ? 'bg-blue-50 text-blue-700 border-blue-200' : 'text-gray-300 border-gray-200 hover:text-blue-600'}`}
+                          title="Page break before this item"
+                        >
+                          PB
                         </button>
                       </div>
 

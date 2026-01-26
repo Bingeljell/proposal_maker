@@ -3,7 +3,19 @@ import { useProposal } from '../../hooks/useProposal';
 import { Plus, Trash2, IndianRupee } from 'lucide-react';
 
 export const CostingForm: React.FC = () => {
-  const { proposal, updateSection } = useProposal();
+  const { proposal, updateSection, updateProposal } = useProposal();
+
+  const hasPageBreak = (targetType: string, targetId: string) =>
+    proposal.pageBreaks?.some((b) => b.targetType === targetType && b.targetId === targetId);
+
+  const togglePageBreak = (targetType: string, targetId: string) => {
+    const pageBreaks = proposal.pageBreaks || [];
+    const existing = pageBreaks.find((b) => b.targetType === targetType && b.targetId === targetId);
+    const updated = existing
+      ? pageBreaks.filter((b) => b.id !== existing.id)
+      : [...pageBreaks, { id: crypto.randomUUID(), targetType, targetId }];
+    updateProposal({ pageBreaks: updated });
+  };
 
   const addSection = () => {
     const newSection = {
@@ -111,6 +123,13 @@ export const CostingForm: React.FC = () => {
                 className="text-lg font-bold text-gray-900 border-0 p-0 focus:ring-0 w-full placeholder:text-gray-300"
               />
               <button
+                onClick={() => togglePageBreak('costing-category', section.id)}
+                className={`text-[10px] font-bold px-2 py-1 rounded border mr-2 ${hasPageBreak('costing-category', section.id) ? 'bg-blue-50 text-blue-700 border-blue-200' : 'text-gray-400 border-gray-200 hover:text-blue-600'}`}
+                title="Page break before this category"
+              >
+                PB
+              </button>
+              <button
                 onClick={() => removeSection(section.id)}
                 className="text-gray-400 hover:text-red-500 ml-4"
               >
@@ -160,6 +179,13 @@ export const CostingForm: React.FC = () => {
                       {(item.quantity * item.rate).toLocaleString('en-IN')}
                     </td>
                     <td className="pl-3 py-3 text-right">
+                      <button
+                        onClick={() => togglePageBreak('costing-item', item.id)}
+                        className={`text-[10px] font-bold px-1.5 py-0.5 rounded border mr-2 ${hasPageBreak('costing-item', item.id) ? 'bg-blue-50 text-blue-700 border-blue-200' : 'text-gray-300 border-gray-200 hover:text-blue-600'}`}
+                        title="Page break before this item"
+                      >
+                        PB
+                      </button>
                       <button
                         onClick={() => removeItem(section.id, item.id)}
                         className="text-gray-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"

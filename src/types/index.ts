@@ -15,6 +15,7 @@ export interface Proposal {
   id: string;
   meta: ProposalMeta;
   sectionVisibility: Record<SectionId, boolean>;
+  pageBreaks: PageBreak[];
   versionHistory: VersionHistoryItem[];
   execSummary: ExecSummary;
   scope: ScopeSection[];
@@ -95,6 +96,21 @@ export interface RateCardItem {
   comment: string;
   quantity: number;
   unitCost: number;
+}
+
+export type PageBreakTargetType =
+  | 'scope-category'
+  | 'scope-deliverable'
+  | 'ratecard-category'
+  | 'ratecard-item'
+  | 'team-member'
+  | 'costing-category'
+  | 'costing-item';
+
+export interface PageBreak {
+  id: string;
+  targetId: string;
+  targetType: PageBreakTargetType;
 }
 
 export interface SignOff {

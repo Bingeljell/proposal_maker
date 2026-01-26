@@ -6,7 +6,7 @@ import { Bold, Italic, List, ListOrdered, Indent, Outdent, AlignJustify } from '
 import clsx from 'clsx';
 
 // Custom extension to allow font-size and line-height
-import { Extension } from '@tiptap/core';
+import { Extension, Node } from '@tiptap/core';
 
 interface RichTextEditorProps {
   value: string;
@@ -45,6 +45,23 @@ const MenuButton = ({
     {label && <span className="text-xs font-medium">{label}</span>}
   </button>
 );
+
+const PageBreak = Node.create({
+  name: 'pageBreak',
+  group: 'block',
+  atom: true,
+  selectable: true,
+  parseHTML() {
+    return [{ tag: 'div[data-page-break]' }];
+  },
+  renderHTML() {
+    return [
+      'div',
+      { 'data-page-break': 'true', class: 'page-break-marker' },
+      ['span', { class: 'page-break-marker-label' }, 'Page Break'],
+    ];
+  },
+});
 
 export const RichTextEditor: React.FC<RichTextEditorProps> = ({ 
   value, 
@@ -98,6 +115,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
           };
         },
       }),
+      PageBreak,
     ],
     content: value,
     editorProps: {
@@ -192,6 +210,11 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
           onClick={() => editor.chain().focus().toggleOrderedList().run()}
           isActive={editor.isActive('orderedList')}
           icon={ListOrdered}
+        />
+        <MenuButton
+          onClick={() => editor.chain().focus().insertContent({ type: 'pageBreak' }).run()}
+          isActive={false}
+          label="Page Break"
         />
         <div className="w-px h-4 bg-gray-300 mx-1" />
         <MenuButton

@@ -16,6 +16,33 @@
     break-after: avoid;
     page-break-after: avoid;
   }
+  .page-break-marker {
+    break-before: page;
+    page-break-before: always;
+    border-top: 2px dashed #d1d5db;
+    margin: 1rem 0;
+    position: relative;
+  }
+  .page-break-marker-label {
+    position: absolute;
+    top: -0.75rem;
+    right: 0;
+    background: #f9fafb;
+    color: #6b7280;
+    font-size: 0.625rem;
+    letter-spacing: 0.08em;
+    padding: 0 0.4rem;
+    text-transform: uppercase;
+  }
+  .page-break-list-item {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .page-break-row {
+    break-before: page;
+    page-break-before: always;
+  }
 }
 
 /* Custom List Styling for Proposals */
@@ -103,5 +130,16 @@
   * {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
+  }
+
+  .page-break-marker {
+    border: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 0 !important;
+  }
+
+  .page-break-marker-label {
+    display: none !important;
   }
 }

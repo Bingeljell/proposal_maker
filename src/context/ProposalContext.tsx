@@ -19,11 +19,15 @@ export const ProposalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       const saved = localStorage.getItem('currentProposal');
       if (saved) {
         const parsed = JSON.parse(saved);
-        // Migration: Ensure sectionVisibility exists
-        if (!parsed.sectionVisibility) {
-          return { ...parsed, sectionVisibility: initialProposal.sectionVisibility };
+        // Migration: Ensure required fields exist
+        const migrated = { ...parsed };
+        if (!migrated.sectionVisibility) {
+          migrated.sectionVisibility = initialProposal.sectionVisibility;
         }
-        return parsed;
+        if (!migrated.pageBreaks) {
+          migrated.pageBreaks = [];
+        }
+        return migrated;
       }
       return initialProposal;
     } catch (e) {
@@ -48,11 +52,15 @@ export const ProposalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     reader.onload = (e) => {
       try {
         const json = JSON.parse(e.target?.result as string);
-        // Migration: Ensure sectionVisibility exists for uploaded files
-        if (!json.sectionVisibility) {
-          json.sectionVisibility = initialProposal.sectionVisibility;
+        // Migration: Ensure required fields exist for uploaded files
+        const migrated = { ...json };
+        if (!migrated.sectionVisibility) {
+          migrated.sectionVisibility = initialProposal.sectionVisibility;
         }
-        setProposal(json);
+        if (!migrated.pageBreaks) {
+          migrated.pageBreaks = [];
+        }
+        setProposal(migrated);
       } catch (err) {
         console.error('Failed to parse proposal file', err);
         alert('Invalid proposal file');

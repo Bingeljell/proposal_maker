@@ -1,5 +1,5 @@
 import React from 'react';
-import { Proposal, ScopeSection, CostingSection } from '../../types';
+import { Proposal, PageBreakTargetType } from '../../types';
 import { IndianRupee, Phone, Globe, MapPin } from 'lucide-react';
 
 // --- Helper Components ---
@@ -17,6 +17,15 @@ const TricolorLine: React.FC = () => (
     <div className="h-0.5 w-full bg-[#138808]"></div> {/* Green */}
   </div>
 );
+
+const PageBreakMarker: React.FC = () => (
+  <div className="page-break-marker" aria-hidden="true">
+    <span className="page-break-marker-label">Page Break</span>
+  </div>
+);
+
+const hasBreakBefore = (proposal: Proposal, targetType: PageBreakTargetType, targetId: string) =>
+  proposal.pageBreaks?.some((b) => b.targetType === targetType && b.targetId === targetId);
 
 const SectionHeading: React.FC<{ title: string; number?: number }> = ({ title, number }) => (
   <div className="break-inside-avoid">
@@ -111,25 +120,35 @@ export const ScopeOfWork: React.FC<{ proposal: Proposal; index: number }> = ({ p
     <SectionHeading title="Scope of Work" number={index} />
     <div className="space-y-8">
       {proposal.scope.map((section) => (
-        <div key={section.id} className="print:mb-8">
-          <h3 className="text-xl font-bold text-gray-800 mb-2 break-after-avoid">{section.name}</h3>
-          <div 
-            className="prose prose-sm max-w-none text-gray-600 mb-4"
-            dangerouslySetInnerHTML={{ __html: section.description }}
-          />
-          
-          <div className="bg-gray-50 rounded-lg p-4 break-inside-avoid print:break-inside-avoid">
-            <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3 break-after-avoid">Deliverables</h4>
-            <ul className="grid grid-cols-1 gap-2">
-              {section.deliverables.map((del) => (
-                <li key={del.id} className="flex justify-between text-sm border-b border-gray-200 pb-2 last:border-0 last:pb-0 break-inside-avoid">
-                  <span className="text-gray-800">{del.description}</span>
-                  <span className="font-bold text-gray-900 bg-white px-2 py-0.5 rounded border border-gray-200 shadow-sm">{del.quantity}</span>
-                </li>
-              ))}
-            </ul>
+        <React.Fragment key={section.id}>
+          {hasBreakBefore(proposal, 'scope-category', section.id) && <PageBreakMarker />}
+          <div className="print:mb-8">
+            <h3 className="text-xl font-bold text-gray-800 mb-2 break-after-avoid">{section.name}</h3>
+            <div 
+              className="prose prose-sm max-w-none text-gray-600 mb-4"
+              dangerouslySetInnerHTML={{ __html: section.description }}
+            />
+            
+            <div className="bg-gray-50 rounded-lg p-4 break-inside-avoid print:break-inside-avoid">
+              <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3 break-after-avoid">Deliverables</h4>
+              <ul className="grid grid-cols-1 gap-2">
+                {section.deliverables.map((del) => (
+                  <React.Fragment key={del.id}>
+                    {hasBreakBefore(proposal, 'scope-deliverable', del.id) && (
+                      <li className="page-break-list-item">
+                        <PageBreakMarker />
+                      </li>
+                    )}
+                    <li className="flex justify-between text-sm border-b border-gray-200 pb-2 last:border-0 last:pb-0 break-inside-avoid">
+                      <span className="text-gray-800">{del.description}</span>
+                      <span className="font-bold text-gray-900 bg-white px-2 py-0.5 rounded border border-gray-200 shadow-sm">{del.quantity}</span>
+                    </li>
+                  </React.Fragment>
+                ))}
+              </ul>
+            </div>
           </div>
-        </div>
+        </React.Fragment>
       ))}
     </div>
   </div>
@@ -165,38 +184,41 @@ export const Team: React.FC<{ proposal: Proposal; index: number }> = ({ proposal
       <SectionHeading title="Proposed Team" number={index} />
       <div className="space-y-4">
         {proposal.team.map((member) => (
-          <div key={member.id} className="break-inside-avoid print:break-inside-avoid">
-            <div className="flex gap-4 border border-gray-200 rounded-lg p-4 bg-white shadow-sm">
-              <div className="flex-shrink-0">
-                <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-100 border border-gray-200">
-                  {member.image ? (
-                    <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-gray-300 font-bold text-lg">
-                      {member.name.charAt(0)}
+          <React.Fragment key={member.id}>
+            {hasBreakBefore(proposal, 'team-member', member.id) && <PageBreakMarker />}
+            <div className="break-inside-avoid print:break-inside-avoid">
+              <div className="flex gap-4 border border-gray-200 rounded-lg p-4 bg-white shadow-sm">
+                <div className="flex-shrink-0">
+                  <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-100 border border-gray-200">
+                    {member.image ? (
+                      <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-gray-300 font-bold text-lg">
+                        {member.name.charAt(0)}
+                      </div>
+                    )}
+                  </div>
+                </div>
+                
+                <div className="flex-1">
+                  <div className="flex justify-between items-start mb-1">
+                    <div>
+                      <h4 className="font-bold text-gray-900 text-base">{member.name}</h4>
+                      <p className="text-blue-600 font-medium text-sm">{member.role}</p>
                     </div>
-                  )}
-                </div>
-              </div>
-              
-              <div className="flex-1">
-                <div className="flex justify-between items-start mb-1">
-                  <div>
-                    <h4 className="font-bold text-gray-900 text-base">{member.name}</h4>
-                    <p className="text-blue-600 font-medium text-sm">{member.role}</p>
+                    <div className="text-right">
+                      <span className="inline-block bg-blue-50 text-blue-700 text-[10px] font-bold px-2 py-0.5 rounded-full border border-blue-100">
+                        {member.allocation}% Time
+                      </span>
+                    </div>
                   </div>
-                  <div className="text-right">
-                    <span className="inline-block bg-blue-50 text-blue-700 text-[10px] font-bold px-2 py-0.5 rounded-full border border-blue-100">
-                      {member.allocation}% Time
-                    </span>
-                  </div>
+                  <p className="text-xs text-gray-600 leading-normal">
+                    {member.description}
+                  </p>
                 </div>
-                <p className="text-xs text-gray-600 leading-normal">
-                  {member.description}
-                </p>
               </div>
             </div>
-          </div>
+          </React.Fragment>
         ))}
       </div>
 
@@ -221,29 +243,41 @@ export const Commercials: React.FC<{ proposal: Proposal; index: number }> = ({ p
       <SectionHeading title="Commercials" number={index} />
       <div className="space-y-6">
         {proposal.costing.map((section) => (
-          <div key={section.id} className="break-inside-avoid">
-            <h3 className="font-bold text-base text-gray-800 mb-2">{section.title}</h3>
-            <table className="w-full text-sm">
-              <thead className="bg-gray-100 text-gray-500 uppercase text-[10px]">
-                <tr>
-                  <th className="py-1.5 px-3 text-left rounded-l-md">Item</th>
-                  <th className="py-1.5 px-3 text-right">Qty</th>
-                  <th className="py-1.5 px-3 text-right">Rate</th>
-                  <th className="py-1.5 px-3 text-right rounded-r-md">Total</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {section.items.map((item) => (
-                  <tr key={item.id} className="break-inside-avoid print:break-inside-avoid">
-                    <td className="py-2 px-3 text-gray-700 text-xs">{item.description}</td>
-                    <td className="py-2 px-3 text-right text-gray-500 text-xs">{item.quantity}</td>
-                    <td className="py-2 px-3 text-right text-gray-500 text-xs font-mono">{item.rate.toLocaleString('en-IN')}</td>
-                    <td className="py-2 px-3 text-right text-gray-900 font-bold text-xs font-mono">{(item.quantity * item.rate).toLocaleString('en-IN')}</td>
+          <React.Fragment key={section.id}>
+            {hasBreakBefore(proposal, 'costing-category', section.id) && <PageBreakMarker />}
+            <div className="break-inside-avoid">
+              <h3 className="font-bold text-base text-gray-800 mb-2">{section.title}</h3>
+              <table className="w-full text-sm">
+                <thead className="bg-gray-100 text-gray-500 uppercase text-[10px]">
+                  <tr>
+                    <th className="py-1.5 px-3 text-left rounded-l-md">Item</th>
+                    <th className="py-1.5 px-3 text-right">Qty</th>
+                    <th className="py-1.5 px-3 text-right">Rate</th>
+                    <th className="py-1.5 px-3 text-right rounded-r-md">Total</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody className="divide-y divide-gray-100">
+                  {section.items.map((item) => (
+                    <React.Fragment key={item.id}>
+                      {hasBreakBefore(proposal, 'costing-item', item.id) && (
+                        <tr className="page-break-row">
+                          <td colSpan={4} className="p-0">
+                            <PageBreakMarker />
+                          </td>
+                        </tr>
+                      )}
+                      <tr className="break-inside-avoid print:break-inside-avoid">
+                        <td className="py-2 px-3 text-gray-700 text-xs">{item.description}</td>
+                        <td className="py-2 px-3 text-right text-gray-500 text-xs">{item.quantity}</td>
+                        <td className="py-2 px-3 text-right text-gray-500 text-xs font-mono">{item.rate.toLocaleString('en-IN')}</td>
+                        <td className="py-2 px-3 text-right text-gray-900 font-bold text-xs font-mono">{(item.quantity * item.rate).toLocaleString('en-IN')}</td>
+                      </tr>
+                    </React.Fragment>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </React.Fragment>
         ))}
       </div>
 
@@ -266,36 +300,48 @@ export const RateCard: React.FC<{ proposal: Proposal; index: number }> = ({ prop
     <SectionHeading title="Rate Card" number={index} />
     <div className="space-y-8">
       {proposal.rateCard && proposal.rateCard.map((section) => (
-        <div key={section.id} className="print:mb-8">
-          <h3 className="text-xl font-bold text-gray-800 mb-2 break-after-avoid">{section.name}</h3>
-          <div 
-            className="prose prose-sm max-w-none text-gray-600 mb-4"
-            dangerouslySetInnerHTML={{ __html: section.description }}
-          />
-          
-          <div className="break-inside-avoid">
-            <table className="w-full text-sm">
-              <thead className="bg-gray-100 text-gray-500 uppercase text-[10px]">
-                <tr>
-                  <th className="py-1.5 px-3 text-left rounded-l-md w-1/3">Deliverable</th>
-                  <th className="py-1.5 px-3 text-left w-1/3">Comment</th>
-                  <th className="py-1.5 px-3 text-right">Qty</th>
-                  <th className="py-1.5 px-3 text-right rounded-r-md">Unit Cost</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {section.items.map((item) => (
-                  <tr key={item.id} className="break-inside-avoid print:break-inside-avoid">
-                    <td className="py-2 px-3 text-gray-800 font-medium text-xs">{item.description}</td>
-                    <td className="py-2 px-3 text-gray-500 text-xs italic">{item.comment}</td>
-                    <td className="py-2 px-3 text-right text-gray-700 text-xs">{item.quantity}</td>
-                    <td className="py-2 px-3 text-right text-gray-700 font-mono text-xs">{item.unitCost.toLocaleString('en-IN')}</td>
+        <React.Fragment key={section.id}>
+          {hasBreakBefore(proposal, 'ratecard-category', section.id) && <PageBreakMarker />}
+          <div className="print:mb-8">
+            <h3 className="text-xl font-bold text-gray-800 mb-2 break-after-avoid">{section.name}</h3>
+            <div 
+              className="prose prose-sm max-w-none text-gray-600 mb-4"
+              dangerouslySetInnerHTML={{ __html: section.description }}
+            />
+            
+            <div className="break-inside-avoid">
+              <table className="w-full text-sm">
+                <thead className="bg-gray-100 text-gray-500 uppercase text-[10px]">
+                  <tr>
+                    <th className="py-1.5 px-3 text-left rounded-l-md w-1/3">Deliverable</th>
+                    <th className="py-1.5 px-3 text-left w-1/3">Comment</th>
+                    <th className="py-1.5 px-3 text-right">Qty</th>
+                    <th className="py-1.5 px-3 text-right rounded-r-md">Unit Cost</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-gray-100">
+                  {section.items.map((item) => (
+                    <React.Fragment key={item.id}>
+                      {hasBreakBefore(proposal, 'ratecard-item', item.id) && (
+                        <tr className="page-break-row">
+                          <td colSpan={4} className="p-0">
+                            <PageBreakMarker />
+                          </td>
+                        </tr>
+                      )}
+                      <tr className="break-inside-avoid print:break-inside-avoid">
+                        <td className="py-2 px-3 text-gray-800 font-medium text-xs">{item.description}</td>
+                        <td className="py-2 px-3 text-gray-500 text-xs italic">{item.comment}</td>
+                        <td className="py-2 px-3 text-right text-gray-700 text-xs">{item.quantity}</td>
+                        <td className="py-2 px-3 text-right text-gray-700 font-mono text-xs">{item.unitCost.toLocaleString('en-IN')}</td>
+                      </tr>
+                    </React.Fragment>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
+        </React.Fragment>
       ))}
     </div>
   </div>
