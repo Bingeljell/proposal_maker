@@ -10,6 +10,7 @@ import {
   OutOfScope,
   Team,
   Commercials,
+  RateCard,
   Terms,
   SignOffSection
 } from './ProposalSections';
@@ -28,6 +29,7 @@ export const Preview: React.FC = () => {
     { id: 'out-of-scope', label: 'Out of Scope', Component: OutOfScope },
     { id: 'team', label: 'Proposed Team', Component: Team },
     { id: 'costing', label: 'Commercials', Component: Commercials },
+    { id: 'ratecard', label: 'Rate Card', Component: RateCard },
     { id: 'terms', label: 'Terms & Conditions', Component: Terms },
     { id: 'sign-off', label: 'Sign Off', Component: SignOffSection },
   ];

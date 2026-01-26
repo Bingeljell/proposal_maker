@@ -17,6 +17,7 @@ export const initialProposal: Proposal = {
     'out-of-scope': true,
     'team': true,
     'costing': true,
+    'ratecard': true,
     'terms': true,
     'sign-off': true,
   },
@@ -65,6 +66,7 @@ export const initialProposal: Proposal = {
       ],
     },
   ],
+  rateCard: [],
   terms: '1. Payment Terms: 50% advance.\n2. Validity: This proposal is valid for 14 days.',
   signOff: {
     disclaimer: 'Confidential Information',

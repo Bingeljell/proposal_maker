@@ -4,6 +4,7 @@ import { HistoryForm } from './components/builder/HistoryForm';
 import { SummaryForm } from './components/builder/SummaryForm';
 import { ScopeForm } from './components/builder/ScopeForm';
 import { CostingForm } from './components/builder/CostingForm';
+import { RateCardForm } from './components/builder/RateCardForm';
 import { ClientReqForm } from './components/builder/ClientReqForm';
 import { OutOfScopeForm } from './components/builder/OutOfScopeForm';
 import { TeamForm } from './components/builder/TeamForm';
@@ -25,6 +26,8 @@ function App() {
             return <ScopeForm />;
           case 'costing':
             return <CostingForm />;
+          case 'ratecard':
+            return <RateCardForm />;
           case 'client-req':
             return <ClientReqForm />;
           case 'out-of-scope':

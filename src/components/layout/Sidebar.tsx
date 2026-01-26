@@ -11,7 +11,8 @@ import {
   ShieldCheck,
   LayoutTemplate,
   Eye,
-  EyeOff
+  EyeOff,
+  Tag
 } from 'lucide-react';
 import { SectionId } from '../../types';
 import { useProposal } from '../../hooks/useProposal';
@@ -30,6 +31,7 @@ const sections: { id: SectionId; label: string; icon: React.ElementType }[] = [
   { id: 'out-of-scope', label: 'Out of Scope', icon: ShieldCheck },
   { id: 'team', label: 'Proposed Team', icon: Users },
   { id: 'costing', label: 'Commercials', icon: IndianRupee },
+  { id: 'ratecard', label: 'Rate Card', icon: Tag },
   { id: 'terms', label: 'Terms & Conditions', icon: FileText },
   { id: 'sign-off', label: 'Sign-off', icon: FileSignature },
 ];

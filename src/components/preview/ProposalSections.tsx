@@ -261,6 +261,46 @@ export const Commercials: React.FC<{ proposal: Proposal; index: number }> = ({ p
   );
 };
 
+export const RateCard: React.FC<{ proposal: Proposal; index: number }> = ({ proposal, index }) => (
+  <div className="mb-12 pt-4 border-t-4 border-gray-100 border-dotted break-before-page print:border-0">
+    <SectionHeading title="Rate Card" number={index} />
+    <div className="space-y-8">
+      {proposal.rateCard && proposal.rateCard.map((section) => (
+        <div key={section.id} className="print:mb-8">
+          <h3 className="text-xl font-bold text-gray-800 mb-2 break-after-avoid">{section.name}</h3>
+          <div 
+            className="prose prose-sm max-w-none text-gray-600 mb-4"
+            dangerouslySetInnerHTML={{ __html: section.description }}
+          />
+          
+          <div className="break-inside-avoid">
+            <table className="w-full text-sm">
+              <thead className="bg-gray-100 text-gray-500 uppercase text-[10px]">
+                <tr>
+                  <th className="py-1.5 px-3 text-left rounded-l-md w-1/3">Deliverable</th>
+                  <th className="py-1.5 px-3 text-left w-1/3">Comment</th>
+                  <th className="py-1.5 px-3 text-right">Qty</th>
+                  <th className="py-1.5 px-3 text-right rounded-r-md">Unit Cost</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-100">
+                {section.items.map((item) => (
+                  <tr key={item.id} className="break-inside-avoid print:break-inside-avoid">
+                    <td className="py-2 px-3 text-gray-800 font-medium text-xs">{item.description}</td>
+                    <td className="py-2 px-3 text-gray-500 text-xs italic">{item.comment}</td>
+                    <td className="py-2 px-3 text-right text-gray-700 text-xs">{item.quantity}</td>
+                    <td className="py-2 px-3 text-right text-gray-700 font-mono text-xs">{item.unitCost.toLocaleString('en-IN')}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
 export const Terms: React.FC<{ proposal: Proposal; index: number }> = ({ proposal, index }) => (
   <div className="mb-12 pt-4 border-t-4 border-gray-100 border-dotted break-before-page print:border-0">
     <div className="break-inside-avoid">

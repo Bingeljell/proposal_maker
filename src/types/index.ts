@@ -7,6 +7,7 @@ export type SectionId =
   | 'out-of-scope' 
   | 'team' 
   | 'costing' 
+  | 'ratecard'
   | 'terms' 
   | 'sign-off';
 
@@ -21,6 +22,7 @@ export interface Proposal {
   outOfScope: string[];
   team: TeamMember[];
   costing: CostingSection[];
+  rateCard: RateCardSection[];
   terms: string;
   signOff: SignOff;
 }
@@ -78,6 +80,21 @@ export interface CostItem {
   description: string;
   quantity: number;
   rate: number;
+}
+
+export interface RateCardSection {
+  id: string;
+  name: string; // Category Head
+  description: string;
+  items: RateCardItem[];
+}
+
+export interface RateCardItem {
+  id: string;
+  description: string;
+  comment: string;
+  quantity: number;
+  unitCost: number;
 }
 
 export interface SignOff {
