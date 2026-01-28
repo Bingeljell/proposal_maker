@@ -86,9 +86,9 @@ The proposal will consist of the following ordered sections:
 
 ### Phase 5: Polish & Refine
 *   [x] Add "Logo Upload" (convert to Base64 for JSON portability).
-*   [ ] Refine the UI (Transitions, empty states).
-*   [ ] Test "Save/Load" flow with realistic data.
-*   [ ] Final "Print to PDF" testing.
+*   [x] Refine the UI (Transitions, empty states).
+*   [x] Test "Save/Load" flow with realistic data.
+*   [x] Final "Print to PDF" testing.
 
 ## 6. Future Enhancements (Backlog)
 *   AI Integration: "Auto-fill Scope" button using Gemini.

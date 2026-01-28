@@ -1,3 +1,9 @@
+2026-01-28
+
+- Added: Expanded `docs/feature_roadmap.md` with comprehensive feature categories: Content & Writing, Customization & Branding, Collaboration & Workflow, Business Intelligence, Data & Integrations, Export & Delivery, and Advanced Features.
+- Added: Created `docs/feature_roadmap.md` with planned features including "Load from Template" functionality and backlog items.
+- Added: Created `README.md` with project overview, setup instructions, usage guide, and documentation references.
+
 2026-01-26
 
 - Added: Manual page break data model and inline break support — `pageBreaks` in `src/types/index.ts`, defaults in `src/data/initialProposal.ts`, migrations in `src/context/ProposalContext.tsx`, marker styling in `src/index.css`, and RichTextEditor `PageBreak` node/toolbar insert in `src/components/ui/RichTextEditor.tsx`.
