@@ -29,70 +29,70 @@ export const IntroForm: React.FC = () => {
   return (
     <div className="space-y-6 max-w-2xl">
       <div>
-        <h3 className="text-lg font-medium text-gray-900 mb-4">Project Details</h3>
+        <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Project Details</h3>
         <div className="grid grid-cols-1 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700">Proposal Title</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Proposal Title</label>
             <input
               type="text"
               name="title"
               value={proposal.meta.title}
               onChange={handleChange}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border"
+              className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border"
               placeholder="e.g. Digital Marketing Strategy 2026"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Client Name</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Client Name</label>
             <input
               type="text"
               name="clientName"
               value={proposal.meta.clientName}
               onChange={handleChange}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border"
+              className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border"
               placeholder="e.g. Acme Corp"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Date</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Date</label>
             <input
               type="date"
               name="date"
               value={proposal.meta.date}
               onChange={handleChange}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border"
+              className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border"
             />
           </div>
         </div>
       </div>
 
-      <div className="pt-6 border-t border-gray-200">
-        <h3 className="text-lg font-medium text-gray-900 mb-4">Agency Logo</h3>
+      <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
+        <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Agency Logo</h3>
         <div className="flex items-start gap-6">
           {proposal.meta.logo ? (
             <div className="relative group">
               <img 
                 src={proposal.meta.logo} 
                 alt="Logo" 
-                className="h-24 w-auto object-contain border border-gray-200 rounded-lg p-2 bg-white" 
+                className="h-24 w-auto object-contain border border-gray-200 dark:border-gray-600 rounded-lg p-2 bg-white dark:bg-gray-700" 
               />
               <button
                 onClick={removeLogo}
-                className="absolute -top-2 -right-2 bg-red-100 text-red-600 rounded-full p-1 hover:bg-red-200 opacity-0 group-hover:opacity-100 transition-opacity"
+                className="absolute -top-2 -right-2 bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-300 rounded-full p-1 hover:bg-red-200 dark:hover:bg-red-900/70 opacity-0 group-hover:opacity-100 transition-opacity"
               >
                 <X size={14} />
               </button>
             </div>
           ) : (
-            <div className="h-24 w-24 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center text-gray-400 bg-gray-50">
+            <div className="h-24 w-24 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg flex items-center justify-center text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-700/50">
               <span className="text-xs">No Logo</span>
             </div>
           )}
           
           <div className="flex-1">
-            <label className="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 cursor-pointer">
+            <label className="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 shadow-sm text-sm font-medium rounded-md text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer">
               <Upload size={16} />
               Upload New Logo
               <input
@@ -103,7 +103,7 @@ export const IntroForm: React.FC = () => {
                 onChange={handleLogoUpload}
               />
             </label>
-            <p className="mt-2 text-xs text-gray-500">
+            <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
               PNG, JPG or SVG. Ideally with a transparent background.
             </p>
           </div>

@@ -1,6 +1,9 @@
 2026-01-28
 
-- Changed: Updated `docs/feature_roadmap.md` to mark **Duplicate/Clone** and **Content Library** as completed features.
+- Added: Implemented **Dark Mode** feature with `useDarkMode` hook (`src/hooks/useDarkMode.ts`), sun/moon toggle in header, and full dark theme support across all UI components.
+- Changed: Updated Tailwind config to enable `darkMode: 'class'` strategy.
+- Changed: Updated `Layout.tsx`, `Sidebar.tsx`, `IntroForm.tsx`, `ScopeForm.tsx`, `RichTextEditor.tsx`, `ContentLibraryModal.tsx`, and `ContentLibraryManager.tsx` with dark mode classes.
+- Changed: Updated `docs/feature_roadmap.md` to mark **Duplicate/Clone**, **Content Library**, and **Dark Mode** as completed features.
 - Added: Implemented `duplicateProposal()` function in `src/context/ProposalContext.tsx` to create a copy of the current proposal with cleared history and updated title/date.
 - Added: Created `defaultContentSnippets.json` with default advertising agency snippets for scope, rate card, testimonials, and general content.
 - Added: Created `useContentLibrary` hook in `src/hooks/useContentLibrary.ts` to manage content snippets with localStorage persistence.

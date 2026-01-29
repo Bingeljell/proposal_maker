@@ -152,9 +152,9 @@ export const ScopeForm: React.FC = () => {
 
           <div>
 
-            <h3 className="text-lg font-medium text-gray-900">Scope of Work</h3>
+            <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">Scope of Work</h3>
 
-            <p className="text-sm text-gray-500">Define your services and specific outputs.</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Define your services and specific outputs.</p>
 
           </div>
 
@@ -184,11 +184,11 @@ export const ScopeForm: React.FC = () => {
 
               key={section.id}
 
-              className="border border-gray-200 rounded-lg bg-white overflow-hidden shadow-sm"
+              className="border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 overflow-hidden shadow-sm"
 
             >
 
-              <div className="bg-gray-50 px-4 py-3 border-b border-gray-200 flex items-center justify-between">
+              <div className="bg-gray-50 dark:bg-gray-700 px-4 py-3 border-b border-gray-200 dark:border-gray-600 flex items-center justify-between">
 
                 <div className="flex items-center gap-2 flex-1">
 
@@ -226,7 +226,7 @@ export const ScopeForm: React.FC = () => {
 
                       onClick={() => togglePageBreak('scope-category', section.id)}
 
-                      className={`text-[10px] font-bold px-1.5 py-0.5 rounded border ${hasPageBreak('scope-category', section.id) ? 'bg-blue-50 text-blue-700 border-blue-200' : 'text-gray-400 border-gray-200 hover:text-blue-600'}`}
+                      className={`text-[10px] font-bold px-1.5 py-0.5 rounded border ${hasPageBreak('scope-category', section.id) ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-800' : 'text-gray-400 dark:text-gray-500 border-gray-200 dark:border-gray-600 hover:text-blue-600'}`}
 
                       title="Page break before this category"
 
@@ -248,7 +248,7 @@ export const ScopeForm: React.FC = () => {
 
                     placeholder="Service Category (e.g. Social Media, Tech)"
 
-                    className="bg-transparent border-0 font-semibold text-gray-900 focus:ring-0 p-0 text-sm w-full"
+                    className="bg-transparent border-0 font-semibold text-gray-900 dark:text-gray-100 focus:ring-0 p-0 text-sm w-full"
 
                   />
 
@@ -258,7 +258,7 @@ export const ScopeForm: React.FC = () => {
 
                   onClick={() => removeSection(section.id)}
 
-                  className="text-gray-400 hover:text-red-600 transition-colors"
+                  className="text-gray-400 dark:text-gray-500 hover:text-red-600 dark:hover:text-red-400 transition-colors"
 
                 >
 
@@ -272,7 +272,7 @@ export const ScopeForm: React.FC = () => {
 
                 <div>
 
-                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">
+                  <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">
 
                     High-level Description
 
@@ -296,7 +296,7 @@ export const ScopeForm: React.FC = () => {
 
                   <div className="flex justify-between items-center mb-2">
 
-                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider">
+                    <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
 
                       Quantified Deliverables
 
@@ -306,7 +306,7 @@ export const ScopeForm: React.FC = () => {
 
                       onClick={() => addDeliverable(section.id)}
 
-                      className="text-xs text-blue-600 font-semibold hover:text-blue-800"
+                      className="text-xs text-blue-600 dark:text-blue-400 font-semibold hover:text-blue-800 dark:hover:text-blue-300"
 
                     >
 
@@ -356,7 +356,7 @@ export const ScopeForm: React.FC = () => {
 
                             onClick={() => togglePageBreak('scope-deliverable', del.id)}
 
-                            className={`text-[10px] font-bold px-1.5 py-0.5 rounded border ${hasPageBreak('scope-deliverable', del.id) ? 'bg-blue-50 text-blue-700 border-blue-200' : 'text-gray-300 border-gray-200 hover:text-blue-600'}`}
+                            className={`text-[10px] font-bold px-1.5 py-0.5 rounded border ${hasPageBreak('scope-deliverable', del.id) ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-800' : 'text-gray-300 dark:text-gray-600 border-gray-200 dark:border-gray-600 hover:text-blue-600'}`}
 
                             title="Page break before this deliverable"
 
@@ -378,7 +378,7 @@ export const ScopeForm: React.FC = () => {
 
                           placeholder="e.g. Social Media Posts"
 
-                          className="flex-1 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-1.5 border"
+                          className="flex-1 rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-1.5 border"
 
                         />
 
@@ -390,7 +390,7 @@ export const ScopeForm: React.FC = () => {
 
                           onChange={(e) => updateDeliverable(section.id, del.id, 'quantity', parseInt(e.target.value) || 0)}
 
-                          className="w-20 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-1.5 border"
+                          className="w-20 rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-1.5 border"
 
                         />
 
@@ -398,7 +398,7 @@ export const ScopeForm: React.FC = () => {
 
                           onClick={() => removeDeliverable(section.id, del.id)}
 
-                          className="text-gray-300 hover:text-red-500 ml-1"
+                          className="text-gray-300 dark:text-gray-600 hover:text-red-500 dark:hover:text-red-400 ml-1"
 
                         >
 
@@ -412,7 +412,7 @@ export const ScopeForm: React.FC = () => {
 
                     {section.deliverables.length === 0 && (
 
-                      <p className="text-xs text-gray-400 italic">No deliverables added yet.</p>
+                      <p className="text-xs text-gray-400 dark:text-gray-500 italic">No deliverables added yet.</p>
 
                     )}
 

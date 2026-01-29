@@ -56,9 +56,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
   };
 
   return (
-    <div className="w-64 bg-white border-r border-gray-200 flex flex-col h-full">
-      <div className="p-4 border-b border-gray-200">
-        <h2 className="font-semibold text-gray-900">Sections</h2>
+    <div className="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col h-full">
+      <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+        <h2 className="font-semibold text-gray-900 dark:text-gray-100">Sections</h2>
       </div>
       <nav className="flex-1 overflow-y-auto p-2 space-y-1">
         {sections.map((section) => {
@@ -71,8 +71,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
               key={section.id}
               className={`group flex items-center justify-between px-3 py-2 text-sm font-medium rounded-md transition-colors ${
                 isActive 
-                  ? 'bg-blue-50 text-blue-700' 
-                  : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                  ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400' 
+                  : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-gray-200'
               }`}
             >
               <button
@@ -87,8 +87,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
               
               <button
                 onClick={(e) => toggleVisibility(e, section.id)}
-                className={`p-1 rounded-md hover:bg-gray-100 transition-colors ${
-                  isVisible ? 'text-blue-600' : 'text-red-500'
+                className={`p-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors ${
+                  isVisible ? 'text-blue-600 dark:text-blue-400' : 'text-red-500 dark:text-red-400'
                 }`}
                 title={isVisible ? "Included in proposal" : "Excluded from proposal"}
               >
@@ -100,10 +100,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
       </nav>
 
       {/* Action Buttons */}
-      <div className="p-3 border-t border-gray-200 space-y-2">
+      <div className="p-3 border-t border-gray-200 dark:border-gray-700 space-y-2">
         <button
           onClick={duplicateProposal}
-          className="flex items-center gap-2 w-full px-3 py-2 text-sm font-medium text-gray-700 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors"
+          className="flex items-center gap-2 w-full px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md transition-colors"
           title="Create a copy of the current proposal"
         >
           <Copy size={16} />
@@ -111,7 +111,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
         </button>
         <button
           onClick={() => setIsLibraryManagerOpen(true)}
-          className="flex items-center gap-2 w-full px-3 py-2 text-sm font-medium text-gray-700 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors"
+          className="flex items-center gap-2 w-full px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md transition-colors"
           title="Manage reusable content snippets"
         >
           <BookOpen size={16} />
