@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { Proposal } from '../types';
+import { Proposal, PackageTemplate } from '../types';
 import { initialProposal } from '../data/initialProposal';
 
 interface ProposalContextType {
@@ -10,6 +10,7 @@ interface ProposalContextType {
   saveToFile: () => void;
   resetProposal: () => void;
   duplicateProposal: () => void;
+  applyPackage: (pkg: PackageTemplate) => void;
 }
 
 const ProposalContext = createContext<ProposalContextType | undefined>(undefined);
@@ -101,6 +102,44 @@ export const ProposalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     });
   };
 
+  const applyPackage = (pkg: PackageTemplate) => {
+    setProposal((prev) => {
+      // Generate new IDs for scope items to avoid conflicts
+      const newScope = pkg.scope.map(section => ({
+        ...section,
+        id: crypto.randomUUID(),
+        deliverables: section.deliverables.map(d => ({
+          ...d,
+          id: crypto.randomUUID(),
+        })),
+      }));
+
+      // Generate new IDs for rate card items
+      const newRateCard = pkg.rateCard.map(section => ({
+        ...section,
+        id: crypto.randomUUID(),
+        items: section.items.map(item => ({
+          ...item,
+          id: crypto.randomUUID(),
+        })),
+      }));
+
+      // Generate new IDs for team members
+      const newTeam = pkg.team.map(member => ({
+        ...member,
+        id: crypto.randomUUID(),
+      }));
+
+      return {
+        ...prev,
+        execSummary: { ...pkg.execSummary },
+        scope: newScope,
+        rateCard: newRateCard,
+        team: newTeam,
+      };
+    });
+  };
+
   return (
     <ProposalContext.Provider
       value={{
@@ -111,6 +150,7 @@ export const ProposalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         saveToFile,
         resetProposal,
         duplicateProposal,
+        applyPackage,
       }}
     >
       {children}

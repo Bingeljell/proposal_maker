@@ -128,3 +128,38 @@ export interface ContentSnippet {
   content: string;
   category: ContentSnippetCategory;
 }
+
+// Package Builder Types
+export interface PackageTemplate {
+  id: string;
+  name: string;
+  description: string;
+  tier: 'basic' | 'standard' | 'premium' | 'custom';
+  scope: ScopeSection[];
+  rateCard: RateCardSection[];
+  team: TeamMember[];
+  execSummary: ExecSummary;
+  estimatedPrice: number;
+}
+
+// Questionnaire Types
+export interface QuestionnaireQuestion {
+  id: string;
+  question: string;
+  type: 'single_choice' | 'multiple_choice' | 'text' | 'budget' | 'timeline';
+  options?: string[];
+  required: boolean;
+}
+
+export interface QuestionnaireResponse {
+  questionId: string;
+  answer: string | string[];
+}
+
+export interface Questionnaire {
+  id: string;
+  title: string;
+  description: string;
+  questions: QuestionnaireQuestion[];
+  recommendedPackage?: string; // PackageTemplate ID
+}

@@ -100,8 +100,8 @@ Allow users to quickly populate proposal sections using pre-defined templates. T
 | Feature | Description | Priority |
 |---------|-------------|----------|
 | Dynamic Pricing | Formulas based on quantities (e.g., "Price per video × number of videos") | Medium |
-| Package Builder | Bundle services into tiered packages (Basic/Standard/Premium) | High |
-| Questionnaire Mode | Send clients a form to auto-populate the proposal | Medium |
+| ~~Package Builder~~ | ~~Bundle services into tiered packages (Basic/Standard/Premium)~~ | ✅ **Completed 2026-01-28** |
+| ~~Questionnaire Mode~~ | ~~Send clients a form to auto-populate the proposal~~ | ✅ **Completed 2026-01-28** |
 | ~~Duplicate/Clone~~ | ~~Copy existing proposals as starting points~~ | ✅ **Completed 2026-01-28** |
 
 ---

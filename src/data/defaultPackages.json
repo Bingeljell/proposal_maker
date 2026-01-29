@@ -1,0 +1,303 @@
+{
+  "packages": [
+    {
+      "id": "social-media-starter",
+      "name": "Social Media Starter",
+      "description": "Perfect for small businesses looking to establish their social media presence with essential content and management.",
+      "tier": "basic",
+      "estimatedPrice": 45000,
+      "execSummary": {
+        "summary": "This starter package is designed to establish and maintain a consistent social media presence for your brand. We'll focus on the most impactful platforms for your audience, creating engaging content that drives awareness and engagement.",
+        "objectives": "• Establish consistent brand presence on social media\n• Increase brand awareness and reach\n• Drive engagement with target audience\n• Build community around your brand"
+      },
+      "scope": [
+        {
+          "id": "social-management",
+          "name": "Social Media Management",
+          "description": "Complete social media management including content strategy, monthly content calendar creation, posting schedule, and community management.",
+          "deliverables": [
+            { "id": "del-1", "description": "Instagram Feed Posts", "quantity": 12 },
+            { "id": "del-2", "description": "Instagram Stories", "quantity": 8 },
+            { "id": "del-3", "description": "Reels / Short-form Videos", "quantity": 2 },
+            { "id": "del-4", "description": "Monthly Analytics Report", "quantity": 1 }
+          ]
+        },
+        {
+          "id": "content-creation",
+          "name": "Content Creation",
+          "description": "Professional content creation including graphic design and basic video editing for social media platforms.",
+          "deliverables": [
+            { "id": "del-5", "description": "Custom Graphic Designs", "quantity": 12 },
+            { "id": "del-6", "description": "Video Editing (30s)", "quantity": 2 }
+          ]
+        }
+      ],
+      "rateCard": [
+        {
+          "id": "rc-social",
+          "name": "Social Media Package",
+          "description": "Monthly social media management and content creation",
+          "items": [
+            { "id": "item-1", "description": "Social Media Management - Monthly", "comment": "Includes 12 posts, 8 stories, 2 reels", "quantity": 1, "unitCost": 35000 },
+            { "id": "item-2", "description": "Content Creation - Graphics", "comment": "Custom designs for each post", "quantity": 12, "unitCost": 500 },
+            { "id": "item-3", "description": "Video Editing - Short Form", "comment": "30-second reels", "quantity": 2, "unitCost": 2500 }
+          ]
+        }
+      ],
+      "team": [
+        {
+          "id": "team-1",
+          "name": "Social Media Manager",
+          "role": "Strategy & Community Management",
+          "allocation": 50,
+          "description": "Responsible for content strategy, scheduling, and community engagement",
+          "image": null
+        },
+        {
+          "id": "team-2",
+          "name": "Content Designer",
+          "role": "Visual Content Creation",
+          "allocation": 30,
+          "description": "Creates graphics and edits video content for social media",
+          "image": null
+        }
+      ]
+    },
+    {
+      "id": "digital-growth",
+      "name": "Digital Growth Package",
+      "description": "Comprehensive digital marketing solution with paid advertising and advanced content strategy for growing businesses.",
+      "tier": "standard",
+      "estimatedPrice": 95000,
+      "execSummary": {
+        "summary": "The Digital Growth Package combines organic social media management with strategic paid advertising to accelerate your brand's growth. This comprehensive solution includes content creation, campaign management, and detailed analytics to maximize ROI.",
+        "objectives": "• Increase brand visibility through organic and paid channels\n• Drive qualified traffic to website/landing pages\n• Generate leads and conversions through targeted campaigns\n• Build a loyal community and customer base\n• Establish thought leadership in your industry"
+      },
+      "scope": [
+        {
+          "id": "social-management-pro",
+          "name": "Social Media Management - Pro",
+          "description": "Enhanced social media management across multiple platforms with advanced content strategy and daily community management.",
+          "deliverables": [
+            { "id": "del-1", "description": "Instagram Feed Posts", "quantity": 20 },
+            { "id": "del-2", "description": "Instagram Stories", "quantity": 15 },
+            { "id": "del-3", "description": "Reels / Short-form Videos", "quantity": 5 },
+            { "id": "del-4", "description": "LinkedIn Articles/Posts", "quantity": 8 },
+            { "id": "del-5", "description": "Monthly Analytics Report", "quantity": 1 },
+            { "id": "del-6", "description": "Community Management (Mon-Fri)", "quantity": 1 }
+          ]
+        },
+        {
+          "id": "paid-ads",
+          "name": "Paid Advertising Management",
+          "description": "Strategic paid advertising campaigns on Meta platforms (Facebook & Instagram) including campaign setup, A/B testing, and ongoing optimization.",
+          "deliverables": [
+            { "id": "del-7", "description": "Campaign Strategy Document", "quantity": 1 },
+            { "id": "del-8", "description": "Ad Creative Sets", "quantity": 6 },
+            { "id": "del-9", "description": "Campaign Performance Reports", "quantity": 4 }
+          ]
+        },
+        {
+          "id": "content-strategy",
+          "name": "Content Strategy & Planning",
+          "description": "Strategic content planning including audience research, competitor analysis, content pillar development, and editorial calendar creation.",
+          "deliverables": [
+            { "id": "del-10", "description": "Content Strategy Document", "quantity": 1 },
+            { "id": "del-11", "description": "3-Month Editorial Calendar", "quantity": 1 }
+          ]
+        }
+      ],
+      "rateCard": [
+        {
+          "id": "rc-social-pro",
+          "name": "Social Media Package - Pro",
+          "description": "Enhanced social media management with multi-platform support",
+          "items": [
+            { "id": "item-1", "description": "Social Media Management - Pro", "comment": "20 posts, 15 stories, 5 reels, LinkedIn", "quantity": 1, "unitCost": 45000 },
+            { "id": "item-2", "description": "Community Management", "comment": "Daily monitoring and response", "quantity": 1, "unitCost": 15000 }
+          ]
+        },
+        {
+          "id": "rc-ads",
+          "name": "Paid Advertising",
+          "description": "Meta ads campaign management",
+          "items": [
+            { "id": "item-3", "description": "Meta Ads Management", "comment": "Campaign setup, management, optimization", "quantity": 1, "unitCost": 20000 },
+            { "id": "item-4", "description": "Ad Creative Production", "comment": "6 creative sets with variations", "quantity": 6, "unitCost": 2000 }
+          ]
+        },
+        {
+          "id": "rc-strategy",
+          "name": "Strategy & Planning",
+          "description": "Content strategy and planning services",
+          "items": [
+            { "id": "item-5", "description": "Content Strategy", "comment": "Research, pillars, calendar", "quantity": 1, "unitCost": 10000 }
+          ]
+        }
+      ],
+      "team": [
+        {
+          "id": "team-1",
+          "name": "Social Media Manager",
+          "role": "Strategy & Community Management",
+          "allocation": 75,
+          "description": "Lead strategist for social media presence and community engagement",
+          "image": null
+        },
+        {
+          "id": "team-2",
+          "name": "Content Designer",
+          "role": "Visual Content Creation",
+          "allocation": 60,
+          "description": "Creates graphics, edits videos, and produces ad creatives",
+          "image": null
+        },
+        {
+          "id": "team-3",
+          "name": "Paid Ads Specialist",
+          "role": "Performance Marketing",
+          "allocation": 40,
+          "description": "Manages paid advertising campaigns and optimization",
+          "image": null
+        }
+      ]
+    },
+    {
+      "id": "full-service-premium",
+      "name": "Full-Service Premium",
+      "description": "Complete digital transformation package with comprehensive strategy, content production, advertising, and dedicated account management for enterprise clients.",
+      "tier": "premium",
+      "estimatedPrice": 185000,
+      "execSummary": {
+        "summary": "Our Full-Service Premium package provides end-to-end digital marketing solutions for businesses seeking market leadership. This comprehensive program includes everything from brand strategy and content production to advanced advertising and conversion optimization, backed by a dedicated team and executive reporting.",
+        "objectives": "• Establish market leadership through comprehensive digital presence\n• Drive significant revenue growth through multi-channel campaigns\n• Build a sustainable, scalable marketing ecosystem\n• Achieve industry-leading engagement and conversion rates\n• Develop long-term brand equity and customer loyalty"
+      },
+      "scope": [
+        {
+          "id": "social-enterprise",
+          "name": "Enterprise Social Media Management",
+          "description": "Full-scale social media management across all major platforms with real-time community management, influencer outreach, and reputation management.",
+          "deliverables": [
+            { "id": "del-1", "description": "Instagram Feed Posts", "quantity": 30 },
+            { "id": "del-2", "description": "Instagram Stories", "quantity": 25 },
+            { "id": "del-3", "description": "Reels / Short-form Videos", "quantity": 10 },
+            { "id": "del-4", "description": "LinkedIn Articles", "quantity": 12 },
+            { "id": "del-5", "description": "Twitter/X Content", "quantity": 20 },
+            { "id": "del-6", "description": "Weekly Analytics Report", "quantity": 4 },
+            { "id": "del-7", "description": "24/7 Community Management", "quantity": 1 }
+          ]
+        },
+        {
+          "id": "video-production",
+          "name": "Video Production Suite",
+          "description": "Professional video production services including scripting, filming, editing, and post-production for high-quality brand content.",
+          "deliverables": [
+            { "id": "del-8", "description": "Long-form Videos (2-5 min)", "quantity": 2 },
+            { "id": "del-9", "description": "Short-form Videos (30-60s)", "quantity": 10 },
+            { "id": "del-10", "description": "Video Ad Campaign Creatives", "quantity": 6 }
+          ]
+        },
+        {
+          "id": "paid-ads-premium",
+          "name": "Premium Paid Advertising",
+          "description": "Advanced multi-platform paid advertising with dynamic creative optimization, remarketing campaigns, and conversion rate optimization.",
+          "deliverables": [
+            { "id": "del-11", "description": "Multi-Platform Campaign Strategy", "quantity": 1 },
+            { "id": "del-12", "description": "Meta + Google Ads Management", "quantity": 1 },
+            { "id": "del-13", "description": "Remarketing Campaign Setup", "quantity": 3 },
+            { "id": "del-14", "description": "Weekly Performance Reports", "quantity": 4 }
+          ]
+        },
+        {
+          "id": "brand-strategy",
+          "name": "Brand Strategy & Positioning",
+          "description": "Comprehensive brand strategy including market research, competitive analysis, brand positioning, and messaging framework development.",
+          "deliverables": [
+            { "id": "del-15", "description": "Brand Strategy Document", "quantity": 1 },
+            { "id": "del-16", "description": "Competitive Analysis Report", "quantity": 1 },
+            { "id": "del-17", "description": "Content Playbook", "quantity": 1 }
+          ]
+        }
+      ],
+      "rateCard": [
+        {
+          "id": "rc-enterprise",
+          "name": "Enterprise Social Media",
+          "description": "Full-scale social media management",
+          "items": [
+            { "id": "item-1", "description": "Enterprise Social Management", "comment": "All platforms, 30+ posts, real-time", "quantity": 1, "unitCost": 65000 },
+            { "id": "item-2", "description": "24/7 Community Management", "comment": "Always-on monitoring", "quantity": 1, "unitCost": 25000 }
+          ]
+        },
+        {
+          "id": "rc-video",
+          "name": "Video Production",
+          "description": "Professional video production services",
+          "items": [
+            { "id": "item-3", "description": "Long-form Video Production", "comment": "Script, shoot, edit (2-5 min)", "quantity": 2, "unitCost": 15000 },
+            { "id": "item-4", "description": "Short-form Video Production", "comment": "Reels/Shorts (30-60s)", "quantity": 10, "unitCost": 4000 }
+          ]
+        },
+        {
+          "id": "rc-ads-premium",
+          "name": "Premium Advertising",
+          "description": "Advanced paid advertising management",
+          "items": [
+            { "id": "item-5", "description": "Premium Ads Management", "comment": "Meta + Google, CRO, remarketing", "quantity": 1, "unitCost": 35000 },
+            { "id": "item-6", "description": "Video Ad Production", "comment": "Campaign creatives", "quantity": 6, "unitCost": 3000 }
+          ]
+        },
+        {
+          "id": "rc-strategy-premium",
+          "name": "Strategic Services",
+          "description": "Brand strategy and consulting",
+          "items": [
+            { "id": "item-7", "description": "Brand Strategy & Positioning", "comment": "Research, analysis, playbook", "quantity": 1, "unitCost": 25000 }
+          ]
+        }
+      ],
+      "team": [
+        {
+          "id": "team-1",
+          "name": "Account Director",
+          "role": "Strategic Oversight & Client Success",
+          "allocation": 50,
+          "description": "Senior leadership ensuring strategic alignment and campaign success",
+          "image": null
+        },
+        {
+          "id": "team-2",
+          "name": "Social Media Manager",
+          "role": "Social Strategy & Community",
+          "allocation": 100,
+          "description": "Full-time dedicated social media management",
+          "image": null
+        },
+        {
+          "id": "team-3",
+          "name": "Content Director",
+          "role": "Creative Direction & Video",
+          "allocation": 75,
+          "description": "Oversees all content creation and video production",
+          "image": null
+        },
+        {
+          "id": "team-4",
+          "name": "Performance Marketing Manager",
+          "role": "Paid Advertising & Analytics",
+          "allocation": 75,
+          "description": "Manages all paid campaigns and performance optimization",
+          "image": null
+        },
+        {
+          "id": "team-5",
+          "name": "Graphic Designer",
+          "role": "Visual Design & Branding",
+          "allocation": 50,
+          "description": "Creates visual assets and maintains brand consistency",
+          "image": null
+        }
+      ]
+    }
+  ]
+}

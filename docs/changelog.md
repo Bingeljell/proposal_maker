@@ -1,5 +1,11 @@
 2026-01-28
 
+- Added: Implemented **Questionnaire Mode** with interactive questionnaire (`QuestionnaireModal.tsx`) that recommends packages based on client responses.
+- Added: Created default questionnaire (`defaultQuestionnaire.json`) with budget, timeline, and services questions.
+- Added: Smart package recommendation algorithm based on budget and project goals.
+- Added: Implemented **Package Builder** feature with pre-defined package templates (`src/data/defaultPackages.json`), package selector modal (`PackageSelector.tsx`), and `applyPackage()` function in ProposalContext.
+- Added: Created `PackageTemplate` and `Questionnaire` types in `src/types/index.ts`.
+- Added: Default packages: "Social Media Starter" (₹45k), "Digital Growth Package" (₹95k), "Full-Service Premium" (₹185k).
 - Added: Implemented **Dark Mode** feature with `useDarkMode` hook (`src/hooks/useDarkMode.ts`), sun/moon toggle in header, and full dark theme support across all UI components.
 - Changed: Updated Tailwind config to enable `darkMode: 'class'` strategy.
 - Changed: Updated `Layout.tsx`, `Sidebar.tsx`, `IntroForm.tsx`, `ScopeForm.tsx`, `RichTextEditor.tsx`, `ContentLibraryModal.tsx`, and `ContentLibraryManager.tsx` with dark mode classes.

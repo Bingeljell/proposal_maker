@@ -14,12 +14,16 @@ import {
   EyeOff,
   Tag,
   Copy,
-  BookOpen
+  BookOpen,
+  Package,
+  ClipboardList
 } from 'lucide-react';
-import { SectionId } from '../../types';
+import { SectionId, PackageTemplate } from '../../types';
 import { useProposal } from '../../hooks/useProposal';
 import { useProposalContext } from '../../context/ProposalContext';
 import { ContentLibraryManager } from '../ui/ContentLibraryManager';
+import { PackageSelector } from '../ui/PackageSelector';
+import { QuestionnaireModal } from '../ui/QuestionnaireModal';
 
 interface SidebarProps {
   activeSection: SectionId;
@@ -42,8 +46,10 @@ const sections: { id: SectionId; label: string; icon: React.ElementType }[] = [
 
 export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange }) => {
   const { proposal, updateProposal } = useProposal();
-  const { duplicateProposal } = useProposalContext();
+  const { duplicateProposal, applyPackage } = useProposalContext();
   const [isLibraryManagerOpen, setIsLibraryManagerOpen] = useState(false);
+  const [isPackageSelectorOpen, setIsPackageSelectorOpen] = useState(false);
+  const [isQuestionnaireOpen, setIsQuestionnaireOpen] = useState(false);
 
   const toggleVisibility = (e: React.MouseEvent, sectionId: SectionId) => {
     e.stopPropagation(); // Prevent navigating when clicking the eye
@@ -117,12 +123,48 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
           <BookOpen size={16} />
           Content Library
         </button>
+        <button
+          onClick={() => setIsPackageSelectorOpen(true)}
+          className="flex items-center gap-2 w-full px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md transition-colors"
+          title="Apply a pre-defined package"
+        >
+          <Package size={16} />
+          Load Package
+        </button>
+        <button
+          onClick={() => setIsQuestionnaireOpen(true)}
+          className="flex items-center gap-2 w-full px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md transition-colors"
+          title="Answer a few questions to get a recommendation"
+        >
+          <ClipboardList size={16} />
+          Questionnaire
+        </button>
       </div>
 
       {/* Content Library Manager Modal */}
       <ContentLibraryManager
         isOpen={isLibraryManagerOpen}
         onClose={() => setIsLibraryManagerOpen(false)}
+      />
+
+      {/* Package Selector Modal */}
+      <PackageSelector
+        isOpen={isPackageSelectorOpen}
+        onClose={() => setIsPackageSelectorOpen(false)}
+        onApplyPackage={(pkg: PackageTemplate) => {
+          applyPackage(pkg);
+          alert(`Package "${pkg.name}" has been applied to your proposal!`);
+        }}
+      />
+
+      {/* Questionnaire Modal */}
+      <QuestionnaireModal
+        isOpen={isQuestionnaireOpen}
+        onClose={() => setIsQuestionnaireOpen(false)}
+        onApplyPackage={(pkg: PackageTemplate) => {
+          applyPackage(pkg);
+          alert(`Package "${pkg.name}" has been applied based on your responses!`);
+        }}
       />
     </div>
   );
