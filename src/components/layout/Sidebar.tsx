@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   FileText, 
   History, 
@@ -12,10 +12,14 @@ import {
   LayoutTemplate,
   Eye,
   EyeOff,
-  Tag
+  Tag,
+  Copy,
+  BookOpen
 } from 'lucide-react';
 import { SectionId } from '../../types';
 import { useProposal } from '../../hooks/useProposal';
+import { useProposalContext } from '../../context/ProposalContext';
+import { ContentLibraryManager } from '../ui/ContentLibraryManager';
 
 interface SidebarProps {
   activeSection: SectionId;
@@ -38,6 +42,8 @@ const sections: { id: SectionId; label: string; icon: React.ElementType }[] = [
 
 export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange }) => {
   const { proposal, updateProposal } = useProposal();
+  const { duplicateProposal } = useProposalContext();
+  const [isLibraryManagerOpen, setIsLibraryManagerOpen] = useState(false);
 
   const toggleVisibility = (e: React.MouseEvent, sectionId: SectionId) => {
     e.stopPropagation(); // Prevent navigating when clicking the eye
@@ -92,6 +98,32 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
           );
         })}
       </nav>
+
+      {/* Action Buttons */}
+      <div className="p-3 border-t border-gray-200 space-y-2">
+        <button
+          onClick={duplicateProposal}
+          className="flex items-center gap-2 w-full px-3 py-2 text-sm font-medium text-gray-700 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors"
+          title="Create a copy of the current proposal"
+        >
+          <Copy size={16} />
+          Duplicate Proposal
+        </button>
+        <button
+          onClick={() => setIsLibraryManagerOpen(true)}
+          className="flex items-center gap-2 w-full px-3 py-2 text-sm font-medium text-gray-700 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors"
+          title="Manage reusable content snippets"
+        >
+          <BookOpen size={16} />
+          Content Library
+        </button>
+      </div>
+
+      {/* Content Library Manager Modal */}
+      <ContentLibraryManager
+        isOpen={isLibraryManagerOpen}
+        onClose={() => setIsLibraryManagerOpen(false)}
+      />
     </div>
   );
 };

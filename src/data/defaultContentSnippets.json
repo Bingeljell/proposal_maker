@@ -1,0 +1,88 @@
+{
+  "snippets": [
+    {
+      "id": "scope-social-full",
+      "name": "Social Media - Full Management",
+      "content": "Complete social media management including content strategy, monthly content calendar creation, posting schedule, community management, and monthly analytics reporting. We will manage all major platforms including Instagram, Facebook, LinkedIn, and Twitter.",
+      "category": "scope"
+    },
+    {
+      "id": "scope-video-short",
+      "name": "Video Production - Short Form",
+      "content": "End-to-end short-form video production for Reels, Shorts, and TikTok. Includes scripting, filming, editing, and post-production. Videos range from 15-60 seconds with 2 rounds of revisions included.",
+      "category": "scope"
+    },
+    {
+      "id": "scope-meta-ads",
+      "name": "Meta Ads Management",
+      "content": "Comprehensive Meta (Facebook & Instagram) advertising campaign management. Includes campaign setup, audience targeting, A/B testing of creative and copy, daily monitoring, weekly optimization, and detailed monthly performance reports.",
+      "category": "scope"
+    },
+    {
+      "id": "scope-brand-identity",
+      "name": "Brand Identity Development",
+      "content": "Complete brand identity package including logo design, color palette, typography selection, brand guidelines document, and basic stationery design (business card, letterhead, email signature).",
+      "category": "scope"
+    },
+    {
+      "id": "scope-content-strategy",
+      "name": "Content Strategy & Planning",
+      "content": "Strategic content planning including audience research, competitor analysis, content pillar development, editorial calendar creation, and performance metrics definition. Deliverable includes a 3-month content roadmap.",
+      "category": "scope"
+    },
+    {
+      "id": "rate-social-package",
+      "name": "Social Media Package - Monthly",
+      "content": "₹45,000/month — Includes 12 feed posts, 8 stories, 2 reels, community management (Mon-Fri), and monthly analytics report.",
+      "category": "rate"
+    },
+    {
+      "id": "rate-video-30s",
+      "name": "Video - 30 Second Reel",
+      "content": "₹7,500 per video — Scripting, shoot, editing, sound design, captions, and 2 rounds of revisions.",
+      "category": "rate"
+    },
+    {
+      "id": "rate-static-creative",
+      "name": "Static Creative Design",
+      "content": "₹2,000 per creative — Custom graphic design for social media posts, ads, or web banners. Includes 2 revision rounds.",
+      "category": "rate"
+    },
+    {
+      "id": "rate-meta-ads-mgmt",
+      "name": "Meta Ads Management",
+      "content": "₹15,000/month + 10% of ad spend — Full campaign setup, management, optimization, and reporting. Minimum ad spend ₹50,000/month.",
+      "category": "rate"
+    },
+    {
+      "id": "rate-photo-shoot",
+      "name": "Product Photography - Half Day",
+      "content": "₹25,000 per shoot — 4-hour product photography session including basic editing, color correction, and delivery of 20 final images.",
+      "category": "rate"
+    },
+    {
+      "id": "testimonial-sample-1",
+      "name": "Testimonial - Marketing Impact",
+      "content": "\"Working with this team transformed our digital presence completely. Within 3 months, our engagement increased by 340% and we saw a significant boost in qualified leads. Their strategic approach and creative execution exceeded all our expectations.\"\n\n— Sarah Johnson, Marketing Director, TechFlow Solutions",
+      "category": "testimonial"
+    },
+    {
+      "id": "testimonial-sample-2",
+      "name": "Testimonial - Creative Quality",
+      "content": "\"The creativity and attention to detail in every piece of content they deliver is outstanding. They truly understand our brand voice and consistently produce work that resonates with our audience. Highly recommended!\"\n\n— Rahul Mehta, Founder, Artisan Coffee Co.",
+      "category": "testimonial"
+    },
+    {
+      "id": "general-meeting-cta",
+      "name": "Meeting CTA",
+      "content": "We would love to discuss this proposal in detail and answer any questions you may have. Please let us know a convenient time for a call or meeting to take this forward.",
+      "category": "general"
+    },
+    {
+      "id": "general-next-steps",
+      "name": "Next Steps",
+      "content": "Upon approval of this proposal, we will schedule a kick-off meeting to discuss timelines, deliverables, and gather any additional assets required to begin the project.",
+      "category": "general"
+    }
+  ]
+}

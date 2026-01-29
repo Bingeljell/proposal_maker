@@ -1,6 +1,6 @@
 import React from 'react';
 import { Proposal, PageBreakTargetType } from '../../types';
-import { IndianRupee, Phone, Globe, MapPin } from 'lucide-react';
+import { IndianRupee, Globe, MapPin } from 'lucide-react';
 
 // --- Helper Components ---
 

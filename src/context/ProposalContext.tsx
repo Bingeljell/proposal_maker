@@ -9,6 +9,7 @@ interface ProposalContextType {
   loadFromFile: (file: File) => void;
   saveToFile: () => void;
   resetProposal: () => void;
+  duplicateProposal: () => void;
 }
 
 const ProposalContext = createContext<ProposalContextType | undefined>(undefined);
@@ -86,6 +87,20 @@ export const ProposalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
   };
 
+  const duplicateProposal = () => {
+    setProposal((prev) => {
+      const cloned: Proposal = JSON.parse(JSON.stringify(prev));
+      // Update meta info for the copy
+      cloned.meta.title += ' - Copy';
+      cloned.meta.date = new Date().toISOString().split('T')[0];
+      // Clear version history for fresh start
+      cloned.versionHistory = [];
+      // Generate new proposal ID
+      cloned.id = crypto.randomUUID();
+      return cloned;
+    });
+  };
+
   return (
     <ProposalContext.Provider
       value={{
@@ -95,6 +110,7 @@ export const ProposalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         loadFromFile,
         saveToFile,
         resetProposal,
+        duplicateProposal,
       }}
     >
       {children}

@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { TextStyle } from '@tiptap/extension-text-style';
-import { Bold, Italic, List, ListOrdered, Indent, Outdent, AlignJustify } from 'lucide-react';
+import { Bold, Italic, List, ListOrdered, Indent, Outdent, AlignJustify, BookOpen } from 'lucide-react';
 import clsx from 'clsx';
+import { ContentLibraryModal } from './ContentLibraryModal';
 
 // Custom extension to allow font-size and line-height
-import { Extension, Node } from '@tiptap/core';
+import { Node } from '@tiptap/core';
 
 interface RichTextEditorProps {
   value: string;
@@ -68,6 +69,8 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
   onChange, 
   className = "" 
 }) => {
+  const [isLibraryOpen, setIsLibraryOpen] = useState(false);
+
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -229,10 +232,26 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
           disabled={!editor.can().sinkListItem('listItem')}
           icon={Indent}
         />
+        <div className="w-px h-4 bg-gray-300 mx-1" />
+        <MenuButton
+          onClick={() => setIsLibraryOpen(true)}
+          isActive={false}
+          icon={BookOpen}
+          label="Insert Snippet"
+        />
       </div>
       
       {/* Editor Content */}
       <EditorContent editor={editor} />
+
+      {/* Content Library Modal */}
+      <ContentLibraryModal
+        isOpen={isLibraryOpen}
+        onClose={() => setIsLibraryOpen(false)}
+        onInsert={(content) => {
+          editor?.chain().focus().insertContent(content).run();
+        }}
+      />
     </div>
   );
 };

@@ -119,3 +119,12 @@ export interface SignOff {
   socials: string; // Could be structured, keeping simple for now
   showSignatures: boolean;
 }
+
+export type ContentSnippetCategory = 'scope' | 'rate' | 'testimonial' | 'general';
+
+export interface ContentSnippet {
+  id: string;
+  name: string;
+  content: string;
+  category: ContentSnippetCategory;
+}

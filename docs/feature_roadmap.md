@@ -35,7 +35,7 @@ Allow users to quickly populate proposal sections using pre-defined templates. T
 |---------|-------------|----------|
 | AI Writing Assistant | Auto-generate scope descriptions, executive summaries, or rewrite content for different tones | Medium |
 | Grammar/Spell Check | Integrated proofreading throughout the proposal | Low |
-| Content Library | Save reusable snippets (boilerplate text, case studies, testimonials) | Medium |
+| ~~Content Library~~ | ~~Save reusable snippets (boilerplate text, case studies, testimonials)~~ | ✅ **Completed** |
 | Smart Suggestions | Recommend services based on client industry or project type | Low |
 
 ---
@@ -102,7 +102,7 @@ Allow users to quickly populate proposal sections using pre-defined templates. T
 | Dynamic Pricing | Formulas based on quantities (e.g., "Price per video × number of videos") | Medium |
 | Package Builder | Bundle services into tiered packages (Basic/Standard/Premium) | High |
 | Questionnaire Mode | Send clients a form to auto-populate the proposal | Medium |
-| Duplicate/Clone | Copy existing proposals as starting points | High |
+| ~~Duplicate/Clone~~ | ~~Copy existing proposals as starting points~~ | ✅ **Completed** |
 
 ---
 
@@ -122,6 +122,8 @@ Allow users to quickly populate proposal sections using pre-defined templates. T
 
 | Feature | Completion Date |
 |---------|-----------------|
+| **Duplicate/Clone Proposal** | 2026-01-28 |
+| **Content Library** | 2026-01-28 |
 | Manual Page Breaks | 2026-01-26 |
 | Rate Card Section | 2026-01-26 |
 | Section Visibility Toggle | 2026-01-26 |

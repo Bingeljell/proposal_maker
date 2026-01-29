@@ -42,7 +42,7 @@ function App() {
             return (
               <div className="text-center py-20">
                 <p className="text-gray-500 text-lg">
-                  Form for <span className="font-semibold text-gray-800 capitalize">{activeSection.replace('-', ' ')}</span> is under construction.
+                  Form for <span className="font-semibold text-gray-800 capitalize">{(activeSection as string).replace('-', ' ')}</span> is under construction.
                 </p>
               </div>
             );

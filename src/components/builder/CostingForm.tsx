@@ -1,14 +1,15 @@
 import React from 'react';
 import { useProposal } from '../../hooks/useProposal';
 import { Plus, Trash2, IndianRupee } from 'lucide-react';
+import { PageBreakTargetType } from '../../types';
 
 export const CostingForm: React.FC = () => {
   const { proposal, updateSection, updateProposal } = useProposal();
 
-  const hasPageBreak = (targetType: string, targetId: string) =>
+  const hasPageBreak = (targetType: PageBreakTargetType, targetId: string) =>
     proposal.pageBreaks?.some((b) => b.targetType === targetType && b.targetId === targetId);
 
-  const togglePageBreak = (targetType: string, targetId: string) => {
+  const togglePageBreak = (targetType: PageBreakTargetType, targetId: string) => {
     const pageBreaks = proposal.pageBreaks || [];
     const existing = pageBreaks.find((b) => b.targetType === targetType && b.targetId === targetId);
     const updated = existing
