@@ -29,6 +29,9 @@ export const ProposalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         if (!migrated.pageBreaks) {
           migrated.pageBreaks = [];
         }
+        if (!migrated.meta.proposalName) {
+          migrated.meta.proposalName = '';
+        }
         return migrated;
       }
       return initialProposal;
@@ -62,6 +65,9 @@ export const ProposalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         if (!migrated.pageBreaks) {
           migrated.pageBreaks = [];
         }
+        if (!migrated.meta.proposalName) {
+          migrated.meta.proposalName = '';
+        }
         setProposal(migrated);
       } catch (err) {
         console.error('Failed to parse proposal file', err);
@@ -76,7 +82,8 @@ export const ProposalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     const blob = new Blob([dataStr], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
-    link.download = `${proposal.meta.clientName.replace(/\s+/g, '_')}_proposal.json`;
+    const fileName = proposal.meta.proposalName.trim() || proposal.meta.title;
+    link.download = `${fileName.replace(/\s+/g, '_')}.json`;
     link.href = url;
     link.click();
     URL.revokeObjectURL(url);

@@ -1,5 +1,12 @@
 2026-01-28
 
+- Fixed: Added missing `break-before-page` class to `ScopeOfWork` component in `ProposalSections.tsx` to ensure it starts on a new page when printing to PDF.
+- Changed: Added `proposalName` field to `ProposalMeta` type for separate file naming (independent of proposal title).
+- Changed: Updated `saveToFile()` in ProposalContext to use `proposalName` if provided, otherwise falls back to `title`.
+- Changed: Updated `document.title` in `Layout.tsx` to use `proposalName` for default PDF filename when printing.
+- Changed: Added Proposal File Name input field in `IntroForm.tsx` with help text explaining its purpose.
+- Changed: Updated header in `Layout.tsx` to display `proposalName` when available.
+- Changed: Added migration logic for `proposalName` field in ProposalContext for backward compatibility.
 - Added: Implemented **Questionnaire Mode** with interactive questionnaire (`QuestionnaireModal.tsx`) that recommends packages based on client responses.
 - Added: Created default questionnaire (`defaultQuestionnaire.json`) with budget, timeline, and services questions.
 - Added: Smart package recommendation algorithm based on budget and project goals.

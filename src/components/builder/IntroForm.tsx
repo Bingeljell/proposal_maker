@@ -32,6 +32,24 @@ export const IntroForm: React.FC = () => {
         <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Project Details</h3>
         <div className="grid grid-cols-1 gap-6">
           <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              Proposal File Name
+              <span className="text-xs font-normal text-gray-500 dark:text-gray-400 ml-2">(used when saving)</span>
+            </label>
+            <input
+              type="text"
+              name="proposalName"
+              value={proposal.meta.proposalName}
+              onChange={handleChange}
+              className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border"
+              placeholder="e.g. Acme_Q1_Social_Campaign_v2"
+            />
+            <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+              Leave empty to use the Proposal Title as filename
+            </p>
+          </div>
+
+          <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Proposal Title</label>
             <input
               type="text"

@@ -33,6 +33,7 @@ export interface ProposalMeta {
   clientName: string;
   date: string;
   logo: string | null; // Base64 string
+  proposalName: string; // For file naming, separate from title
 }
 
 export interface VersionHistoryItem {

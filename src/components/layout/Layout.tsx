@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useProposal } from '../../hooks/useProposal';
 import { useDarkMode } from '../../hooks/useDarkMode';
 import { Sidebar } from './Sidebar';
@@ -15,6 +15,12 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const { isDarkMode, toggle } = useDarkMode();
   const [activeSection, setActiveSection] = useState<SectionId>('intro');
   const [viewMode, setViewMode] = useState<'edit' | 'preview'>('edit');
+
+  // Update document title for PDF printing (browser uses this as default filename)
+  useEffect(() => {
+    const fileName = proposal.meta.proposalName.trim() || proposal.meta.title;
+    document.title = fileName ? `${fileName} - Proposal` : 'Proposal Builder';
+  }, [proposal.meta.proposalName, proposal.meta.title]);
 
   const handlePrint = () => {
     window.print();
@@ -37,8 +43,8 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
           <div className="flex items-center gap-4">
             <div>
               <h1 className="text-sm font-bold text-gray-900 dark:text-gray-100 uppercase tracking-wider">Proposal Builder</h1>
-              <p className="text-xs text-gray-500 dark:text-gray-400 font-medium truncate max-w-[200px]">
-                {proposal.meta.clientName} / {proposal.meta.title}
+              <p className="text-xs text-gray-500 dark:text-gray-400 font-medium truncate max-w-[250px]" title={proposal.meta.proposalName || proposal.meta.title}>
+                {proposal.meta.clientName} / {proposal.meta.proposalName || proposal.meta.title}
               </p>
             </div>
           </div>

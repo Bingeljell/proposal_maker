@@ -116,7 +116,7 @@ export const ExecutiveSummary: React.FC<{ proposal: Proposal; index: number }> =
 );
 
 export const ScopeOfWork: React.FC<{ proposal: Proposal; index: number }> = ({ proposal, index }) => (
-  <div className="mb-12 pt-4 border-t-4 border-gray-100 border-dotted print:border-0">
+  <div className="mb-12 pt-4 border-t-4 border-gray-100 border-dotted break-before-page print:border-0">
     <SectionHeading title="Scope of Work" number={index} />
     <div className="space-y-8">
       {proposal.scope.map((section) => (

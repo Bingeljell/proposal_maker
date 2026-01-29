@@ -7,6 +7,7 @@ export const initialProposal: Proposal = {
     clientName: 'Acme Corp',
     date: new Date().toISOString().split('T')[0],
     logo: null,
+    proposalName: '', // Will default to title if empty
   },
   sectionVisibility: {
     'intro': true,
