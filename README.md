@@ -1,4 +1,6 @@
-# Proposal Maker
+# The Decent Proposal
+
+> "Because Demi Moore won't win you the business"
 
 A lightweight, client-side web application for creating professional, branded proposals for advertising and creative services. Built with React and Tailwind CSS.
 

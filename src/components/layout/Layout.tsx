@@ -19,7 +19,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   // Update document title for PDF printing (browser uses this as default filename)
   useEffect(() => {
     const fileName = proposal.meta.proposalName.trim() || proposal.meta.title;
-    document.title = fileName ? `${fileName} - Proposal` : 'Proposal Builder';
+    document.title = fileName ? `${fileName} - Proposal` : 'The Decent Proposal';
   }, [proposal.meta.proposalName, proposal.meta.title]);
 
   const handlePrint = () => {
@@ -42,7 +42,10 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         <header className="print:hidden h-16 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-6 flex-shrink-0 z-10 relative">
           <div className="flex items-center gap-4">
             <div>
-              <h1 className="text-sm font-bold text-gray-900 dark:text-gray-100 uppercase tracking-wider">Proposal Builder</h1>
+              <div className="flex items-center gap-2">
+                <h1 className="text-sm font-bold text-gray-900 dark:text-gray-100 uppercase tracking-wider">The Decent Proposal</h1>
+                <span className="text-[10px] bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded text-gray-500 italic">"Because Demi Moore won't win you the business"</span>
+              </div>
               <p className="text-xs text-gray-500 dark:text-gray-400 font-medium truncate max-w-[250px]" title={proposal.meta.proposalName || proposal.meta.title}>
                 {proposal.meta.clientName} / {proposal.meta.proposalName || proposal.meta.title}
               </p>
