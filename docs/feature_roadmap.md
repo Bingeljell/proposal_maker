@@ -46,7 +46,7 @@ Allow users to quickly populate proposal sections using pre-defined templates. T
 | Feature | Description | Priority | Status |
 |---------|-------------|----------|--------|
 | ~~Dark Mode~~ | ~~Toggle between light and dark themes for the builder~~ | ✅ | **Completed 2026-01-28** |
-| Theme Presets | Multiple visual styles (Modern, Classic, Minimal, Bold) | Medium | Client-side |
+| ~~Theme Presets~~ | ~~Multiple visual styles (Modern, Classic, Minimal, Bold)~~ | ⏸️ | **Deferred - see note below** |
 | Cover Page Designer | Visual editor for the intro page | Medium | Client-side |
 | Multi-brand Support | Switch between different agency brands | Low | Client-side |
 | Custom CSS | Advanced users can add their own styles | Low | Client-side |
@@ -136,3 +136,28 @@ Features marked **"Client-side"** can be implemented immediately without any bac
 Features marked **"⚠️ Requires backend"** will be deferred until backend infrastructure is available.
 
 **Current Focus:** Load from Template (High Priority, Client-side ✅)
+
+---
+
+## Deferred Features
+
+### Theme Presets (Deferred)
+**Status:** Partially implemented but removed from UI  
+**Reason:** The feature required extensive refactoring of ProposalSections.tsx to use CSS variables instead of hardcoded Tailwind classes. The implementation complexity outweighed the immediate value.  
+**Path forward:** Revisit when doing a comprehensive UI theming overhaul.
+
+### Backend-Required Features (Pending Discussion)
+The following features require backend infrastructure and need to be discussed:
+
+| Feature | Why Backend Needed |
+|---------|-------------------|
+| **Shareable Preview Links** | Need server to host and serve proposals at unique URLs |
+| **Proposal Analytics** | Need to track views, time spent - requires server-side logging |
+| **CRM Integration** | API calls to HubSpot/Salesforce need secure credentials storage |
+| **Cloud Sync** | OAuth + file storage (Google Drive/Dropbox) |
+| **E-signature Integration** | DocuSign/HelloSign webhooks and API |
+
+**Discussion needed:** Do we want to:
+1. Keep the app purely client-side (simple, no hosting costs)?
+2. Add a lightweight backend for specific features?
+3. Use serverless functions for specific APIs?

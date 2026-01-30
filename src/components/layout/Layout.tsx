@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useProposal } from '../../hooks/useProposal';
 import { useDarkMode } from '../../hooks/useDarkMode';
-import { useTheme } from '../../hooks/useTheme';
-import { ThemeSelector } from '../ui/ThemeSelector';
 import { StatusBadge } from '../ui/StatusBadge';
 import { StatusWorkflow } from '../ui/StatusWorkflow';
 import { Sidebar } from './Sidebar';
@@ -17,7 +15,6 @@ interface LayoutProps {
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const { proposal, saveToFile, loadFromFile, resetProposal, updateStatus } = useProposal();
   const { isDarkMode, toggle } = useDarkMode();
-  const { currentTheme, setTheme } = useTheme();
   const [activeSection, setActiveSection] = useState<SectionId>('intro');
   const [viewMode, setViewMode] = useState<'edit' | 'preview'>('edit');
   const [isWorkflowOpen, setIsWorkflowOpen] = useState(false);
@@ -67,13 +64,6 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
           </div>
 
           <div className="flex items-center gap-2">
-            {/* Theme Selector - Show in preview mode */}
-            {viewMode === 'preview' && (
-              <div className="mr-2">
-                <ThemeSelector currentTheme={currentTheme} onThemeChange={setTheme} />
-              </div>
-            )}
-
             {/* Dark Mode Toggle */}
             <button
               onClick={toggle}

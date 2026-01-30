@@ -7,7 +7,7 @@ import { useTheme } from '../../hooks/useTheme';
 
 // --- Helper Components ---
 
-const PageContainer: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = '' }) => (
+const PageContainer: React.FC<{ children: React.ReactNode; className?: string }> = ({ children }) => (
   <div className="bg-white w-full max-w-[210mm] mx-auto min-h-[297mm] p-[15mm] mb-8 shadow-lg print:shadow-none print:mb-0 print:w-full print:max-w-none print:h-auto print:min-h-0 relative">
     <div className="theme-preview" style={{ fontFamily: 'var(--theme-font-body, system-ui)' }}>
       {children}
@@ -227,7 +227,6 @@ export const VersionHistory: React.FC<{ proposal: Proposal; index: number }> = (
 );
 
 export const ExecutiveSummary: React.FC<{ proposal: Proposal; index: number }> = ({ proposal, index }) => {
-  const { themeSettings } = useTheme();
   
   return (
     <div className="mb-12 break-before-page">
@@ -263,7 +262,6 @@ export const ExecutiveSummary: React.FC<{ proposal: Proposal; index: number }> =
 };
 
 export const ScopeOfWork: React.FC<{ proposal: Proposal; index: number }> = ({ proposal, index }) => {
-  const { themeSettings } = useTheme();
   
   return (
     <div className="mb-12 pt-4 border-t-4 border-dotted break-before-page print:border-0" style={{ borderColor: 'var(--theme-border, #F3F4F6)' }}>
@@ -355,7 +353,6 @@ export const OutOfScope: React.FC<{ proposal: Proposal; index: number }> = ({ pr
 
 export const Team: React.FC<{ proposal: Proposal; index: number }> = ({ proposal, index }) => {
   const totalFTE = proposal.team.reduce((acc, member) => acc + member.allocation, 0) / 100;
-  const { themeSettings } = useTheme();
 
   return (
     <div className="mb-12 pt-4 border-t-4 border-dotted break-before-page print:border-0" style={{ borderColor: 'var(--theme-border, #F3F4F6)' }}>

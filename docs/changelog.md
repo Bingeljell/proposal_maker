@@ -2,6 +2,13 @@
 
 ## 2026-01-30
 
+### Changes: Theme Presets Removed
+
+- **Removed:** Theme Presets feature from UI (`ThemeSelector` removed from `Layout.tsx`)
+  - Reason: Feature was partially implemented but didn't affect preview output
+  - CSS variable system remains in codebase for future theming overhaul
+  - Added deferred status note in `feature_roadmap.md`
+
 ### Major Feature Release - 7 New Client-Side Features
 
 **Summary:** Implemented all high and medium priority client-side features from the roadmap.

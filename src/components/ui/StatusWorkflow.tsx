@@ -129,22 +129,20 @@ export const StatusWorkflow: React.FC<StatusWorkflowProps> = ({
             {workflowSteps.map((step, index) => {
               const isCompleted = index < currentStepIndex;
               const isCurrent = index === currentStepIndex;
-              const isPending = index > currentStepIndex;
               const timestamp = getTimestampForStatus(step.id);
 
               return (
                 <div
                   key={step.id}
-                  onClick={() => !isPending && handleStepClick(step.id)}
+                  onClick={() => handleStepClick(step.id)}
                   className={`
-                    relative flex items-start gap-4 p-4 rounded-lg border-2 transition-all duration-200
+                    relative flex items-start gap-4 p-4 rounded-lg border-2 transition-all duration-200 cursor-pointer hover:shadow-md
                     ${isCurrent
                       ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
                       : isCompleted
                       ? 'border-green-500 bg-green-50/50 dark:bg-green-900/10'
-                      : 'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50'
+                      : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-blue-300 dark:hover:border-blue-700'
                     }
-                    ${!isPending ? 'cursor-pointer hover:shadow-md' : 'cursor-not-allowed opacity-60'}
                   `}
                 >
                   {/* Icon */}
