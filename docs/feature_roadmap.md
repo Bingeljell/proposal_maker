@@ -37,8 +37,7 @@ Allow users to quickly populate proposal sections using pre-defined templates. T
 |---------|-------------|----------|
 | ~~AI Writing Assistant~~ | ~~Auto-generate scope descriptions, executive summaries, or rewrite content for different tones~~ | ✅ **Completed 2026-01-30** |
 | Grammar/Spell Check | Integrated proofreading throughout the proposal | Low |
-| ~~Content Library~~ | ~~Save reusable snippets (boilerplate text, case studies, testimonials)~~ | ✅ **Completed** |
-| Smart Suggestions | Recommend services based on client industry or project type | Low |
+| ~~Smart Suggestions~~ | ~~Recommend services based on client industry or project type~~ | ✅ **Completed 2026-01-30** |
 
 ---
 
@@ -90,7 +89,7 @@ Allow users to quickly populate proposal sections using pre-defined templates. T
 
 | Feature | Description | Priority |
 |---------|-------------|----------|
-| Multiple Export Formats | Word, PowerPoint, Excel (for costing) | Medium |
+| ~~Multiple Export Formats~~ | ~~Word (.docx)~~ | ✅ **Completed 2026-01-30** |
 | Email Templates | Pre-written emails to send with proposals | Low |
 | Password Protection | Secure sensitive proposals | Low |
 | QR Code Generation | For easy mobile access | Low |
@@ -124,6 +123,9 @@ Allow users to quickly populate proposal sections using pre-defined templates. T
 
 | Feature | Completion Date |
 |---------|-----------------|
+| **Export to Word (.docx)** | 2026-01-30 |
+| **Smart Suggestions** | 2026-01-30 |
+| **Advanced Cover Patterns** | 2026-01-30 |
 | **Currency Support** | 2026-01-30 |
 | **Dynamic Pricing** | 2026-01-30 |
 | **Cover Page Designer** | 2026-01-30 |

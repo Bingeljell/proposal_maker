@@ -1,5 +1,9 @@
 2026-01-30
 
+- Added: **Advanced Cover Patterns** (`src/data/patterns.ts`) allowing users to apply CSS-based patterns (Dots, Grid, Lines, Waves) to the simple cover layout.
+- Added: **Smart Suggestions** for Scope of Work. Typing in a deliverable field now triggers an autocomplete dropdown powered by `src/data/smartSuggestions.ts`, categorizing deliverables by service type (Social, Video, Web, SEO).
+- Added: **Export to Word (.docx)** feature. Implemented `generateDocx` utility using `docx` library to create editable proposal documents matching the JSON structure.
+- Changed: Renamed application to **"The Decent Proposal"** with new tagline.
 - Added: **Currency Support** with global selector (INR, USD, EUR, GBP, AUD, CAD, SGD) that updates all financial values and formatting across the proposal.
 - Added: **Dynamic Pricing** features in Commercials section, including per-item Discounts (%), Tax Rates (%), and Optional item toggles (excluded from total).
 - Added: **Cover Page Designer** with 4 layout options (Simple, Split, Full, Minimal) and support for custom background images.
