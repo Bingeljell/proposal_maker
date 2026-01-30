@@ -193,6 +193,16 @@
   - CSS variable system remains in codebase for future theming overhaul
   - Added deferred status note in `feature_roadmap.md`
 
+### React Router Implementation
+
+- **Added:** `react-router-dom` for proper client-side routing
+- **Routes configured:**
+  - `/` - Landing page
+  - `/app` - Proposal builder app
+  - `/app/:section` - Builder with specific section (prepared for future use)
+- **Updated:** Landing page now uses `useNavigate` hook instead of prop callback
+- **Removed:** `onEnterApp` prop from LandingPage component
+
 ### Branding & Landing Page
 
 - **Added:** New landing page (`src/components/landing/LandingPage.tsx`) with:

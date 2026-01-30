@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   FileText, 
   Zap, 
@@ -13,10 +14,6 @@ import {
   Users,
   Layers
 } from 'lucide-react';
-
-interface LandingPageProps {
-  onEnterApp: () => void;
-}
 
 const features = [
   {
@@ -60,8 +57,11 @@ const capabilities = [
   { icon: <CheckCircle className="w-5 h-5" />, text: 'Terms, Sign-offs & Approvals' }
 ];
 
-export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
+export const LandingPage: React.FC = () => {
+  const navigate = useNavigate();
   const [isHovering, setIsHovering] = useState(false);
+  
+  const onEnterApp = () => navigate('/app');
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
@@ -78,7 +78,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
           </div>
           <button
             onClick={onEnterApp}
-            className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors flex items-center gap-2"
+            className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors flex items-center gap-2 cursor-pointer"
           >
             Launch App
             <ArrowRight className="w-4 h-4" />

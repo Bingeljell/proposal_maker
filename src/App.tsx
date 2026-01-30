@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from './components/layout/Layout';
 import { LandingPage } from './components/landing/LandingPage';
 import { IntroForm } from './components/builder/IntroForm';
@@ -12,18 +12,13 @@ import { OutOfScopeForm } from './components/builder/OutOfScopeForm';
 import { TeamForm } from './components/builder/TeamForm';
 import { TermsForm } from './components/builder/TermsForm';
 import { SignOffForm } from './components/builder/SignOffForm';
+import type { SectionId } from './types';
 
-function App() {
-  const [showApp, setShowApp] = useState(false);
-
-  // Show landing page initially
-  if (!showApp) {
-    return <LandingPage onEnterApp={() => setShowApp(true)} />;
-  }
-
+// Wrapper component to handle section routing within the app
+function AppContent() {
   return (
     <Layout>
-      {(activeSection) => {
+      {(activeSection: SectionId) => {
         switch (activeSection) {
           case 'intro':
             return <IntroForm />;
@@ -58,6 +53,27 @@ function App() {
         }
       }}
     </Layout>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* Landing Page */}
+        <Route path="/" element={<LandingPage />} />
+        
+        {/* App Routes */}
+        <Route path="/app" element={<AppContent />} />
+        <Route path="/app/:section" element={<AppContent />} />
+        
+        {/* Future: Shared Proposal View */}
+        {/* <Route path="/view/:id" element={<SharedProposalView />} /> */}
+        
+        {/* Redirect unknown routes to landing */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
