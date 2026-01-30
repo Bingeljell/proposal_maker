@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { Proposal, PackageTemplate } from '../types';
+import { Proposal, PackageTemplate, ProposalTemplate } from '../types';
 import { initialProposal } from '../data/initialProposal';
 
 interface ProposalContextType {
@@ -11,6 +11,7 @@ interface ProposalContextType {
   resetProposal: () => void;
   duplicateProposal: () => void;
   applyPackage: (pkg: PackageTemplate) => void;
+  loadTemplate: (template: ProposalTemplate) => void;
 }
 
 const ProposalContext = createContext<ProposalContextType | undefined>(undefined);
@@ -31,6 +32,9 @@ export const ProposalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         }
         if (!migrated.meta.proposalName) {
           migrated.meta.proposalName = '';
+        }
+        if (!migrated.meta.theme) {
+          migrated.meta.theme = initialProposal.meta.theme;
         }
         return migrated;
       }
@@ -67,6 +71,9 @@ export const ProposalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         }
         if (!migrated.meta.proposalName) {
           migrated.meta.proposalName = '';
+        }
+        if (!migrated.meta.theme) {
+          migrated.meta.theme = initialProposal.meta.theme;
         }
         setProposal(migrated);
       } catch (err) {
@@ -147,6 +154,32 @@ export const ProposalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     });
   };
 
+  const loadTemplate = (template: ProposalTemplate) => {
+    if (confirm(`Are you sure you want to load the "${template.name}" template? This will overwrite your current proposal.`)) {
+      const newProposal: Proposal = {
+        ...initialProposal,
+        ...template.data,
+        id: crypto.randomUUID(),
+        meta: {
+          ...initialProposal.meta,
+          title: template.name,
+          date: new Date().toISOString().split('T')[0],
+          proposalName: '',
+        },
+        versionHistory: [
+          {
+            id: crypto.randomUUID(),
+            version: '1.0',
+            date: new Date().toISOString().split('T')[0],
+            author: 'Agency Team',
+            notes: `Initialized from ${template.name} template`,
+          },
+        ],
+      };
+      setProposal(newProposal);
+    }
+  };
+
   return (
     <ProposalContext.Provider
       value={{
@@ -158,6 +191,7 @@ export const ProposalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         resetProposal,
         duplicateProposal,
         applyPackage,
+        loadTemplate,
       }}
     >
       {children}

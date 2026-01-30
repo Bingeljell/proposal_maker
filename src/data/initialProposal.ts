@@ -8,6 +8,13 @@ export const initialProposal: Proposal = {
     date: new Date().toISOString().split('T')[0],
     logo: null,
     proposalName: '', // Will default to title if empty
+    theme: {
+      id: 'modern',
+      name: 'Modern Blue',
+      primaryColor: '#2563eb', // blue-600
+      headingFont: 'Inter, sans-serif',
+      bodyFont: 'Inter, sans-serif',
+    },
   },
   sectionVisibility: {
     'intro': true,

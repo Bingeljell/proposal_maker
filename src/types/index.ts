@@ -34,6 +34,15 @@ export interface ProposalMeta {
   date: string;
   logo: string | null; // Base64 string
   proposalName: string; // For file naming, separate from title
+  theme: ThemeConfig;
+}
+
+export interface ThemeConfig {
+  id: string;
+  name: string;
+  primaryColor: string;
+  headingFont: string;
+  bodyFont: string;
 }
 
 export interface VersionHistoryItem {
@@ -163,4 +172,12 @@ export interface Questionnaire {
   description: string;
   questions: QuestionnaireQuestion[];
   recommendedPackage?: string; // PackageTemplate ID
+}
+
+export interface ProposalTemplate {
+  id: string;
+  name: string;
+  description: string;
+  category: 'Creative' | 'Technical' | 'Business' | 'Other';
+  data: Omit<Proposal, 'id' | 'meta' | 'versionHistory'>;
 }

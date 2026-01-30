@@ -1,6 +1,7 @@
 import React from 'react';
 import { useProposal } from '../../hooks/useProposal';
 import { SectionId } from '../../types';
+import { predefinedThemes } from '../../data/themes';
 import {
   CoverPage,
   VersionHistory,
@@ -37,8 +38,47 @@ export const Preview: React.FC = () => {
   // Filter visible sections
   const visibleSections = contentSections.filter(section => visibility[section.id] !== false);
 
+  const theme = proposal.meta.theme || predefinedThemes[0];
+
   return (
-    <div className="print:m-0 print:p-0">
+    <div className="print:m-0 print:p-0 proposal-preview-theme">
+      {/* Dynamic Theme Styles */}
+      <style>{`
+        .proposal-preview-theme {
+          --color-primary: ${theme.primaryColor};
+          --color-primary-light: ${theme.primaryColor}15; /* ~10% opacity */
+          --font-heading: ${theme.headingFont};
+          --font-body: ${theme.bodyFont};
+        }
+        
+        /* Font Application */
+        .proposal-preview-theme, 
+        .proposal-preview-theme .prose {
+          font-family: var(--font-body) !important;
+        }
+        
+        .proposal-preview-theme h1, 
+        .proposal-preview-theme h2, 
+        .proposal-preview-theme h3, 
+        .proposal-preview-theme h4,
+        .proposal-preview-theme th {
+          font-family: var(--font-heading) !important;
+        }
+
+        /* Color Overrides - Targeting specific utility classes used in sub-components */
+        .proposal-preview-theme .text-blue-600 { color: var(--color-primary) !important; }
+        .proposal-preview-theme .text-blue-700 { color: var(--color-primary) !important; }
+        .proposal-preview-theme .bg-blue-500 { background-color: var(--color-primary) !important; }
+        .proposal-preview-theme .bg-blue-50 { background-color: var(--color-primary-light) !important; }
+        .proposal-preview-theme .border-blue-500 { border-color: var(--color-primary) !important; }
+        .proposal-preview-theme .border-blue-100 { border-color: var(--color-primary-light) !important; }
+        
+        /* Branding Enforcement */
+        .proposal-preview-theme h2 { color: var(--color-primary) !important; }
+        .proposal-preview-theme .border-gray-900 { border-color: var(--color-primary) !important; }
+        .proposal-preview-theme .text-gray-900.font-extrabold { color: var(--color-primary) !important; } /* Cover Title */
+      `}</style>
+
       {/* 1. Cover Page */}
       {(visibility['intro'] !== false) && (
         <div className="print:break-after-page mb-8 print:mb-0">

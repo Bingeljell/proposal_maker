@@ -8,6 +8,8 @@ This document outlines planned features and enhancements for Proposal Maker.
 
 ### 1. Load from Template
 
+> **✅ Completed 2026-01-30**
+
 **Description:**
 Allow users to quickly populate proposal sections using pre-defined templates. This will significantly speed up proposal creation by providing common configurations for scope of work, rate cards, team structures, and more.
 
@@ -33,7 +35,7 @@ Allow users to quickly populate proposal sections using pre-defined templates. T
 
 | Feature | Description | Priority |
 |---------|-------------|----------|
-| AI Writing Assistant | Auto-generate scope descriptions, executive summaries, or rewrite content for different tones | Medium |
+| ~~AI Writing Assistant~~ | ~~Auto-generate scope descriptions, executive summaries, or rewrite content for different tones~~ | ✅ **Completed 2026-01-30** |
 | Grammar/Spell Check | Integrated proofreading throughout the proposal | Low |
 | ~~Content Library~~ | ~~Save reusable snippets (boilerplate text, case studies, testimonials)~~ | ✅ **Completed** |
 | Smart Suggestions | Recommend services based on client industry or project type | Low |
@@ -44,7 +46,7 @@ Allow users to quickly populate proposal sections using pre-defined templates. T
 
 | Feature | Description | Priority |
 |---------|-------------|----------|
-| Theme Presets | Multiple visual styles (Modern, Classic, Minimal, Bold) | Medium |
+| ~~Theme Presets~~ | ~~Multiple visual styles (Modern, Classic, Minimal, Bold)~~ | ✅ **Completed 2026-01-30** |
 | Custom CSS | Advanced users can add their own styles | Low |
 | Multi-brand Support | Switch between different agency brands | Low |
 | Cover Page Designer | Visual editor for the intro page | Medium |
@@ -122,6 +124,9 @@ Allow users to quickly populate proposal sections using pre-defined templates. T
 
 | Feature | Completion Date |
 |---------|-----------------|
+| **AI Writing Assistant** | 2026-01-30 |
+| **Theme Presets** | 2026-01-30 |
+| **Load from Template** | 2026-01-30 |
 | **Duplicate/Clone Proposal** | 2026-01-28 |
 | **Content Library** | 2026-01-28 |
 | Manual Page Breaks | 2026-01-26 |

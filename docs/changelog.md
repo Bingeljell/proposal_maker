@@ -1,5 +1,15 @@
 2026-01-30
 
+- Added: **AI Writing Assistant** integration in Rich Text Editor. Users can configure their own Google Gemini API Key (`Settings` in sidebar) and generate content (`Sparkles` icon in editor) directly within the app.
+- Added: **Theme Presets** feature (`src/data/themes.ts`, `ThemeSelector.tsx`). Users can now choose from 5 visual themes (Modern, Classic, Bold, Creative, Forest) which dynamically update fonts and colors in the Preview.
+- Added: **Load from Template** functionality. Added `src/data/templates.ts` with 3 full proposal templates (Video Production, Website Dev, Social Retainer) and a new `TemplateModal` to browse and apply them.
+- Added: `ProposalTemplate`, `ThemeConfig` types and updated `ProposalMeta` to include theme settings.
+- Added: Migration logic in `ProposalContext` to ensure old proposals are compatible with new theme features.
+- Added: `marked` dependency for rendering AI-generated Markdown.
+- Added: Google Fonts imports in `index.html` to support new theme typography.
+- Changed: Updated `Sidebar.tsx` to include "Load Template" and "Settings" buttons.
+- Changed: Updated `Preview.tsx` to inject dynamic CSS variables based on the selected theme.
+
 - Added: Project handover to Gemini CLI agent.
 
 2026-01-28

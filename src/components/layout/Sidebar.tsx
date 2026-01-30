@@ -16,14 +16,17 @@ import {
   Copy,
   BookOpen,
   Package,
-  ClipboardList
+  ClipboardList,
+  Settings
 } from 'lucide-react';
-import { SectionId, PackageTemplate } from '../../types';
+import { SectionId, PackageTemplate, ProposalTemplate } from '../../types';
 import { useProposal } from '../../hooks/useProposal';
 import { useProposalContext } from '../../context/ProposalContext';
 import { ContentLibraryManager } from '../ui/ContentLibraryManager';
 import { PackageSelector } from '../ui/PackageSelector';
 import { QuestionnaireModal } from '../ui/QuestionnaireModal';
+import { TemplateModal } from '../ui/TemplateModal';
+import { AISettingsModal } from '../ui/AISettingsModal';
 
 interface SidebarProps {
   activeSection: SectionId;
@@ -46,10 +49,12 @@ const sections: { id: SectionId; label: string; icon: React.ElementType }[] = [
 
 export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange }) => {
   const { proposal, updateProposal } = useProposal();
-  const { duplicateProposal, applyPackage } = useProposalContext();
+  const { duplicateProposal, applyPackage, loadTemplate } = useProposalContext();
   const [isLibraryManagerOpen, setIsLibraryManagerOpen] = useState(false);
   const [isPackageSelectorOpen, setIsPackageSelectorOpen] = useState(false);
   const [isQuestionnaireOpen, setIsQuestionnaireOpen] = useState(false);
+  const [isTemplateModalOpen, setIsTemplateModalOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   const toggleVisibility = (e: React.MouseEvent, sectionId: SectionId) => {
     e.stopPropagation(); // Prevent navigating when clicking the eye
@@ -124,6 +129,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
           Content Library
         </button>
         <button
+          onClick={() => setIsTemplateModalOpen(true)}
+          className="flex items-center gap-2 w-full px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md transition-colors"
+          title="Load a full proposal template"
+        >
+          <LayoutTemplate size={16} />
+          Load Template
+        </button>
+        <button
           onClick={() => setIsPackageSelectorOpen(true)}
           className="flex items-center gap-2 w-full px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md transition-colors"
           title="Apply a pre-defined package"
@@ -138,6 +151,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
         >
           <ClipboardList size={16} />
           Questionnaire
+        </button>
+        <button
+          onClick={() => setIsSettingsOpen(true)}
+          className="flex items-center gap-2 w-full px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md transition-colors mt-4 border-t border-gray-200 dark:border-gray-600 pt-2"
+          title="Configure API Keys and Settings"
+        >
+          <Settings size={16} />
+          Settings
         </button>
       </div>
 
@@ -165,6 +186,21 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
           applyPackage(pkg);
           alert(`Package "${pkg.name}" has been applied based on your responses!`);
         }}
+      />
+
+      {/* Template Modal */}
+      <TemplateModal
+        isOpen={isTemplateModalOpen}
+        onClose={() => setIsTemplateModalOpen(false)}
+        onLoadTemplate={(template: ProposalTemplate) => {
+          loadTemplate(template);
+        }}
+      />
+
+      {/* Settings Modal */}
+      <AISettingsModal
+        isOpen={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
       />
     </div>
   );

@@ -1,6 +1,9 @@
 import React, { useRef } from 'react';
 import { useProposal } from '../../hooks/useProposal';
 import { Upload, X } from 'lucide-react';
+import { ThemeSelector } from '../ui/ThemeSelector';
+import { ThemeConfig } from '../../types';
+import { predefinedThemes } from '../../data/themes';
 
 export const IntroForm: React.FC = () => {
   const { proposal, updateSection } = useProposal();
@@ -24,6 +27,10 @@ export const IntroForm: React.FC = () => {
   const removeLogo = () => {
     updateSection('meta', { ...proposal.meta, logo: null });
     if (fileInputRef.current) fileInputRef.current.value = '';
+  };
+
+  const handleThemeChange = (theme: ThemeConfig) => {
+    updateSection('meta', { ...proposal.meta, theme });
   };
 
   return (
@@ -126,6 +133,13 @@ export const IntroForm: React.FC = () => {
             </p>
           </div>
         </div>
+      </div>
+
+      <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
+        <ThemeSelector 
+          currentTheme={proposal.meta.theme || predefinedThemes[0]} 
+          onThemeChange={handleThemeChange} 
+        />
       </div>
     </div>
   );
