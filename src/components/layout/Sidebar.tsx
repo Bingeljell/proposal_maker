@@ -18,11 +18,12 @@ import {
   Package,
   ClipboardList
 } from 'lucide-react';
-import { SectionId, PackageTemplate } from '../../types';
+import { SectionId, PackageTemplate, ProposalTemplate } from '../../types';
 import { useProposal } from '../../hooks/useProposal';
 import { useProposalContext } from '../../context/ProposalContext';
 import { ContentLibraryManager } from '../ui/ContentLibraryManager';
 import { PackageSelector } from '../ui/PackageSelector';
+import { TemplateSelector } from '../ui/TemplateSelector';
 import { QuestionnaireModal } from '../ui/QuestionnaireModal';
 
 interface SidebarProps {
@@ -46,9 +47,10 @@ const sections: { id: SectionId; label: string; icon: React.ElementType }[] = [
 
 export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange }) => {
   const { proposal, updateProposal } = useProposal();
-  const { duplicateProposal, applyPackage } = useProposalContext();
+  const { duplicateProposal, applyPackage, applyTemplate } = useProposalContext();
   const [isLibraryManagerOpen, setIsLibraryManagerOpen] = useState(false);
   const [isPackageSelectorOpen, setIsPackageSelectorOpen] = useState(false);
+  const [isTemplateSelectorOpen, setIsTemplateSelectorOpen] = useState(false);
   const [isQuestionnaireOpen, setIsQuestionnaireOpen] = useState(false);
 
   const toggleVisibility = (e: React.MouseEvent, sectionId: SectionId) => {
@@ -124,6 +126,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
           Content Library
         </button>
         <button
+          onClick={() => setIsTemplateSelectorOpen(true)}
+          className="flex items-center gap-2 w-full px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md transition-colors"
+          title="Load from proposal templates"
+        >
+          <LayoutTemplate size={16} />
+          Load Template
+        </button>
+        <button
           onClick={() => setIsPackageSelectorOpen(true)}
           className="flex items-center gap-2 w-full px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md transition-colors"
           title="Apply a pre-defined package"
@@ -145,6 +155,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
       <ContentLibraryManager
         isOpen={isLibraryManagerOpen}
         onClose={() => setIsLibraryManagerOpen(false)}
+      />
+
+      {/* Template Selector Modal */}
+      <TemplateSelector
+        isOpen={isTemplateSelectorOpen}
+        onClose={() => setIsTemplateSelectorOpen(false)}
+        onApplyTemplate={(template: ProposalTemplate, sections?: string[]) => {
+          applyTemplate(template, sections);
+          alert(`Template "${template.name}" has been applied to your proposal!`);
+        }}
+        currentProposal={proposal}
       />
 
       {/* Package Selector Modal */}

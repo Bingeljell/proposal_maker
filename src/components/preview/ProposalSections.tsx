@@ -1,22 +1,33 @@
 import React from 'react';
-import { Proposal, PageBreakTargetType } from '../../types';
-import { IndianRupee, Globe, MapPin } from 'lucide-react';
+import { Proposal, PageBreakTargetType, CostItem, CoverStyle } from '../../types';
+import { IndianRupee, Globe, MapPin, FunctionSquare } from 'lucide-react';
+import { calculateItemRate, extractFormulaVariables } from '../../utils/pricingEngine';
+import { CenteredLayout, LeftAlignedLayout, SplitLayout, MinimalLayout } from './coverLayouts';
+import { useTheme } from '../../hooks/useTheme';
 
 // --- Helper Components ---
 
 const PageContainer: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = '' }) => (
-  <div className={`bg-white w-full max-w-[210mm] mx-auto min-h-[297mm] p-[15mm] mb-8 shadow-lg print:shadow-none print:mb-0 print:w-full print:max-w-none print:h-auto print:min-h-0 ${className}`}>
-    {children}
+  <div className="bg-white w-full max-w-[210mm] mx-auto min-h-[297mm] p-[15mm] mb-8 shadow-lg print:shadow-none print:mb-0 print:w-full print:max-w-none print:h-auto print:min-h-0 relative">
+    <div className="theme-preview" style={{ fontFamily: 'var(--theme-font-body, system-ui)' }}>
+      {children}
+    </div>
   </div>
 );
 
-const TricolorLine: React.FC = () => (
-  <div className="flex flex-col h-1.5 w-full mb-6 mt-8 break-inside-avoid">
-    <div className="h-0.5 w-full bg-[#FF9933]"></div> {/* Saffron */}
-    <div className="h-0.5 w-full bg-white border-y border-gray-100"></div> {/* White */}
-    <div className="h-0.5 w-full bg-[#138808]"></div> {/* Green */}
-  </div>
-);
+const TricolorLine: React.FC = () => {
+  const { currentTheme } = useTheme();
+  // Hide tricolor line for minimal theme
+  if (currentTheme === 'minimal') return null;
+  
+  return (
+    <div className="flex flex-col h-1.5 w-full mb-6 mt-8 break-inside-avoid">
+      <div className="h-0.5 w-full bg-[#FF9933]"></div> {/* Saffron */}
+      <div className="h-0.5 w-full bg-white border-y border-gray-100"></div> {/* White */}
+      <div className="h-0.5 w-full bg-[#138808]"></div> {/* Green */}
+    </div>
+  );
+};
 
 const PageBreakMarker: React.FC = () => (
   <div className="page-break-marker" aria-hidden="true">
@@ -27,49 +38,167 @@ const PageBreakMarker: React.FC = () => (
 const hasBreakBefore = (proposal: Proposal, targetType: PageBreakTargetType, targetId: string) =>
   proposal.pageBreaks?.some((b) => b.targetType === targetType && b.targetId === targetId);
 
-const SectionHeading: React.FC<{ title: string; number?: number }> = ({ title, number }) => (
-  <div className="break-inside-avoid">
-    <TricolorLine />
-    <div className="border-b-2 border-gray-900 pb-2 mb-8">
-      <h2 className="text-2xl font-bold text-gray-900 uppercase tracking-wider flex items-baseline">
-        {number && <span className="text-gray-400 mr-3 text-lg font-light">{number < 10 ? `0${number}` : number}.</span>}
-        {title}
-      </h2>
+const SectionHeading: React.FC<{ title: string; number?: number }> = ({ title, number }) => {
+  const { themeSettings } = useTheme();
+  const headingStyle = themeSettings.headingStyle;
+  
+  return (
+    <div className="break-inside-avoid">
+      <TricolorLine />
+      <div 
+        className="border-b-2 pb-2 mb-8"
+        style={{ borderColor: 'var(--theme-text, #111827)' }}
+      >
+        <h2 
+          className="text-2xl font-bold flex items-baseline"
+          style={{ 
+            color: 'var(--theme-text, #111827)',
+            fontFamily: 'var(--theme-font-heading, system-ui)',
+            textTransform: headingStyle === 'uppercase' ? 'uppercase' : 'none',
+            letterSpacing: headingStyle === 'uppercase' ? '0.05em' : 'normal'
+          }}
+        >
+          {number && (
+            <span 
+              className="mr-3 text-lg font-light"
+              style={{ color: 'var(--theme-text-muted, #9CA3AF)' }}
+            >
+              {number < 10 ? `0${number}` : number}.
+            </span>
+          )}
+          {title}
+        </h2>
+      </div>
     </div>
-  </div>
-);
+  );
+};
+
+// --- Formula Breakdown Component ---
+
+const FormulaBreakdown: React.FC<{ item: CostItem; variables: Proposal['pricingVariables'] }> = ({ 
+  item, 
+  variables 
+}) => {
+  if (!item.useFormula || !item.formula) return null;
+
+  const usedVars = extractFormulaVariables(item.formula);
+  if (usedVars.length === 0) return null;
+
+  const getVariableValue = (key: string): number => {
+    return variables?.find((v) => v.key === key)?.value ?? 0;
+  };
+
+  const getVariableName = (key: string): string => {
+    return variables?.find((v) => v.key === key)?.name ?? key;
+  };
+
+  // Create a readable breakdown like "10 videos × ₹5,000"
+  const parts = usedVars.map((varKey) => {
+    const value = getVariableValue(varKey);
+    const name = getVariableName(varKey);
+    return { key: varKey, value, name };
+  });
+
+  // Extract base rate from formula (assuming pattern like "{var} * rate" or "{var} * rate + ...")
+  // This is a simple heuristic to show meaningful breakdown
+  const formula = item.formula;
+  const rateMatch = formula.match(/\*\s*(\d+)/);
+  const baseRate = rateMatch ? parseInt(rateMatch[1]) : null;
+
+  return (
+    <div className="mt-1 text-[10px] text-gray-400 flex items-center gap-1 flex-wrap">
+      <FunctionSquare size={10} className="text-purple-400" />
+      {parts.map((part, idx) => (
+        <React.Fragment key={part.key}>
+          <span className="bg-gray-100 px-1 py-0.5 rounded">
+            {part.value} {part.name.toLowerCase()}
+          </span>
+          {idx < parts.length - 1 && <span>+</span>}
+        </React.Fragment>
+      ))}
+      {baseRate && parts.length === 1 && (
+        <>
+          <span>×</span>
+          <span>₹{baseRate.toLocaleString('en-IN')}</span>
+        </>
+      )}
+    </div>
+  );
+};
 
 // --- Section Renderers ---
 
-export const CoverPage: React.FC<{ proposal: Proposal }> = ({ proposal }) => (
-  <PageContainer className="flex flex-col justify-between text-center">
-    <div>
-      <TricolorLine />
-      <div className="pt-20">
-        {proposal.meta.logo ? (
-          <img src={proposal.meta.logo} alt="Agency Logo" className="h-32 mx-auto object-contain mb-8" />
-        ) : (
-          <div className="h-32 flex items-center justify-center text-gray-300 font-bold text-xl uppercase tracking-widest">
-            Agency Logo
-          </div>
-        )}
-      </div>
-    </div>
+// Background pattern components
+const BackgroundPattern: React.FC<{ pattern: CoverStyle['backgroundPattern']; accentColor: string }> = ({ 
+  pattern, 
+  accentColor 
+}) => {
+  switch (pattern) {
+    case 'dots':
+      return (
+        <div 
+          className="absolute inset-0 opacity-30 pointer-events-none"
+          style={{
+            backgroundImage: `radial-gradient(circle, #d1d5db 1px, transparent 1px)`,
+            backgroundSize: '24px 24px',
+          }}
+        />
+      );
+    case 'lines':
+      return (
+        <div 
+          className="absolute inset-0 opacity-20 pointer-events-none"
+          style={{
+            backgroundImage: `repeating-linear-gradient(45deg, #e5e7eb 0, #e5e7eb 1px, transparent 0, transparent 50%)`,
+            backgroundSize: '24px 24px',
+          }}
+        />
+      );
+    case 'gradient':
+      return (
+        <div 
+          className="absolute inset-0 opacity-50 pointer-events-none"
+          style={{
+            background: `linear-gradient(135deg, #ffffff 0%, #f9fafb 50%, ${accentColor}08 100%)`,
+          }}
+        />
+      );
+    default:
+      return null;
+  }
+};
 
-    <div className="flex-1 flex flex-col justify-center">
-      <h1 className="text-5xl font-extrabold text-gray-900 mb-4 leading-tight">
-        {proposal.meta.title}
-      </h1>
-      <p className="text-xl text-gray-500 uppercase tracking-widest font-medium">
-        Prepared for {proposal.meta.clientName}
-      </p>
-    </div>
+export const CoverPage: React.FC<{ proposal: Proposal }> = ({ proposal }) => {
+  // Get cover style with defaults
+  const coverStyle: CoverStyle = proposal.meta.coverStyle || {
+    layout: 'centered',
+    showDecorativeElements: true,
+    backgroundPattern: 'none',
+    accentColor: '#2563eb',
+    fontSize: 'normal',
+  };
 
-    <div className="pb-20 text-gray-400 font-medium">
-      <p>{new Date(proposal.meta.date).toLocaleDateString('en-US', { dateStyle: 'long' })}</p>
-    </div>
-  </PageContainer>
-);
+  const accentColor = coverStyle.accentColor || '#2563eb';
+  const fontSizeClass = coverStyle.fontSize || 'normal';
+
+  // Common props for all layouts
+  const layoutProps = {
+    proposal,
+    coverStyle,
+    backgroundPattern: <BackgroundPattern pattern={coverStyle.backgroundPattern} accentColor={accentColor} />,
+    accentColor,
+    fontSizeClass,
+  };
+
+  return (
+    <PageContainer className="relative overflow-hidden">
+      {coverStyle.layout === 'centered' && <CenteredLayout {...layoutProps} />}
+      {coverStyle.layout === 'left-aligned' && <LeftAlignedLayout {...layoutProps} />}
+      {coverStyle.layout === 'split' && <SplitLayout {...layoutProps} />}
+      {coverStyle.layout === 'minimal' && <MinimalLayout {...layoutProps} />}
+    </PageContainer>
+  );
+};
 
 export const VersionHistory: React.FC<{ proposal: Proposal; index: number }> = ({ proposal, index }) => (
   <div className="mb-12 break-inside-avoid">
@@ -97,67 +226,115 @@ export const VersionHistory: React.FC<{ proposal: Proposal; index: number }> = (
   </div>
 );
 
-export const ExecutiveSummary: React.FC<{ proposal: Proposal; index: number }> = ({ proposal, index }) => (
-  <div className="mb-12 break-before-page">
-    <SectionHeading title="Executive Summary" number={index} />
-    <div 
-      className="prose prose-sm max-w-none text-gray-700 mb-8"
-      dangerouslySetInnerHTML={{ __html: proposal.execSummary.summary }}
-    />
-    
-    <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-blue-500 break-inside-avoid">
-      <h3 className="font-bold text-gray-900 mb-3 text-lg">Key Objectives</h3>
+export const ExecutiveSummary: React.FC<{ proposal: Proposal; index: number }> = ({ proposal, index }) => {
+  const { themeSettings } = useTheme();
+  
+  return (
+    <div className="mb-12 break-before-page">
+      <SectionHeading title="Executive Summary" number={index} />
       <div 
-        className="prose prose-sm max-w-none text-gray-700"
-        dangerouslySetInnerHTML={{ __html: proposal.execSummary.objectives }}
+        className="prose prose-sm max-w-none mb-8"
+        style={{ color: 'var(--theme-text, #374151)' }}
+        dangerouslySetInnerHTML={{ __html: proposal.execSummary.summary }}
       />
+      
+      <div 
+        className="p-6 rounded-lg break-inside-avoid"
+        style={{ 
+          backgroundColor: 'var(--theme-background-alt, #F9FAFB)',
+          borderLeftWidth: '4px',
+          borderLeftColor: 'var(--theme-primary, #3B82F6)'
+        }}
+      >
+        <h3 
+          className="font-bold mb-3 text-lg"
+          style={{ color: 'var(--theme-text, #111827)' }}
+        >
+          Key Objectives
+        </h3>
+        <div 
+          className="prose prose-sm max-w-none"
+          style={{ color: 'var(--theme-text, #374151)' }}
+          dangerouslySetInnerHTML={{ __html: proposal.execSummary.objectives }}
+        />
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
-export const ScopeOfWork: React.FC<{ proposal: Proposal; index: number }> = ({ proposal, index }) => (
-  <div className="mb-12 pt-4 border-t-4 border-gray-100 border-dotted break-before-page print:border-0">
-    <SectionHeading title="Scope of Work" number={index} />
-    <div className="space-y-8">
-      {proposal.scope.map((section) => (
-        <React.Fragment key={section.id}>
-          {hasBreakBefore(proposal, 'scope-category', section.id) && <PageBreakMarker />}
-          <div className="print:mb-8">
-            <h3 className="text-xl font-bold text-gray-800 mb-2 break-after-avoid">{section.name}</h3>
-            <div 
-              className="prose prose-sm max-w-none text-gray-600 mb-4"
-              dangerouslySetInnerHTML={{ __html: section.description }}
-            />
-            
-            <div className="bg-gray-50 rounded-lg p-4 break-inside-avoid print:break-inside-avoid">
-              <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3 break-after-avoid">Deliverables</h4>
-              <ul className="grid grid-cols-1 gap-2">
-                {section.deliverables.map((del) => (
-                  <React.Fragment key={del.id}>
-                    {hasBreakBefore(proposal, 'scope-deliverable', del.id) && (
-                      <li className="page-break-list-item">
-                        <PageBreakMarker />
+export const ScopeOfWork: React.FC<{ proposal: Proposal; index: number }> = ({ proposal, index }) => {
+  const { themeSettings } = useTheme();
+  
+  return (
+    <div className="mb-12 pt-4 border-t-4 border-dotted break-before-page print:border-0" style={{ borderColor: 'var(--theme-border, #F3F4F6)' }}>
+      <SectionHeading title="Scope of Work" number={index} />
+      <div className="space-y-8">
+        {proposal.scope.map((section) => (
+          <React.Fragment key={section.id}>
+            {hasBreakBefore(proposal, 'scope-category', section.id) && <PageBreakMarker />}
+            <div className="print:mb-8">
+              <h3 
+                className="text-xl font-bold mb-2 break-after-avoid"
+                style={{ color: 'var(--theme-text, #1F2937)' }}
+              >
+                {section.name}
+              </h3>
+              <div 
+                className="prose prose-sm max-w-none mb-4"
+                style={{ color: 'var(--theme-text-muted, #4B5563)' }}
+                dangerouslySetInnerHTML={{ __html: section.description }}
+              />
+              
+              <div 
+                className="rounded-lg p-4 break-inside-avoid print:break-inside-avoid"
+                style={{ backgroundColor: 'var(--theme-background-alt, #F9FAFB)' }}
+              >
+                <h4 
+                  className="text-xs font-bold uppercase tracking-wider mb-3 break-after-avoid"
+                  style={{ color: 'var(--theme-text-muted, #6B7280)' }}
+                >
+                  Deliverables
+                </h4>
+                <ul className="grid grid-cols-1 gap-2">
+                  {section.deliverables.map((del) => (
+                    <React.Fragment key={del.id}>
+                      {hasBreakBefore(proposal, 'scope-deliverable', del.id) && (
+                        <li className="page-break-list-item">
+                          <PageBreakMarker />
+                        </li>
+                      )}
+                      <li 
+                        className="flex justify-between text-sm border-b pb-2 last:border-0 last:pb-0 break-inside-avoid"
+                        style={{ borderColor: 'var(--theme-border, #E5E7EB)' }}
+                      >
+                        <span style={{ color: 'var(--theme-text, #1F2937)' }}>{del.description}</span>
+                        <span 
+                          className="font-bold px-2 py-0.5 rounded border shadow-sm"
+                          style={{ 
+                            color: 'var(--theme-text, #111827)',
+                            backgroundColor: 'var(--theme-background, #FFFFFF)',
+                            borderColor: 'var(--theme-border, #E5E7EB)'
+                          }}
+                        >
+                          {del.quantity}
+                        </span>
                       </li>
-                    )}
-                    <li className="flex justify-between text-sm border-b border-gray-200 pb-2 last:border-0 last:pb-0 break-inside-avoid">
-                      <span className="text-gray-800">{del.description}</span>
-                      <span className="font-bold text-gray-900 bg-white px-2 py-0.5 rounded border border-gray-200 shadow-sm">{del.quantity}</span>
-                    </li>
-                  </React.Fragment>
-                ))}
-              </ul>
+                    </React.Fragment>
+                  ))}
+                </ul>
+              </div>
             </div>
-          </div>
-        </React.Fragment>
-      ))}
+          </React.Fragment>
+        ))}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export const Requirements: React.FC<{ proposal: Proposal; index: number }> = ({ proposal, index }) => (
-  <div className="mb-12 pt-4 border-t-4 border-gray-100 border-dotted break-inside-avoid break-before-page print:border-0">
+  <div className="mb-12 pt-4 border-t-4 border-dotted break-inside-avoid break-before-page print:border-0" style={{ borderColor: 'var(--theme-border, #F3F4F6)' }}>
     <SectionHeading title="Client Requirements" number={index} />
-    <ul className="list-disc list-inside space-y-2 text-gray-700">
+    <ul className="list-disc list-inside space-y-2" style={{ color: 'var(--theme-text, #374151)' }}>
       {proposal.clientResponsibilities.map((req, i) => (
         <li key={i}>{req}</li>
       ))}
@@ -166,9 +343,9 @@ export const Requirements: React.FC<{ proposal: Proposal; index: number }> = ({ 
 );
 
 export const OutOfScope: React.FC<{ proposal: Proposal; index: number }> = ({ proposal, index }) => (
-  <div className="mb-12 pt-4 border-t-4 border-gray-100 border-dotted break-inside-avoid break-before-page print:border-0">
+  <div className="mb-12 pt-4 border-t-4 border-dotted break-inside-avoid break-before-page print:border-0" style={{ borderColor: 'var(--theme-border, #F3F4F6)' }}>
     <SectionHeading title="Out of Scope" number={index} />
-    <ul className="list-disc list-inside space-y-2 text-gray-700">
+    <ul className="list-disc list-inside space-y-2" style={{ color: 'var(--theme-text, #374151)' }}>
       {proposal.outOfScope.map((item, i) => (
         <li key={i}>{item}</li>
       ))}
@@ -178,22 +355,38 @@ export const OutOfScope: React.FC<{ proposal: Proposal; index: number }> = ({ pr
 
 export const Team: React.FC<{ proposal: Proposal; index: number }> = ({ proposal, index }) => {
   const totalFTE = proposal.team.reduce((acc, member) => acc + member.allocation, 0) / 100;
+  const { themeSettings } = useTheme();
 
   return (
-    <div className="mb-12 pt-4 border-t-4 border-gray-100 border-dotted break-before-page print:border-0">
+    <div className="mb-12 pt-4 border-t-4 border-dotted break-before-page print:border-0" style={{ borderColor: 'var(--theme-border, #F3F4F6)' }}>
       <SectionHeading title="Proposed Team" number={index} />
       <div className="space-y-4">
         {proposal.team.map((member) => (
           <React.Fragment key={member.id}>
             {hasBreakBefore(proposal, 'team-member', member.id) && <PageBreakMarker />}
             <div className="break-inside-avoid print:break-inside-avoid">
-              <div className="flex gap-4 border border-gray-200 rounded-lg p-4 bg-white shadow-sm">
+              <div 
+                className="flex gap-4 border rounded-lg p-4 shadow-sm"
+                style={{ 
+                  backgroundColor: 'var(--theme-background, #FFFFFF)',
+                  borderColor: 'var(--theme-border, #E5E7EB)'
+                }}
+              >
                 <div className="flex-shrink-0">
-                  <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-100 border border-gray-200">
+                  <div 
+                    className="w-16 h-16 rounded-full overflow-hidden border"
+                    style={{ 
+                      backgroundColor: 'var(--theme-background-alt, #F3F4F6)',
+                      borderColor: 'var(--theme-border, #E5E7EB)'
+                    }}
+                  >
                     {member.image ? (
                       <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-gray-300 font-bold text-lg">
+                      <div 
+                        className="w-full h-full flex items-center justify-center font-bold text-lg"
+                        style={{ color: 'var(--theme-text-muted, #D1D5DB)' }}
+                      >
                         {member.name.charAt(0)}
                       </div>
                     )}
@@ -203,16 +396,36 @@ export const Team: React.FC<{ proposal: Proposal; index: number }> = ({ proposal
                 <div className="flex-1">
                   <div className="flex justify-between items-start mb-1">
                     <div>
-                      <h4 className="font-bold text-gray-900 text-base">{member.name}</h4>
-                      <p className="text-blue-600 font-medium text-sm">{member.role}</p>
+                      <h4 
+                        className="font-bold text-base"
+                        style={{ color: 'var(--theme-text, #111827)' }}
+                      >
+                        {member.name}
+                      </h4>
+                      <p 
+                        className="font-medium text-sm"
+                        style={{ color: 'var(--theme-primary, #3B82F6)' }}
+                      >
+                        {member.role}
+                      </p>
                     </div>
                     <div className="text-right">
-                      <span className="inline-block bg-blue-50 text-blue-700 text-[10px] font-bold px-2 py-0.5 rounded-full border border-blue-100">
+                      <span 
+                        className="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full border"
+                        style={{ 
+                          color: 'var(--theme-primary, #1D4ED8)',
+                          backgroundColor: 'var(--theme-primary, #3B82F6)10',
+                          borderColor: 'var(--theme-primary, #3B82F6)20'
+                        }}
+                      >
                         {member.allocation}% Time
                       </span>
                     </div>
                   </div>
-                  <p className="text-xs text-gray-600 leading-normal">
+                  <p 
+                    className="text-xs leading-normal"
+                    style={{ color: 'var(--theme-text-muted, #4B5563)' }}
+                  >
                     {member.description}
                   </p>
                 </div>
@@ -223,8 +436,19 @@ export const Team: React.FC<{ proposal: Proposal; index: number }> = ({ proposal
       </div>
 
       <div className="mt-6 flex justify-end">
-        <div className="bg-gray-900 text-white px-5 py-2 rounded-lg flex items-center gap-3 shadow-md break-inside-avoid">
-          <span className="text-xs uppercase tracking-wider font-medium text-gray-300">Total Resource FTE</span>
+        <div 
+          className="px-5 py-2 rounded-lg flex items-center gap-3 shadow-md break-inside-avoid"
+          style={{ 
+            backgroundColor: 'var(--theme-text, #111827)',
+            color: 'var(--theme-background, #FFFFFF)'
+          }}
+        >
+          <span 
+            className="text-xs uppercase tracking-wider font-medium"
+            style={{ color: 'var(--theme-text-muted, #9CA3AF)' }}
+          >
+            Total Resource FTE
+          </span>
           <span className="text-xl font-bold">{totalFTE.toFixed(2)}</span>
         </div>
       </div>
@@ -233,8 +457,16 @@ export const Team: React.FC<{ proposal: Proposal; index: number }> = ({ proposal
 };
 
 export const Commercials: React.FC<{ proposal: Proposal; index: number }> = ({ proposal, index }) => {
+  const getItemDisplayRate = (item: CostItem): number => {
+    if (item.useFormula && item.formula) {
+      const result = calculateItemRate(item, proposal.pricingVariables || []);
+      return result.rate;
+    }
+    return item.rate;
+  };
+
   const grandTotal = proposal.costing.reduce(
-    (acc, section) => acc + section.items.reduce((sAcc, item) => sAcc + item.quantity * item.rate, 0),
+    (acc, section) => acc + section.items.reduce((sAcc, item) => sAcc + item.quantity * getItemDisplayRate(item), 0),
     0
   );
 
@@ -257,23 +489,40 @@ export const Commercials: React.FC<{ proposal: Proposal; index: number }> = ({ p
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
-                  {section.items.map((item) => (
-                    <React.Fragment key={item.id}>
-                      {hasBreakBefore(proposal, 'costing-item', item.id) && (
-                        <tr className="page-break-row">
-                          <td colSpan={4} className="p-0">
-                            <PageBreakMarker />
+                  {section.items.map((item) => {
+                    const displayRate = getItemDisplayRate(item);
+                    return (
+                      <React.Fragment key={item.id}>
+                        {hasBreakBefore(proposal, 'costing-item', item.id) && (
+                          <tr className="page-break-row">
+                            <td colSpan={4} className="p-0">
+                              <PageBreakMarker />
+                            </td>
+                          </tr>
+                        )}
+                        <tr className="break-inside-avoid print:break-inside-avoid">
+                          <td className="py-2 px-3 text-gray-700 text-xs">
+                            <div>{item.description}</div>
+                            {item.useFormula && item.formula && (
+                              <FormulaBreakdown item={item} variables={proposal.pricingVariables} />
+                            )}
                           </td>
+                          <td className="py-2 px-3 text-right text-gray-500 text-xs">{item.quantity}</td>
+                          <td className="py-2 px-3 text-right text-gray-500 text-xs font-mono">
+                            {item.useFormula && item.formula ? (
+                              <span className="flex items-center justify-end gap-1">
+                                <FunctionSquare size={10} className="text-purple-400" />
+                                {displayRate.toLocaleString('en-IN')}
+                              </span>
+                            ) : (
+                              displayRate.toLocaleString('en-IN')
+                            )}
+                          </td>
+                          <td className="py-2 px-3 text-right text-gray-900 font-bold text-xs font-mono">{(item.quantity * displayRate).toLocaleString('en-IN')}</td>
                         </tr>
-                      )}
-                      <tr className="break-inside-avoid print:break-inside-avoid">
-                        <td className="py-2 px-3 text-gray-700 text-xs">{item.description}</td>
-                        <td className="py-2 px-3 text-right text-gray-500 text-xs">{item.quantity}</td>
-                        <td className="py-2 px-3 text-right text-gray-500 text-xs font-mono">{item.rate.toLocaleString('en-IN')}</td>
-                        <td className="py-2 px-3 text-right text-gray-900 font-bold text-xs font-mono">{(item.quantity * item.rate).toLocaleString('en-IN')}</td>
-                      </tr>
-                    </React.Fragment>
-                  ))}
+                      </React.Fragment>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
@@ -348,7 +597,7 @@ export const RateCard: React.FC<{ proposal: Proposal; index: number }> = ({ prop
 );
 
 export const Terms: React.FC<{ proposal: Proposal; index: number }> = ({ proposal, index }) => (
-  <div className="mb-12 pt-4 border-t-4 border-gray-100 border-dotted break-before-page print:border-0">
+  <div className="mb-12 pt-4 border-t-4 border-gray-100 border-dotted break-inside-avoid break-before-page print:border-0">
     <div className="break-inside-avoid">
       <SectionHeading title="Terms & Conditions" number={index} />
       <div 
@@ -360,7 +609,7 @@ export const Terms: React.FC<{ proposal: Proposal; index: number }> = ({ proposa
 );
 
 export const SignOffSection: React.FC<{ proposal: Proposal; index: number }> = ({ proposal, index }) => (
-  <div className="mb-12 pt-4 border-t-4 border-gray-100 border-dotted break-before-page print:border-0">
+  <div className="mb-12 pt-4 border-t-4 border-gray-100 border-dotted break-inside-avoid break-before-page print:border-0">
     <div className="break-inside-avoid">
       <SectionHeading title="Sign Off" number={index} />
       <div className="bg-white border-2 border-gray-900 p-8 rounded-xl">

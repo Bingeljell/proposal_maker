@@ -1,0 +1,414 @@
+{
+  "templates": [
+    {
+      "id": "complete-social-media-proposal",
+      "name": "Complete Social Media Proposal",
+      "description": "A comprehensive full-service social media marketing proposal with scope, team, rate card, and terms. Perfect for pitching monthly retainer services.",
+      "category": "full",
+      "execSummary": {
+        "summary": "We are excited to present this comprehensive social media marketing proposal designed to elevate your brand's digital presence. Our team of experts will work closely with you to create engaging content, manage your community, and drive measurable results across all major social platforms.",
+        "objectives": "• Build a strong, consistent brand presence across Instagram, LinkedIn, and Facebook\n• Increase follower engagement by 40% within the first 6 months\n• Drive qualified traffic to your website through organic content\n• Establish thought leadership in your industry through strategic content\n• Create a loyal community of brand advocates and customers"
+      },
+      "scope": [
+        {
+          "id": "scope-social-mgmt",
+          "name": "Social Media Management",
+          "description": "Complete management of your social media presence including content strategy, scheduling, and community engagement across all major platforms.",
+          "deliverables": [
+            { "id": "del-1", "description": "Instagram Feed Posts (Custom Graphics)", "quantity": 16 },
+            { "id": "del-2", "description": "Instagram Stories", "quantity": 20 },
+            { "id": "del-3", "description": "Instagram Reels (30-60 seconds)", "quantity": 4 },
+            { "id": "del-4", "description": "LinkedIn Articles/Posts", "quantity": 8 },
+            { "id": "del-5", "description": "Facebook Posts", "quantity": 12 },
+            { "id": "del-6", "description": "Monthly Analytics Report", "quantity": 1 }
+          ]
+        },
+        {
+          "id": "scope-content-creation",
+          "name": "Content Creation & Design",
+          "description": "Professional graphic design and video editing services to create scroll-stopping content that aligns with your brand identity.",
+          "deliverables": [
+            { "id": "del-7", "description": "Custom Graphic Designs (Carousel, Static, Stories)", "quantity": 25 },
+            { "id": "del-8", "description": "Video Editing & Motion Graphics", "quantity": 6 },
+            { "id": "del-9", "description": "Content Calendar Planning", "quantity": 1 }
+          ]
+        },
+        {
+          "id": "scope-community",
+          "name": "Community Management",
+          "description": "Active community management to engage with your audience, respond to comments and messages, and build relationships.",
+          "deliverables": [
+            { "id": "del-10", "description": "Daily Comment & DM Response (Mon-Fri)", "quantity": 1 },
+            { "id": "del-11", "description": "Weekly Engagement Strategy", "quantity": 1 },
+            { "id": "del-12", "description": "Monthly Community Growth Report", "quantity": 1 }
+          ]
+        }
+      ],
+      "clientResponsibilities": [
+        "Provide brand guidelines, logos, and approved visual assets within 3 days of project kickoff",
+        "Approve content calendar at least 5 business days before the start of each month",
+        "Provide product/service information and updates for content creation",
+        "Assign a dedicated point of contact for approvals and queries with 24-hour response time",
+        "Share access to social media accounts and any relevant analytics data"
+      ],
+      "outOfScope": [
+        "Paid advertising media spend (ad budget to be provided separately)",
+        "Photography and video shooting (stock images and client-provided assets only)",
+        "Influencer collaboration fees and management",
+        "Third-party software subscriptions (scheduling tools, analytics platforms)",
+        "Crisis management and PR services beyond standard community management",
+        "Website development or landing page creation"
+      ],
+      "team": [
+        {
+          "id": "team-1",
+          "name": "Social Media Strategist",
+          "role": "Strategy & Account Management",
+          "allocation": 60,
+          "description": "Develops overall social media strategy, manages client relationships, oversees content direction, and ensures campaign objectives are met.",
+          "image": null
+        },
+        {
+          "id": "team-2",
+          "name": "Content Designer",
+          "role": "Visual Content Creation",
+          "allocation": 75,
+          "description": "Creates all visual assets including graphics, carousels, stories, and assists with video editing. Ensures brand consistency across all content.",
+          "image": null
+        },
+        {
+          "id": "team-3",
+          "name": "Community Manager",
+          "role": "Engagement & Community",
+          "allocation": 50,
+          "description": "Monitors social channels daily, responds to comments and messages, engages with relevant accounts, and builds community relationships.",
+          "image": null
+        },
+        {
+          "id": "team-4",
+          "name": "Copywriter",
+          "role": "Content Writing",
+          "allocation": 40,
+          "description": "Writes compelling captions, articles, and social copy that resonates with the target audience and drives engagement.",
+          "image": null
+        }
+      ],
+      "rateCard": [
+        {
+          "id": "rc-social",
+          "name": "Social Media Management",
+          "description": "Comprehensive social media management services",
+          "items": [
+            { "id": "rc-item-1", "description": "Social Media Management - Monthly Retainer", "comment": "16 posts, 20 stories, 4 reels, LinkedIn & Facebook", "quantity": 1, "unitCost": 45000 },
+            { "id": "rc-item-2", "description": "Community Management (Mon-Fri)", "comment": "Daily monitoring and engagement", "quantity": 1, "unitCost": 15000 }
+          ]
+        },
+        {
+          "id": "rc-content",
+          "name": "Content Creation",
+          "description": "Design and content production services",
+          "items": [
+            { "id": "rc-item-3", "description": "Custom Graphic Design", "comment": "Carousels, static posts, story templates", "quantity": 25, "unitCost": 400 },
+            { "id": "rc-item-4", "description": "Video Editing & Motion Graphics", "comment": "Reels, short-form video content", "quantity": 6, "unitCost": 2500 }
+          ]
+        },
+        {
+          "id": "rc-strategy",
+          "name": "Strategy & Reporting",
+          "description": "Planning and analytics services",
+          "items": [
+            { "id": "rc-item-5", "description": "Content Strategy & Calendar", "comment": "Monthly planning and editorial calendar", "quantity": 1, "unitCost": 8000 },
+            { "id": "rc-item-6", "description": "Monthly Analytics Report", "comment": "Performance analysis and recommendations", "quantity": 1, "unitCost": 5000 }
+          ]
+        }
+      ],
+      "terms": "1. **Payment Terms**: 50% advance payment due upon project kickoff, remaining 50% due by the 5th of each month.\n\n2. **Contract Duration**: Minimum 3-month commitment required. Either party may terminate with 30 days written notice.\n\n3. **Content Approval**: All content will be shared for approval 5 business days before scheduled posting. Delays in approval may affect posting schedules.\n\n4. **Revisions**: Each deliverable includes up to 2 rounds of revisions. Additional revisions will be billed at ₹1,500 per hour.\n\n5. **Intellectual Property**: All created content becomes client's property upon full payment. Agency retains the right to showcase work in portfolio.\n\n6. **Confidentiality**: Both parties agree to maintain confidentiality of proprietary information shared during the engagement.\n\n7. **Limitation of Liability**: Agency's liability is limited to the monthly fee paid. We are not liable for platform algorithm changes or third-party service outages.\n\n8. **Force Majeure**: Neither party is liable for delays caused by circumstances beyond reasonable control.\n\n9. **Proposal Validity**: This proposal is valid for 30 days from the date of issue."
+    },
+    {
+      "id": "brand-identity-project",
+      "name": "Brand Identity Project",
+      "description": "A complete brand identity and visual design proposal including logo design, brand guidelines, collateral design, and digital assets.",
+      "category": "full",
+      "execSummary": {
+        "summary": "This proposal outlines our comprehensive brand identity design services to create a distinctive and memorable brand presence for your business. From logo design to complete brand guidelines, we'll craft a cohesive visual identity that resonates with your target audience and sets you apart from competitors.",
+        "objectives": "• Develop a unique and memorable brand identity that reflects your values\n• Create consistent visual language across all touchpoints\n• Design versatile logo variations for different applications\n• Establish comprehensive brand guidelines for future use\n• Deliver production-ready assets for immediate implementation"
+      },
+      "scope": [
+        {
+          "id": "scope-discovery",
+          "name": "Brand Discovery & Strategy",
+          "description": "In-depth research and strategy phase to understand your business, audience, competitors, and define brand direction.",
+          "deliverables": [
+            { "id": "del-1", "description": "Brand Discovery Workshop (2 hours)", "quantity": 1 },
+            { "id": "del-2", "description": "Competitor Analysis Report", "quantity": 1 },
+            { "id": "del-3", "description": "Brand Strategy Document", "quantity": 1 },
+            { "id": "del-4", "description": "Brand Positioning Statement", "quantity": 1 }
+          ]
+        },
+        {
+          "id": "scope-logo",
+          "name": "Logo Design & Visual Identity",
+          "description": "Complete logo design process including multiple concepts, revisions, and final deliverables in all required formats.",
+          "deliverables": [
+            { "id": "del-5", "description": "Logo Design Concepts (Initial)", "quantity": 3 },
+            { "id": "del-6", "description": "Logo Refinement Rounds", "quantity": 3 },
+            { "id": "del-7", "description": "Final Logo Package (All formats)", "quantity": 1 },
+            { "id": "del-8", "description": "Logo Variations (Horizontal, Vertical, Icon)", "quantity": 3 },
+            { "id": "del-9", "description": "Color Palette Definition", "quantity": 1 }
+          ]
+        },
+        {
+          "id": "scope-collateral",
+          "name": "Brand Collateral Design",
+          "description": "Design of essential brand collateral and touchpoints for immediate brand implementation.",
+          "deliverables": [
+            { "id": "del-10", "description": "Business Card Design", "quantity": 1 },
+            { "id": "del-11", "description": "Letterhead Design", "quantity": 1 },
+            { "id": "del-12", "description": "Social Media Template Kit", "quantity": 5 },
+            { "id": "del-13", "description": "Email Signature Design", "quantity": 1 }
+          ]
+        },
+        {
+          "id": "scope-guidelines",
+          "name": "Brand Guidelines",
+          "description": "Comprehensive brand guidelines document ensuring consistent brand application across all future materials.",
+          "deliverables": [
+            { "id": "del-14", "description": "Brand Guidelines Document (PDF)", "quantity": 1 },
+            { "id": "del-15", "description": "Logo Usage Guidelines", "quantity": 1 },
+            { "id": "del-16", "description": "Typography Guidelines", "quantity": 1 },
+            { "id": "del-17", "description": "Color Usage Specifications", "quantity": 1 }
+          ]
+        }
+      ],
+      "clientResponsibilities": [
+        "Complete detailed brand questionnaire within 3 days of project start",
+        "Provide existing brand assets, if any, including previous logos and marketing materials",
+        "Attend brand discovery workshop (scheduled within first week)",
+        "Provide timely feedback on design concepts (within 5 business days per round)",
+        "Make timely payments according to the agreed milestone schedule"
+      ],
+      "outOfScope": [
+        "Website design and development",
+        "Photography or illustration services (stock assets used unless specified)",
+        "Printing and production of physical materials",
+        "Packaging design (available as add-on)",
+        "Marketing strategy or campaign planning",
+        "Copywriting services beyond basic tagline development",
+        "Trademark registration or legal services"
+      ],
+      "team": [
+        {
+          "id": "team-1",
+          "name": "Creative Director",
+          "role": "Creative Leadership & Strategy",
+          "allocation": 40,
+          "description": "Oversees creative direction, ensures brand strategy alignment, reviews all deliverables, and guides the design team.",
+          "image": null
+        },
+        {
+          "id": "team-2",
+          "name": "Brand Designer",
+          "role": "Visual Design & Identity",
+          "allocation": 100,
+          "description": "Primary designer responsible for logo concepts, visual identity development, and brand collateral design.",
+          "image": null
+        },
+        {
+          "id": "team-3",
+          "name": "Brand Strategist",
+          "role": "Research & Strategy",
+          "allocation": 30,
+          "description": "Conducts competitor research, leads discovery workshop, and develops brand strategy and positioning.",
+          "image": null
+        }
+      ],
+      "rateCard": [
+        {
+          "id": "rc-discovery",
+          "name": "Discovery & Strategy",
+          "description": "Research and strategic planning phase",
+          "items": [
+            { "id": "rc-item-1", "description": "Brand Discovery Workshop", "comment": "2-hour interactive session", "quantity": 1, "unitCost": 15000 },
+            { "id": "rc-item-2", "description": "Brand Strategy & Research", "comment": "Competitor analysis, positioning, strategy doc", "quantity": 1, "unitCost": 25000 }
+          ]
+        },
+        {
+          "id": "rc-design",
+          "name": "Design & Identity",
+          "description": "Logo and visual identity design",
+          "items": [
+            { "id": "rc-item-3", "description": "Logo Design Package", "comment": "3 concepts, 3 revision rounds, all formats", "quantity": 1, "unitCost": 60000 },
+            { "id": "rc-item-4", "description": "Brand Collateral Design", "comment": "Business cards, letterhead, social templates", "quantity": 1, "unitCost": 25000 }
+          ]
+        },
+        {
+          "id": "rc-guidelines",
+          "name": "Brand Guidelines",
+          "description": "Comprehensive brand documentation",
+          "items": [
+            { "id": "rc-item-5", "description": "Brand Guidelines Document", "comment": "Complete usage guidelines and specifications", "quantity": 1, "unitCost": 20000 }
+          ]
+        }
+      ],
+      "terms": "1. **Payment Schedule**: 40% advance to commence work, 30% upon approval of logo concepts, 30% upon final delivery.\n\n2. **Project Timeline**: 6-8 weeks from kickoff to final delivery, subject to timely client feedback.\n\n3. **Revisions**: Each design phase includes specified revision rounds. Additional revisions beyond scope will be billed at ₹2,000 per hour.\n\n4. **Intellectual Property**: Full ownership rights transfer to client upon final payment. Designer retains right to display work in portfolio.\n\n5. **Source Files**: Source files (AI, PSD, Figma) delivered upon final payment.\n\n6. **Project Scope**: Any additions to the agreed scope will require a separate change order and additional fees.\n\n7. **Project Pauses**: Projects paused for more than 14 days may be subject to rescheduling fees.\n\n8. **Confidentiality**: All client information and materials are treated as strictly confidential.\n\n9. **Proposal Validity**: This proposal is valid for 21 days from the date of issue."
+    },
+    {
+      "id": "social-media-scope-only",
+      "name": "Social Media Scope Only",
+      "description": "A detailed scope of work template for social media management services. Apply to just the scope section to quickly define deliverables.",
+      "category": "scope",
+      "scope": [
+        {
+          "id": "scope-content-creation",
+          "name": "Content Creation",
+          "description": "Development of engaging social media content tailored to your brand voice and audience preferences.",
+          "deliverables": [
+            { "id": "del-1", "description": "Instagram Feed Posts", "quantity": 12 },
+            { "id": "del-2", "description": "Instagram Stories", "quantity": 15 },
+            { "id": "del-3", "description": "Instagram Reels", "quantity": 3 },
+            { "id": "del-4", "description": "Caption Copywriting", "quantity": 15 }
+          ]
+        },
+        {
+          "id": "scope-scheduling",
+          "name": "Content Scheduling & Publishing",
+          "description": "Strategic scheduling and publishing of content at optimal times for maximum reach and engagement.",
+          "deliverables": [
+            { "id": "del-5", "description": "Monthly Content Calendar", "quantity": 1 },
+            { "id": "del-6", "description": "Post Scheduling & Publishing", "quantity": 1 },
+            { "id": "del-7", "description": "Hashtag Research & Strategy", "quantity": 1 }
+          ]
+        },
+        {
+          "id": "scope-analytics",
+          "name": "Analytics & Reporting",
+          "description": "Monthly performance tracking and reporting to measure success and optimize strategy.",
+          "deliverables": [
+            { "id": "del-8", "description": "Monthly Performance Report", "quantity": 1 },
+            { "id": "del-9", "description": "Growth Analysis & Insights", "quantity": 1 },
+            { "id": "del-10", "description": "Strategy Recommendations", "quantity": 1 }
+          ]
+        }
+      ],
+      "clientResponsibilities": [
+        "Provide brand assets and guidelines within 3 days of kickoff",
+        "Approve content calendar 5 days before month start",
+        "Respond to queries within 24 hours during business days"
+      ],
+      "outOfScope": [
+        "Paid advertising media spend",
+        "Photography and videography services",
+        "Influencer collaboration fees",
+        "Social media crisis management"
+      ]
+    },
+    {
+      "id": "standard-rate-card",
+      "name": "Standard Rate Card",
+      "description": "A comprehensive rate card template for digital marketing services. Includes common services with industry-standard pricing.",
+      "category": "ratecard",
+      "rateCard": [
+        {
+          "id": "rc-social",
+          "name": "Social Media Services",
+          "description": "Social media management and content services",
+          "items": [
+            { "id": "item-1", "description": "Social Media Management - Basic", "comment": "8 posts, 10 stories per month", "quantity": 1, "unitCost": 25000 },
+            { "id": "item-2", "description": "Social Media Management - Standard", "comment": "15 posts, 20 stories, 3 reels per month", "quantity": 1, "unitCost": 45000 },
+            { "id": "item-3", "description": "Social Media Management - Premium", "comment": "25 posts, 30 stories, 8 reels per month", "quantity": 1, "unitCost": 75000 },
+            { "id": "item-4", "description": "Community Management", "comment": "Daily monitoring and response", "quantity": 1, "unitCost": 15000 }
+          ]
+        },
+        {
+          "id": "rc-content",
+          "name": "Content Creation",
+          "description": "Design and content production services",
+          "items": [
+            { "id": "item-5", "description": "Static Graphic Design", "comment": "Single image post design", "quantity": 1, "unitCost": 800 },
+            { "id": "item-6", "description": "Carousel Design (5-10 slides)", "comment": "Multi-slide carousel post", "quantity": 1, "unitCost": 2500 },
+            { "id": "item-7", "description": "Reel Editing (30-60 sec)", "comment": "Video editing with captions & music", "quantity": 1, "unitCost": 2500 },
+            { "id": "item-8", "description": "Story Design", "comment": "Instagram/Facebook story design", "quantity": 1, "unitCost": 400 }
+          ]
+        },
+        {
+          "id": "rc-ads",
+          "name": "Advertising Services",
+          "description": "Paid advertising management",
+          "items": [
+            { "id": "item-9", "description": "Meta Ads Management", "comment": "Facebook & Instagram campaign setup & management", "quantity": 1, "unitCost": 20000 },
+            { "id": "item-10", "description": "Google Ads Management", "comment": "Search & display campaign management", "quantity": 1, "unitCost": 25000 },
+            { "id": "item-11", "description": "Ad Creative Design", "comment": "Single ad creative design", "quantity": 1, "unitCost": 1500 }
+          ]
+        },
+        {
+          "id": "rc-strategy",
+          "name": "Strategy & Consulting",
+          "description": "Strategic planning and consulting services",
+          "items": [
+            { "id": "item-12", "description": "Social Media Strategy", "comment": "Comprehensive strategy document", "quantity": 1, "unitCost": 35000 },
+            { "id": "item-13", "description": "Content Calendar (1 month)", "comment": "Detailed monthly content plan", "quantity": 1, "unitCost": 8000 },
+            { "id": "item-14", "description": "Competitor Analysis", "comment": "In-depth competitor research report", "quantity": 1, "unitCost": 15000 },
+            { "id": "item-15", "description": "Brand Audit", "comment": "Current state analysis & recommendations", "quantity": 1, "unitCost": 20000 }
+          ]
+        },
+        {
+          "id": "rc-design",
+          "name": "Design Services",
+          "description": "Additional design services",
+          "items": [
+            { "id": "item-16", "description": "Logo Design", "comment": "Logo concept and refinement", "quantity": 1, "unitCost": 30000 },
+            { "id": "item-17", "description": "Brochure Design", "comment": "Multi-page brochure design", "quantity": 1, "unitCost": 15000 },
+            { "id": "item-18", "description": "Business Card Design", "comment": "Professional business card design", "quantity": 1, "unitCost": 3000 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "core-team-structure",
+      "name": "Core Team Structure",
+      "description": "A standard digital marketing team structure template. Apply to quickly populate your proposed team section.",
+      "category": "team",
+      "team": [
+        {
+          "id": "team-1",
+          "name": "Account Manager",
+          "role": "Client Relations & Project Coordination",
+          "allocation": 50,
+          "description": "Primary point of contact for all client communications. Oversees project timelines, coordinates between teams, and ensures deliverables meet client expectations.",
+          "image": null
+        },
+        {
+          "id": "team-2",
+          "name": "Social Media Manager",
+          "role": "Strategy & Content Planning",
+          "allocation": 75,
+          "description": "Develops social media strategy, plans content calendar, manages posting schedule, and monitors overall social media performance.",
+          "image": null
+        },
+        {
+          "id": "team-3",
+          "name": "Content Designer",
+          "role": "Visual Content Creation",
+          "allocation": 80,
+          "description": "Creates all visual content including graphics, carousels, stories, and assists with video editing. Maintains brand consistency across all designs.",
+          "image": null
+        },
+        {
+          "id": "team-4",
+          "name": "Copywriter",
+          "role": "Content Writing & Messaging",
+          "allocation": 50,
+          "description": "Writes engaging captions, social copy, articles, and ensures all content aligns with brand voice and resonates with target audience.",
+          "image": null
+        }
+      ]
+    },
+    {
+      "id": "standard-terms-template",
+      "name": "Standard Terms & Conditions",
+      "description": "A comprehensive terms and conditions template suitable for digital marketing and creative service agreements.",
+      "category": "terms",
+      "terms": "1. **Payment Terms**: 50% advance payment due upon project kickoff, remaining 50% due by the 5th of each month for retainer services or upon milestone completion for project-based work. Late payments subject to 2% monthly service charge.\n\n2. **Contract Duration**: Retainer agreements require a minimum 3-month commitment. Either party may terminate with 30 days written notice. Project-based work follows the timeline specified in the proposal.\n\n3. **Work Schedule**: Standard business days are Monday-Friday, 10:00 AM - 6:00 PM IST. Weekend and holiday work available at premium rates (1.5x standard rates).\n\n4. **Content Approval Process**: All content will be shared for approval as per the agreed timeline. Delays in approval beyond 48 hours may result in rescheduled delivery dates.\n\n5. **Revisions Policy**: Each deliverable includes up to 2 rounds of revisions unless otherwise specified. Additional revisions will be billed at ₹1,500 per hour. Major scope changes require a change order.\n\n6. **Intellectual Property Rights**: All created content, designs, and materials become client's property upon full payment. Agency retains the right to showcase work in portfolio and marketing materials unless otherwise agreed in writing.\n\n7. **Confidentiality Agreement**: Both parties agree to maintain strict confidentiality regarding proprietary information, business strategies, and sensitive data shared during the engagement period and thereafter.\n\n8. **Third-Party Services**: Client is responsible for direct payment of third-party costs including media spend, software subscriptions, stock image licenses, and printing costs unless explicitly included in the proposal.\n\n9. **Limitation of Liability**: Agency's liability is limited to the fees paid for services. We are not liable for platform algorithm changes, third-party service outages, or indirect damages.\n\n10. **Force Majeure**: Neither party is liable for delays caused by circumstances beyond reasonable control including natural disasters, government actions, or internet service disruptions.\n\n11. **Indemnification**: Client agrees to indemnify and hold harmless the agency from claims arising from content provided by client or unauthorized use of deliverables.\n\n12. **Proposal Validity**: This proposal is valid for 30 days from the date of issue unless otherwise specified. Pricing and availability subject to change after expiration."
+    }
+  ]
+}

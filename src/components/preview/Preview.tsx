@@ -1,6 +1,6 @@
 import React from 'react';
 import { useProposal } from '../../hooks/useProposal';
-import { SectionId } from '../../types';
+import { SectionId, ProposalStatus } from '../../types';
 import {
   CoverPage,
   VersionHistory,
@@ -37,11 +37,76 @@ export const Preview: React.FC = () => {
   // Filter visible sections
   const visibleSections = contentSections.filter(section => visibility[section.id] !== false);
 
+  // Status watermark styles
+  const getStatusWatermark = (status: ProposalStatus) => {
+    const watermarks: Record<ProposalStatus, { text: string; className: string }> = {
+      draft: {
+        text: 'DRAFT',
+        className: 'text-gray-300/30 dark:text-gray-600/30',
+      },
+      review: {
+        text: 'IN REVIEW',
+        className: 'text-amber-300/30 dark:text-amber-600/30',
+      },
+      final: {
+        text: 'FINAL',
+        className: 'text-blue-300/30 dark:text-blue-600/30',
+      },
+      sent: {
+        text: 'SENT',
+        className: 'text-green-300/30 dark:text-green-600/30',
+      },
+    };
+    return watermarks[status];
+  };
+
+  const watermark = getStatusWatermark(proposal.status);
+
   return (
-    <div className="print:m-0 print:p-0">
+    <div className="print:m-0 print:p-0 relative">
+      {/* Status Watermark - Visible in Preview Mode */}
+      {proposal.status !== 'sent' && (
+        <div
+          className={`
+            fixed pointer-events-none select-none z-0
+            text-6xl md:text-8xl font-black tracking-widest uppercase
+            rotate-45 origin-center
+            ${watermark.className}
+            top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+            print:hidden
+          `}
+        >
+          {watermark.text}
+        </div>
+      )}
+
+      {/* SENT Stamp - Special treatment for sent status */}
+      {proposal.status === 'sent' && (
+        <div
+          className={`
+            fixed pointer-events-none select-none z-50
+            print:fixed print:z-50 print:block
+            top-8 right-8 print:top-4 print:right-4
+          `}
+        >
+          <div
+            className={`
+              border-4 border-green-500/50 rounded-lg
+              px-4 py-2
+              transform rotate-12
+              bg-green-50/10 backdrop-blur-sm
+            `}
+          >
+            <span className="text-3xl md:text-4xl font-black text-green-500/60 tracking-widest uppercase">
+              SENT
+            </span>
+          </div>
+        </div>
+      )}
+
       {/* 1. Cover Page */}
       {(visibility['intro'] !== false) && (
-        <div className="print:break-after-page mb-8 print:mb-0">
+        <div className="print:break-after-page mb-8 print:mb-0 relative">
           <CoverPage proposal={proposal} />
         </div>
       )}

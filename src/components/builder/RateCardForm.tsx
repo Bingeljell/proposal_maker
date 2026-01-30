@@ -1,11 +1,13 @@
 import React from 'react';
 import { useProposal } from '../../hooks/useProposal';
+import { useCurrency } from '../../hooks/useCurrency';
 import { RichTextEditor } from '../ui/RichTextEditor';
 import { Plus, Trash2, ArrowUp, ArrowDown } from 'lucide-react';
 import { PageBreakTargetType } from '../../types';
 
 export const RateCardForm: React.FC = () => {
   const { proposal, updateSection, updateProposal } = useProposal();
+  const { getCurrencySymbol } = useCurrency();
 
   const hasPageBreak = (targetType: PageBreakTargetType, targetId: string) =>
     proposal.pageBreaks?.some((b) => b.targetType === targetType && b.targetId === targetId);
@@ -217,7 +219,9 @@ export const RateCardForm: React.FC = () => {
                       <div className="col-span-4 text-[10px] font-bold text-gray-400 uppercase">Deliverable</div>
                       <div className="col-span-3 text-[10px] font-bold text-gray-400 uppercase">Comment</div>
                       <div className="col-span-2 text-[10px] font-bold text-gray-400 uppercase text-right">Qty</div>
-                      <div className="col-span-2 text-[10px] font-bold text-gray-400 uppercase text-right">Unit Cost</div>
+                      <div className="col-span-2 text-[10px] font-bold text-gray-400 uppercase text-right">
+                        Unit Cost ({getCurrencySymbol()})
+                      </div>
                       <div className="col-span-1"></div>
                    </div>
                 )}
@@ -270,12 +274,17 @@ export const RateCardForm: React.FC = () => {
                             onChange={(e) => updateItem(section.id, item.id, 'quantity', parseInt(e.target.value) || 0)}
                             className="col-span-2 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-1.5 border text-right"
                           />
-                          <input
-                            type="number"
-                            value={item.unitCost}
-                            onChange={(e) => updateItem(section.id, item.id, 'unitCost', parseInt(e.target.value) || 0)}
-                            className="col-span-2 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-1.5 border text-right"
-                          />
+                          <div className="col-span-2 relative">
+                            <span className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 text-sm">
+                              {getCurrencySymbol()}
+                            </span>
+                            <input
+                              type="number"
+                              value={item.unitCost}
+                              onChange={(e) => updateItem(section.id, item.id, 'unitCost', parseInt(e.target.value) || 0)}
+                              className="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-1.5 pl-6 border text-right"
+                            />
+                          </div>
                       </div>
                       
                       <button

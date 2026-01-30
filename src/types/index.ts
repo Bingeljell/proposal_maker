@@ -11,6 +11,23 @@ export type SectionId =
   | 'terms' 
   | 'sign-off';
 
+export type Currency = 'INR' | 'USD' | 'EUR' | 'GBP' | 'AUD' | 'CAD' | 'SGD' | 'AED';
+
+export type ProposalStatus = 'draft' | 'review' | 'final' | 'sent';
+
+export interface StatusHistoryItem {
+  status: ProposalStatus;
+  timestamp: string;
+  changedBy?: string;
+}
+
+export interface CurrencyConfig {
+  symbol: string;
+  locale: string;
+  name: string;
+  code: Currency;
+}
+
 export interface Proposal {
   id: string;
   meta: ProposalMeta;
@@ -26,6 +43,19 @@ export interface Proposal {
   rateCard: RateCardSection[];
   terms: string;
   signOff: SignOff;
+  pricingVariables: PricingVariable[];
+  status: ProposalStatus;
+  statusHistory?: StatusHistoryItem[];
+}
+
+export type CoverLayout = 'centered' | 'left-aligned' | 'split' | 'minimal';
+
+export interface CoverStyle {
+  layout: CoverLayout;
+  showDecorativeElements: boolean;
+  backgroundPattern?: 'none' | 'dots' | 'lines' | 'gradient';
+  accentColor?: string;
+  fontSize: 'compact' | 'normal' | 'large';
 }
 
 export interface ProposalMeta {
@@ -34,6 +64,10 @@ export interface ProposalMeta {
   date: string;
   logo: string | null; // Base64 string
   proposalName: string; // For file naming, separate from title
+  expiresAt?: string; // ISO date string for proposal expiration
+  validityDays?: number; // Number of days until expiration (for auto-calculation)
+  currency?: Currency; // Optional for backward compatibility, defaults to 'INR'
+  coverStyle?: CoverStyle; // Optional for backward compatibility
 }
 
 export interface VersionHistoryItem {
@@ -82,6 +116,18 @@ export interface CostItem {
   description: string;
   quantity: number;
   rate: number;
+  useFormula?: boolean;
+  formula?: string; // e.g. "{videos} * 5000 + {posts} * 1000"
+  variables?: Record<string, number>; // Local variables override
+  calculatedRate?: number; // The calculated value from formula
+  formulaError?: string; // Error message if formula is invalid
+}
+
+export interface PricingVariable {
+  id: string;
+  name: string; // Display name (e.g., "Number of Videos")
+  key: string; // Variable key (e.g., "videos") - used in formulas
+  value: number;
 }
 
 export interface RateCardSection {
@@ -130,6 +176,28 @@ export interface ContentSnippet {
   category: ContentSnippetCategory;
 }
 
+// Template Types
+export type TemplateCategory = 'full' | 'scope' | 'ratecard' | 'team' | 'terms';
+
+export interface ProposalTemplate {
+  id: string;
+  name: string;
+  description: string;
+  category: TemplateCategory;
+  isCustom?: boolean;
+  createdAt?: string;
+  // Optional partial Proposal data
+  execSummary?: ExecSummary;
+  scope?: ScopeSection[];
+  clientResponsibilities?: string[];
+  outOfScope?: string[];
+  team?: TeamMember[];
+  costing?: CostingSection[];
+  rateCard?: RateCardSection[];
+  terms?: string;
+  signOff?: SignOff;
+}
+
 // Package Builder Types
 export interface PackageTemplate {
   id: string;
@@ -163,4 +231,59 @@ export interface Questionnaire {
   description: string;
   questions: QuestionnaireQuestion[];
   recommendedPackage?: string; // PackageTemplate ID
+}
+
+// ============ Theme Presets Types ============
+
+export type ThemePreset = 'modern' | 'classic' | 'minimal' | 'bold';
+
+export interface ThemeColors {
+  primary: string;
+  secondary: string;
+  accent: string;
+  text: string;
+  textMuted: string;
+  background: string;
+  backgroundAlt: string;
+  border: string;
+}
+
+export interface ThemeFonts {
+  heading: string;
+  body: string;
+  mono: string;
+}
+
+export interface ThemeSpacing {
+  pagePadding: string;
+  sectionGap: string;
+  elementGap: string;
+  compact: boolean;
+}
+
+export interface ThemeBorderRadius {
+  small: string;
+  medium: string;
+  large: string;
+  card: string;
+}
+
+export interface ThemeSettings {
+  id: ThemePreset;
+  name: string;
+  description: string;
+  colors: ThemeColors;
+  fonts: ThemeFonts;
+  spacing: ThemeSpacing;
+  borderRadius: ThemeBorderRadius;
+  showTricolorLine: boolean;
+  headingStyle: 'uppercase' | 'capitalize' | 'normal';
+  tableStyle: 'striped' | 'bordered' | 'minimal';
+  cardStyle: 'shadow' | 'border' | 'flat';
+}
+
+export interface ThemeContextState {
+  currentTheme: ThemePreset;
+  setTheme: (theme: ThemePreset) => void;
+  themeSettings: ThemeSettings;
 }

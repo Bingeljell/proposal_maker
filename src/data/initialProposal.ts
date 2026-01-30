@@ -8,6 +8,13 @@ export const initialProposal: Proposal = {
     date: new Date().toISOString().split('T')[0],
     logo: null,
     proposalName: '', // Will default to title if empty
+    coverStyle: {
+      layout: 'centered',
+      showDecorativeElements: true,
+      backgroundPattern: 'none',
+      accentColor: '#2563eb',
+      fontSize: 'normal',
+    },
   },
   sectionVisibility: {
     'intro': true,
@@ -76,4 +83,13 @@ export const initialProposal: Proposal = {
     socials: '@myagency',
     showSignatures: true,
   },
+  pricingVariables: [],
+  status: 'draft',
+  statusHistory: [
+    {
+      status: 'draft',
+      timestamp: new Date().toISOString(),
+      changedBy: 'System',
+    },
+  ],
 };

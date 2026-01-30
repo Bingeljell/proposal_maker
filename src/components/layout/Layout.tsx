@@ -1,20 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { useProposal } from '../../hooks/useProposal';
 import { useDarkMode } from '../../hooks/useDarkMode';
+import { useTheme } from '../../hooks/useTheme';
+import { ThemeSelector } from '../ui/ThemeSelector';
+import { StatusBadge } from '../ui/StatusBadge';
+import { StatusWorkflow } from '../ui/StatusWorkflow';
 import { Sidebar } from './Sidebar';
 import { SectionId } from '../../types';
-import { Preview } from '../preview/Preview'; // Import the new Preview component
-import { Download, Upload, Trash2, Eye, EyeOff, Edit3, Printer, Moon, Sun } from 'lucide-react';
+import { Preview } from '../preview/Preview';
+import { Download, Upload, Trash2, Eye, EyeOff, Edit3, Printer, Moon, Sun, GitBranch } from 'lucide-react';
 
 interface LayoutProps {
   children: (activeSection: SectionId) => React.ReactNode;
 }
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const { proposal, saveToFile, loadFromFile, resetProposal } = useProposal();
+  const { proposal, saveToFile, loadFromFile, resetProposal, updateStatus } = useProposal();
   const { isDarkMode, toggle } = useDarkMode();
+  const { currentTheme, setTheme } = useTheme();
   const [activeSection, setActiveSection] = useState<SectionId>('intro');
   const [viewMode, setViewMode] = useState<'edit' | 'preview'>('edit');
+  const [isWorkflowOpen, setIsWorkflowOpen] = useState(false);
 
   // Update document title for PDF printing (browser uses this as default filename)
   useEffect(() => {
@@ -47,9 +53,27 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                 {proposal.meta.clientName} / {proposal.meta.proposalName || proposal.meta.title}
               </p>
             </div>
+            {/* Status Badge */}
+            <div className="border-l border-gray-200 dark:border-gray-600 pl-4">
+              <button
+                onClick={() => setIsWorkflowOpen(true)}
+                className="group flex items-center gap-2 px-2 py-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                title="Click to manage approval workflow"
+              >
+                <StatusBadge status={proposal.status} size="sm" />
+                <GitBranch size={14} className="text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300" />
+              </button>
+            </div>
           </div>
 
           <div className="flex items-center gap-2">
+            {/* Theme Selector - Show in preview mode */}
+            {viewMode === 'preview' && (
+              <div className="mr-2">
+                <ThemeSelector currentTheme={currentTheme} onThemeChange={setTheme} />
+              </div>
+            )}
+
             {/* Dark Mode Toggle */}
             <button
               onClick={toggle}
@@ -143,6 +167,15 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
           </div>
         </main>
       </div>
+
+      {/* Status Workflow Modal */}
+      <StatusWorkflow
+        isOpen={isWorkflowOpen}
+        onClose={() => setIsWorkflowOpen(false)}
+        currentStatus={proposal.status}
+        statusHistory={proposal.statusHistory}
+        onStatusChange={updateStatus}
+      />
     </div>
   );
 };

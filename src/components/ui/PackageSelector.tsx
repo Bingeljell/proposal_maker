@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { X, Package, Check, Star, Zap, Crown, ChevronRight } from 'lucide-react';
 import { PackageTemplate } from '../../types';
 import { usePackages } from '../../hooks/usePackages';
+import { useCurrency } from '../../hooks/useCurrency';
 
 interface PackageSelectorProps {
   isOpen: boolean;
@@ -36,6 +37,7 @@ export const PackageSelector: React.FC<PackageSelectorProps> = ({
   onApplyPackage,
 }) => {
   const { packages, getPackagesByTier } = usePackages();
+  const { formatAmount } = useCurrency();
   const [selectedTier, setSelectedTier] = useState<PackageTemplate['tier'] | 'all'>('all');
   const [previewPackage, setPreviewPackage] = useState<PackageTemplate | null>(null);
 
@@ -46,11 +48,7 @@ export const PackageSelector: React.FC<PackageSelectorProps> = ({
     : getPackagesByTier(selectedTier);
 
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-IN', {
-      style: 'currency',
-      currency: 'INR',
-      maximumFractionDigits: 0,
-    }).format(price);
+    return formatAmount(price);
   };
 
   const handleApply = () => {

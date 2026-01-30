@@ -1,6 +1,7 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { Proposal, PackageTemplate } from '../types';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { Proposal, PackageTemplate, ProposalTemplate, CostItem, ProposalStatus } from '../types';
 import { initialProposal } from '../data/initialProposal';
+import { calculateItemRate } from '../utils/pricingEngine';
 
 interface ProposalContextType {
   proposal: Proposal;
@@ -11,6 +12,11 @@ interface ProposalContextType {
   resetProposal: () => void;
   duplicateProposal: () => void;
   applyPackage: (pkg: PackageTemplate) => void;
+  applyTemplate: (template: ProposalTemplate, sections?: string[]) => void;
+  recalculateCosts: () => void;
+  updatePricingVariable: (variableId: string, value: number) => void;
+  getCalculatedItemRate: (item: CostItem) => number;
+  updateStatus: (newStatus: ProposalStatus) => void;
 }
 
 const ProposalContext = createContext<ProposalContextType | undefined>(undefined);
@@ -32,6 +38,32 @@ export const ProposalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         if (!migrated.meta.proposalName) {
           migrated.meta.proposalName = '';
         }
+        if (!migrated.pricingVariables) {
+          migrated.pricingVariables = [];
+        }
+        // Migration: Add status field for existing proposals
+        if (!migrated.status) {
+          migrated.status = 'draft';
+        }
+        if (!migrated.statusHistory) {
+          migrated.statusHistory = [
+            {
+              status: migrated.status,
+              timestamp: new Date().toISOString(),
+              changedBy: 'System (Migration)',
+            },
+          ];
+        }
+        // Migration: Ensure coverStyle exists
+        if (!migrated.meta.coverStyle) {
+          migrated.meta.coverStyle = {
+            layout: 'centered',
+            showDecorativeElements: true,
+            backgroundPattern: 'none',
+            accentColor: '#2563eb',
+            fontSize: 'normal',
+          };
+        }
         return migrated;
       }
       return initialProposal;
@@ -52,6 +84,82 @@ export const ProposalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setProposal((prev) => ({ ...prev, [section]: data }));
   };
 
+  /**
+   * Recalculate all costing items that use formulas
+   * This is called automatically when pricing variables change
+   */
+  const recalculateCosts = useCallback(() => {
+    setProposal((prev) => {
+      const updatedCosting = prev.costing.map((section) => ({
+        ...section,
+        items: section.items.map((item) => {
+          if (item.useFormula && item.formula) {
+            const result = calculateItemRate(item, prev.pricingVariables || []);
+            return {
+              ...item,
+              calculatedRate: result.rate,
+              formulaError: result.error,
+            };
+          }
+          return item;
+        }),
+      }));
+
+      return { ...prev, costing: updatedCosting };
+    });
+  }, []);
+
+  /**
+   * Update a pricing variable value and recalculate all dependent costs
+   */
+  const updatePricingVariable = useCallback((variableId: string, value: number) => {
+    setProposal((prev) => {
+      const updatedVariables = prev.pricingVariables.map((v) =>
+        v.id === variableId ? { ...v, value } : v
+      );
+
+      // Recalculate all items that might use this variable
+      const updatedCosting = prev.costing.map((section) => ({
+        ...section,
+        items: section.items.map((item) => {
+          if (item.useFormula && item.formula) {
+            const result = calculateItemRate(
+              { ...item, variables: item.variables },
+              updatedVariables
+            );
+            return {
+              ...item,
+              calculatedRate: result.rate,
+              formulaError: result.error,
+            };
+          }
+          return item;
+        }),
+      }));
+
+      return {
+        ...prev,
+        pricingVariables: updatedVariables,
+        costing: updatedCosting,
+      };
+    });
+  }, []);
+
+  /**
+   * Get the calculated rate for a cost item
+   * Returns the formula result if in formula mode, otherwise returns manual rate
+   */
+  const getCalculatedItemRate = useCallback(
+    (item: CostItem): number => {
+      if (item.useFormula && item.formula) {
+        const result = calculateItemRate(item, proposal.pricingVariables || []);
+        return result.rate;
+      }
+      return item.rate;
+    },
+    [proposal.pricingVariables]
+  );
+
   const loadFromFile = (file: File) => {
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -67,6 +175,32 @@ export const ProposalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         }
         if (!migrated.meta.proposalName) {
           migrated.meta.proposalName = '';
+        }
+        if (!migrated.pricingVariables) {
+          migrated.pricingVariables = [];
+        }
+        // Migration: Add status field for imported files
+        if (!migrated.status) {
+          migrated.status = 'draft';
+        }
+        if (!migrated.statusHistory) {
+          migrated.statusHistory = [
+            {
+              status: migrated.status,
+              timestamp: new Date().toISOString(),
+              changedBy: 'System (Import)',
+            },
+          ];
+        }
+        // Migration: Ensure coverStyle exists
+        if (!migrated.meta.coverStyle) {
+          migrated.meta.coverStyle = {
+            layout: 'centered',
+            showDecorativeElements: true,
+            backgroundPattern: 'none',
+            accentColor: '#2563eb',
+            fontSize: 'normal',
+          };
         }
         setProposal(migrated);
       } catch (err) {
@@ -103,11 +237,44 @@ export const ProposalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       cloned.meta.date = new Date().toISOString().split('T')[0];
       // Clear version history for fresh start
       cloned.versionHistory = [];
+      // Reset status to draft for the copy
+      cloned.status = 'draft';
+      cloned.statusHistory = [
+        {
+          status: 'draft',
+          timestamp: new Date().toISOString(),
+          changedBy: 'System (Duplicate)',
+        },
+      ];
       // Generate new proposal ID
       cloned.id = crypto.randomUUID();
       return cloned;
     });
   };
+
+  /**
+   * Update the proposal status and log the change
+   */
+  const updateStatus = useCallback((newStatus: ProposalStatus) => {
+    setProposal((prev) => {
+      // Don't update if status hasn't changed
+      if (prev.status === newStatus) return prev;
+
+      const historyItem = {
+        status: newStatus,
+        timestamp: new Date().toISOString(),
+        changedBy: 'User',
+      };
+
+      console.log(`[Proposal Status] Changed from "${prev.status}" to "${newStatus}" at ${historyItem.timestamp}`);
+
+      return {
+        ...prev,
+        status: newStatus,
+        statusHistory: [...(prev.statusHistory || []), historyItem],
+      };
+    });
+  }, []);
 
   const applyPackage = (pkg: PackageTemplate) => {
     setProposal((prev) => {
@@ -147,6 +314,99 @@ export const ProposalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     });
   };
 
+  const applyTemplate = (template: ProposalTemplate, sections?: string[]) => {
+    setProposal((prev) => {
+      const updates: Partial<Proposal> = {};
+
+      // Determine which sections to apply
+      const sectionsToApply = sections || [
+        'execSummary',
+        'scope',
+        'clientResponsibilities',
+        'outOfScope',
+        'team',
+        'costing',
+        'rateCard',
+        'terms',
+        'signOff',
+      ];
+
+      // Apply execSummary
+      if (sectionsToApply.includes('execSummary') && template.execSummary) {
+        updates.execSummary = { ...template.execSummary };
+      }
+
+      // Apply scope with new IDs
+      if (sectionsToApply.includes('scope') && template.scope && template.scope.length > 0) {
+        updates.scope = template.scope.map((section) => ({
+          ...section,
+          id: crypto.randomUUID(),
+          deliverables: section.deliverables.map((d) => ({
+            ...d,
+            id: crypto.randomUUID(),
+          })),
+        }));
+      }
+
+      // Apply clientResponsibilities
+      if (sectionsToApply.includes('clientResponsibilities') && template.clientResponsibilities) {
+        updates.clientResponsibilities = [...template.clientResponsibilities];
+      }
+
+      // Apply outOfScope
+      if (sectionsToApply.includes('outOfScope') && template.outOfScope) {
+        updates.outOfScope = [...template.outOfScope];
+      }
+
+      // Apply team with new IDs
+      if (sectionsToApply.includes('team') && template.team && template.team.length > 0) {
+        updates.team = template.team.map((member) => ({
+          ...member,
+          id: crypto.randomUUID(),
+        }));
+      }
+
+      // Apply costing with new IDs
+      if (sectionsToApply.includes('costing') && template.costing && template.costing.length > 0) {
+        updates.costing = template.costing.map((section) => ({
+          ...section,
+          id: crypto.randomUUID(),
+          items: section.items.map((item) => ({
+            ...item,
+            id: crypto.randomUUID(),
+          })),
+        }));
+      }
+
+      // Apply rateCard with new IDs
+      if (sectionsToApply.includes('rateCard') && template.rateCard && template.rateCard.length > 0) {
+        updates.rateCard = template.rateCard.map((section) => ({
+          ...section,
+          id: crypto.randomUUID(),
+          items: section.items.map((item) => ({
+            ...item,
+            id: crypto.randomUUID(),
+          })),
+        }));
+      }
+
+      // Apply terms
+      if (sectionsToApply.includes('terms') && template.terms) {
+        updates.terms = template.terms;
+      }
+
+      // Apply signOff
+      if (sectionsToApply.includes('signOff') && template.signOff) {
+        updates.signOff = { ...template.signOff };
+      }
+
+      return {
+        ...prev,
+        ...updates,
+      };
+    });
+  };
+
   return (
     <ProposalContext.Provider
       value={{
@@ -158,6 +418,11 @@ export const ProposalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         resetProposal,
         duplicateProposal,
         applyPackage,
+        applyTemplate,
+        recalculateCosts,
+        updatePricingVariable,
+        getCalculatedItemRate,
+        updateStatus,
       }}
     >
       {children}
