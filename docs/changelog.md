@@ -193,6 +193,19 @@
   - CSS variable system remains in codebase for future theming overhaul
   - Added deferred status note in `feature_roadmap.md`
 
+### Branding & Landing Page
+
+- **Added:** New landing page (`src/components/landing/LandingPage.tsx`) with:
+  - Hero section with value proposition
+  - Features grid highlighting 6 key benefits
+  - Capabilities showcase with proposal sections
+  - How it works 3-step process
+  - Call-to-action sections
+  - Responsive design with dark mode support
+- **Renamed:** App from "Proposal Maker" to "The Decent Proposal"
+  - Updated `index.html`, `package.json`, `README.md`
+  - Updated document titles and branding throughout
+
 ### Documentation
 
 - **Added:** `docs/backend_implementation.md` - Complete architecture and implementation plan for Supabase backend

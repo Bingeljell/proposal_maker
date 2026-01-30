@@ -1,12 +1,12 @@
-# Proposal Maker
+# The Decent Proposal
 
-A lightweight, client-side web application for creating professional, branded proposals for advertising and creative services. Built with React and Tailwind CSS.
+A powerful, privacy-first proposal builder for agencies, freelancers, and consultants. Create professional, branded proposals that win deals. Built with React and Tailwind CSS.
 
 ---
 
 ## What It Does
 
-Proposal Maker functions like a document builder:
+The Decent Proposal functions like a document builder:
 
 1. **Input Data via Forms** — Fill in proposal details through an intuitive sidebar interface
 2. **Preview in Real-Time** — See your proposal rendered beautifully as you edit

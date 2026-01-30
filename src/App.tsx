@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { Layout } from './components/layout/Layout';
+import { LandingPage } from './components/landing/LandingPage';
 import { IntroForm } from './components/builder/IntroForm';
 import { HistoryForm } from './components/builder/HistoryForm';
 import { SummaryForm } from './components/builder/SummaryForm';
@@ -12,6 +14,13 @@ import { TermsForm } from './components/builder/TermsForm';
 import { SignOffForm } from './components/builder/SignOffForm';
 
 function App() {
+  const [showApp, setShowApp] = useState(false);
+
+  // Show landing page initially
+  if (!showApp) {
+    return <LandingPage onEnterApp={() => setShowApp(true)} />;
+  }
+
   return (
     <Layout>
       {(activeSection) => {
