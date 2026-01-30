@@ -4,7 +4,7 @@
 Build a lightweight, client-side web application ("Proposal Maker") that allows users to create professional, branded proposals for advertising/creative services. The tool will function like a document builder: users input data via forms, and the app renders a beautiful, print-ready web page that can be exported as a PDF.
 
 ## 2. Core Philosophy
-*   **Client-Side Only:** No backend, no database.
+*   **Hybrid Architecture:** Primarily client-side for speed, but leveraging backend services for sharing and persistence where needed.
 *   **Stateless Tool:** The app is a "processor". Data is saved by the user as a `.json` file and can be re-uploaded to resume editing.
 *   **Print-First Design:** The HTML output is optimized for "Print to PDF" functionality.
 *   **Organic UX:** Clean input forms -> Real-time or On-demand Preview.
