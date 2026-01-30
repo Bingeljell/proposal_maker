@@ -42,6 +42,9 @@ export const ProposalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         if (migrated.meta.coverImage === undefined) {
           migrated.meta.coverImage = null;
         }
+        if (!migrated.meta.coverPattern) {
+          migrated.meta.coverPattern = 'none';
+        }
         if (!migrated.meta.currency) {
           migrated.meta.currency = 'INR';
         }
@@ -89,6 +92,9 @@ export const ProposalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         }
         if (migrated.meta.coverImage === undefined) {
           migrated.meta.coverImage = null;
+        }
+        if (!migrated.meta.coverPattern) {
+          migrated.meta.coverPattern = 'none';
         }
         if (!migrated.meta.currency) {
           migrated.meta.currency = 'INR';

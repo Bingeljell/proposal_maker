@@ -17,6 +17,7 @@ export const initialProposal: Proposal = {
     },
     coverLayout: 'simple',
     coverImage: null,
+    coverPattern: 'none',
     currency: 'INR',
   },
   sectionVisibility: {

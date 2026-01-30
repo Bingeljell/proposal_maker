@@ -39,6 +39,7 @@ export interface ProposalMeta {
   theme: ThemeConfig;
   coverLayout: 'simple' | 'split' | 'full' | 'minimal';
   coverImage: string | null; // Base64 or URL for background
+  coverPattern?: string; // CSS background pattern ID
   currency: CurrencyCode;
 }
 

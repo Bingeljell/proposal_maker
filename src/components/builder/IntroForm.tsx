@@ -5,6 +5,7 @@ import { ThemeSelector } from '../ui/ThemeSelector';
 import { ThemeConfig, CurrencyCode } from '../../types';
 import { predefinedThemes } from '../../data/themes';
 import { currencySymbols } from '../../utils/currency';
+import { patterns } from '../../data/patterns';
 
 export const IntroForm: React.FC = () => {
   const { proposal, updateSection } = useProposal();
@@ -239,6 +240,39 @@ export const IntroForm: React.FC = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Pattern Selector */}
+            {!proposal.meta.coverImage && (
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Background Pattern</label>
+                    <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
+                        {patterns.map((pattern) => (
+                            <button
+                                key={pattern.id}
+                                onClick={() => updateSection('meta', { ...proposal.meta, coverPattern: pattern.id })}
+                                className={`h-16 rounded-lg border-2 transition-all relative overflow-hidden ${
+                                    proposal.meta.coverPattern === pattern.id
+                                    ? 'border-blue-500 ring-2 ring-blue-200 dark:ring-blue-900'
+                                    : 'border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500'
+                                }`}
+                                title={pattern.name}
+                            >
+                                <div 
+                                    className="absolute inset-0 bg-gray-50 dark:bg-gray-800"
+                                    style={{ 
+                                        backgroundImage: pattern.css,
+                                        // Mock CSS variable for preview
+                                        '--color-primary-light': 'rgba(59, 130, 246, 0.2)' 
+                                    } as React.CSSProperties}
+                                />
+                                {proposal.meta.coverPattern === pattern.id && (
+                                    <div className="absolute top-1 right-1 w-2 h-2 bg-blue-500 rounded-full shadow-sm" />
+                                )}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            )}
         </div>
       </div>
 

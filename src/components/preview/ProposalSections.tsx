@@ -2,6 +2,7 @@ import React from 'react';
 import { Proposal, PageBreakTargetType } from '../../types';
 import { Globe, MapPin } from 'lucide-react';
 import { formatCurrency } from '../../utils/currency';
+import { patterns } from '../../data/patterns';
 
 // --- Helper Components ---
 
@@ -141,9 +142,19 @@ export const CoverPage: React.FC<{ proposal: Proposal }> = ({ proposal }) => {
   }
 
   // Default 'simple' layout
+  const pattern = patterns.find(p => p.id === proposal.meta.coverPattern)?.css || 'none';
+
   return (
-    <PageContainer className="flex flex-col justify-between text-center border-t-[10px] border-blue-600">
-        <div>
+    <PageContainer className="flex flex-col justify-between text-center border-t-[10px] border-blue-600 relative overflow-hidden">
+        {/* Background Pattern */}
+        {layout === 'simple' && pattern !== 'none' && (
+            <div 
+                className="absolute inset-0 z-0 opacity-30 pointer-events-none"
+                style={{ backgroundImage: pattern }}
+            />
+        )}
+
+        <div className="relative z-10">
         <div className="pt-20">
             {proposal.meta.logo ? (
             <img src={proposal.meta.logo} alt="Agency Logo" className="h-32 mx-auto object-contain mb-8" />
@@ -155,7 +166,7 @@ export const CoverPage: React.FC<{ proposal: Proposal }> = ({ proposal }) => {
         </div>
         </div>
 
-        <div className="flex-1 flex flex-col justify-center">
+        <div className="flex-1 flex flex-col justify-center relative z-10">
         <h1 className="text-5xl font-extrabold text-gray-900 mb-6 leading-tight">
             {proposal.meta.title}
         </h1>
@@ -165,7 +176,7 @@ export const CoverPage: React.FC<{ proposal: Proposal }> = ({ proposal }) => {
         </p>
         </div>
 
-        <div className="pb-20 text-gray-400 font-medium">
+        <div className="pb-20 text-gray-400 font-medium relative z-10">
         <p>{new Date(proposal.meta.date).toLocaleDateString('en-US', { dateStyle: 'long' })}</p>
         </div>
     </PageContainer>
