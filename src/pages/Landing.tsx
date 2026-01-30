@@ -8,8 +8,10 @@ import {
   ArrowRight,
   Zap,
   Globe,
-  LayoutTemplate
+  LayoutTemplate,
+  Briefcase
 } from 'lucide-react';
+import { templates } from '../data/templates';
 
 export const Landing = () => {
   return (
@@ -25,8 +27,8 @@ export const Landing = () => {
             <span className="font-bold text-lg tracking-tight">The Decent Proposal</span>
           </div>
           <div className="flex items-center gap-6">
-            <Link to="/builder" className="text-sm font-medium hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Features</Link>
-            <Link to="/builder" className="text-sm font-medium hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Templates</Link>
+            <a href="#features" className="text-sm font-medium hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Features</a>
+            <a href="#templates" className="text-sm font-medium hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Templates</a>
             <Link 
               to="/builder" 
               className="bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-5 py-2 rounded-full text-sm font-semibold hover:bg-gray-800 dark:hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl"
@@ -182,6 +184,66 @@ export const Landing = () => {
               title="Cover Designer"
               description="Make a great first impression with beautiful, customizable cover pages and background patterns."
             />
+          </div>
+        </div>
+      </section>
+
+      {/* Templates Section */}
+      <section id="templates" className="py-24 bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-xs font-semibold mb-4 border border-purple-100 dark:border-purple-800">
+              <LayoutTemplate size={12} fill="currentColor" />
+              <span>Get Started Faster</span>
+            </div>
+            <h2 className="text-3xl font-bold mb-4">Start with a professional template</h2>
+            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+              Choose from our library of pre-built proposals for common agency services.
+              Customize them to fit your brand in seconds.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {templates.map((template) => (
+              <div key={template.id} className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all group flex flex-col">
+                <div className="h-40 bg-gray-100 dark:bg-gray-700 relative overflow-hidden flex items-center justify-center">
+                   {/* Abstract Preview */}
+                   <div className="w-3/4 h-3/4 bg-white dark:bg-gray-800 shadow-md rounded-md flex flex-col p-3 transform group-hover:scale-105 transition-transform duration-500">
+                      <div className="h-2 w-1/2 bg-gray-200 dark:bg-gray-600 rounded mb-2"></div>
+                      <div className="h-1 w-full bg-gray-100 dark:bg-gray-700 rounded mb-1"></div>
+                      <div className="h-1 w-2/3 bg-gray-100 dark:bg-gray-700 rounded mb-4"></div>
+                      <div className="flex-1 bg-blue-50 dark:bg-blue-900/20 rounded border border-blue-100 dark:border-blue-800/50"></div>
+                   </div>
+                   <div className="absolute top-3 right-3">
+                      <span className={`text-[10px] px-2 py-1 rounded-full border font-bold uppercase tracking-wider ${
+                        template.category === 'Creative' ? 'bg-purple-50 text-purple-700 border-purple-200' :
+                        template.category === 'Technical' ? 'bg-blue-50 text-blue-700 border-blue-200' :
+                        'bg-green-50 text-green-700 border-green-200'
+                      }`}>
+                        {template.category}
+                      </span>
+                   </div>
+                </div>
+                <div className="p-6 flex-1 flex flex-col">
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">{template.name}</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-6 flex-1">
+                    {template.description}
+                  </p>
+                  
+                  <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400 mb-6 border-t border-gray-100 dark:border-gray-700 pt-4">
+                    <span className="flex items-center gap-1"><Layers size={14} /> {template.data.scope.length} Services</span>
+                    <span className="flex items-center gap-1"><Briefcase size={14} /> {template.data.team.length} Roles</span>
+                  </div>
+
+                  <Link 
+                    to="/builder" 
+                    className="w-full py-2.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-lg font-semibold text-sm hover:bg-blue-600 dark:hover:bg-gray-200 hover:text-white dark:hover:text-gray-900 transition-colors text-center"
+                  >
+                    Use Template
+                  </Link>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
