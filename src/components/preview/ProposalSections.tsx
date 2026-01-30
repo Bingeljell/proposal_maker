@@ -41,35 +41,135 @@ const SectionHeading: React.FC<{ title: string; number?: number }> = ({ title, n
 
 // --- Section Renderers ---
 
-export const CoverPage: React.FC<{ proposal: Proposal }> = ({ proposal }) => (
-  <PageContainer className="flex flex-col justify-between text-center">
-    <div>
-      <TricolorLine />
-      <div className="pt-20">
-        {proposal.meta.logo ? (
-          <img src={proposal.meta.logo} alt="Agency Logo" className="h-32 mx-auto object-contain mb-8" />
-        ) : (
-          <div className="h-32 flex items-center justify-center text-gray-300 font-bold text-xl uppercase tracking-widest">
-            Agency Logo
+export const CoverPage: React.FC<{ proposal: Proposal }> = ({ proposal }) => {
+  const layout = proposal.meta.coverLayout || 'simple';
+  const bgImage = proposal.meta.coverImage;
+
+  if (layout === 'minimal') {
+    return (
+      <PageContainer className="flex flex-col justify-center text-left p-[20mm]">
+        <div className="mb-16">
+           {proposal.meta.logo && (
+            <img src={proposal.meta.logo} alt="Agency Logo" className="h-16 object-contain mb-8" />
+          )}
+        </div>
+        <h1 className="text-6xl font-light text-gray-900 mb-6 leading-tight tracking-tight">
+          {proposal.meta.title}
+        </h1>
+        <div className="w-24 h-1 bg-gray-900 mb-8"></div>
+        <p className="text-xl text-gray-500 font-light">
+          Prepared for <span className="text-gray-900 font-medium">{proposal.meta.clientName}</span>
+        </p>
+        <p className="text-sm text-gray-400 mt-24">
+            {new Date(proposal.meta.date).toLocaleDateString('en-US', { dateStyle: 'long' })}
+        </p>
+      </PageContainer>
+    );
+  }
+
+  if (layout === 'full' && bgImage) {
+    return (
+       <div className="bg-white w-full max-w-[210mm] mx-auto min-h-[297mm] mb-8 shadow-lg print:shadow-none print:mb-0 print:w-full print:max-w-none print:h-auto print:min-h-0 relative overflow-hidden flex flex-col justify-end text-white">
+          {/* Background Image */}
+          <div className="absolute inset-0 z-0">
+             <img src={bgImage} alt="Cover" className="w-full h-full object-cover" />
+             <div className="absolute inset-0 bg-black/40"></div>
+             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
           </div>
-        )}
-      </div>
-    </div>
 
-    <div className="flex-1 flex flex-col justify-center">
-      <h1 className="text-5xl font-extrabold text-gray-900 mb-4 leading-tight">
-        {proposal.meta.title}
-      </h1>
-      <p className="text-xl text-gray-500 uppercase tracking-widest font-medium">
-        Prepared for {proposal.meta.clientName}
-      </p>
-    </div>
+          <div className="relative z-10 p-[15mm] pb-[30mm]">
+            {proposal.meta.logo && (
+                <div className="bg-white/90 p-4 rounded-lg inline-block mb-12 backdrop-blur-sm">
+                     <img src={proposal.meta.logo} alt="Agency Logo" className="h-16 object-contain" />
+                </div>
+            )}
+            <h1 className="text-5xl font-extrabold mb-4 leading-tight text-white drop-shadow-md">
+                {proposal.meta.title}
+            </h1>
+            <p className="text-2xl text-gray-200 font-medium mb-2">
+                {proposal.meta.clientName}
+            </p>
+             <p className="text-lg text-gray-300">
+                {new Date(proposal.meta.date).toLocaleDateString('en-US', { dateStyle: 'long' })}
+            </p>
+          </div>
+       </div>
+    );
+  }
 
-    <div className="pb-20 text-gray-400 font-medium">
-      <p>{new Date(proposal.meta.date).toLocaleDateString('en-US', { dateStyle: 'long' })}</p>
-    </div>
-  </PageContainer>
-);
+  if (layout === 'split') {
+      return (
+        <div className="bg-white w-full max-w-[210mm] mx-auto min-h-[297mm] mb-8 shadow-lg print:shadow-none print:mb-0 print:w-full print:max-w-none print:h-auto print:min-h-0 flex flex-col md:flex-row overflow-hidden">
+             {/* Left/Top Content */}
+             <div className="w-full md:w-1/2 p-[15mm] flex flex-col justify-between bg-gray-50">
+                <div className="pt-10">
+                    {proposal.meta.logo ? (
+                        <img src={proposal.meta.logo} alt="Agency Logo" className="h-24 object-contain" />
+                    ) : (
+                        <div className="text-gray-400 font-bold text-xl uppercase tracking-widest">Agency Logo</div>
+                    )}
+                </div>
+                
+                <div className="py-20">
+                    <h1 className="text-4xl font-extrabold text-gray-900 mb-6 leading-tight">
+                        {proposal.meta.title}
+                    </h1>
+                     <div className="w-12 h-1.5 bg-blue-600 mb-6"></div>
+                    <p className="text-lg text-gray-600 font-medium">
+                        Prepared for {proposal.meta.clientName}
+                    </p>
+                </div>
+
+                <div className="pb-10 text-gray-500 font-medium text-sm">
+                    {new Date(proposal.meta.date).toLocaleDateString('en-US', { dateStyle: 'long' })}
+                </div>
+             </div>
+
+             {/* Right/Bottom Image */}
+             <div className="w-full md:w-1/2 bg-gray-200 relative">
+                 {bgImage ? (
+                     <img src={bgImage} alt="Cover" className="w-full h-full object-cover absolute inset-0" />
+                 ) : (
+                     <div className="w-full h-full flex items-center justify-center text-gray-400 bg-gray-800">
+                         <span className="text-white opacity-50 font-bold text-xl">Cover Image</span>
+                     </div>
+                 )}
+             </div>
+        </div>
+      );
+  }
+
+  // Default 'simple' layout
+  return (
+    <PageContainer className="flex flex-col justify-between text-center border-t-[10px] border-blue-600">
+        <div>
+        <div className="pt-20">
+            {proposal.meta.logo ? (
+            <img src={proposal.meta.logo} alt="Agency Logo" className="h-32 mx-auto object-contain mb-8" />
+            ) : (
+            <div className="h-32 flex items-center justify-center text-gray-300 font-bold text-xl uppercase tracking-widest">
+                Agency Logo
+            </div>
+            )}
+        </div>
+        </div>
+
+        <div className="flex-1 flex flex-col justify-center">
+        <h1 className="text-5xl font-extrabold text-gray-900 mb-6 leading-tight">
+            {proposal.meta.title}
+        </h1>
+        <div className="w-20 h-1 bg-gray-200 mx-auto mb-6"></div>
+        <p className="text-xl text-gray-500 uppercase tracking-widest font-medium">
+            Prepared for {proposal.meta.clientName}
+        </p>
+        </div>
+
+        <div className="pb-20 text-gray-400 font-medium">
+        <p>{new Date(proposal.meta.date).toLocaleDateString('en-US', { dateStyle: 'long' })}</p>
+        </div>
+    </PageContainer>
+  );
+};
 
 export const VersionHistory: React.FC<{ proposal: Proposal; index: number }> = ({ proposal, index }) => (
   <div className="mb-12 break-inside-avoid">

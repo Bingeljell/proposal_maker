@@ -15,6 +15,8 @@ export const initialProposal: Proposal = {
       headingFont: 'Inter, sans-serif',
       bodyFont: 'Inter, sans-serif',
     },
+    coverLayout: 'simple',
+    coverImage: null,
   },
   sectionVisibility: {
     'intro': true,

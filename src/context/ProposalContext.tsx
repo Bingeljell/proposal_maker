@@ -36,6 +36,12 @@ export const ProposalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         if (!migrated.meta.theme) {
           migrated.meta.theme = initialProposal.meta.theme;
         }
+        if (!migrated.meta.coverLayout) {
+          migrated.meta.coverLayout = 'simple';
+        }
+        if (migrated.meta.coverImage === undefined) {
+          migrated.meta.coverImage = null;
+        }
         return migrated;
       }
       return initialProposal;
@@ -74,6 +80,12 @@ export const ProposalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         }
         if (!migrated.meta.theme) {
           migrated.meta.theme = initialProposal.meta.theme;
+        }
+        if (!migrated.meta.coverLayout) {
+          migrated.meta.coverLayout = 'simple';
+        }
+        if (migrated.meta.coverImage === undefined) {
+          migrated.meta.coverImage = null;
         }
         setProposal(migrated);
       } catch (err) {

@@ -35,6 +35,8 @@ export interface ProposalMeta {
   logo: string | null; // Base64 string
   proposalName: string; // For file naming, separate from title
   theme: ThemeConfig;
+  coverLayout: 'simple' | 'split' | 'full' | 'minimal';
+  coverImage: string | null; // Base64 or URL for background
 }
 
 export interface ThemeConfig {
