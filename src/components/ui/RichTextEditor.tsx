@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { TextStyle } from '@tiptap/extension-text-style';
-import { Bold, Italic, List, ListOrdered, Indent, Outdent, AlignJustify, BookOpen } from 'lucide-react';
+import { Bold, Italic, List, ListOrdered, Indent, Outdent, AlignJustify, BookOpen, Sparkles } from 'lucide-react';
 import clsx from 'clsx';
 import { ContentLibraryModal } from './ContentLibraryModal';
+import { AIWritingAssistant } from './AIWritingAssistant';
 
 // Custom extension to allow font-size and line-height
 import { Node } from '@tiptap/core';
@@ -70,6 +71,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
   className = "" 
 }) => {
   const [isLibraryOpen, setIsLibraryOpen] = useState(false);
+  const [isAIAssistantOpen, setIsAIAssistantOpen] = useState(false);
 
   const editor = useEditor({
     extensions: [
@@ -239,6 +241,12 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
           icon={BookOpen}
           label="Insert Snippet"
         />
+        <MenuButton
+          onClick={() => setIsAIAssistantOpen(true)}
+          isActive={false}
+          icon={Sparkles}
+          label="AI Assist"
+        />
       </div>
       
       {/* Editor Content */}
@@ -248,6 +256,15 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
       <ContentLibraryModal
         isOpen={isLibraryOpen}
         onClose={() => setIsLibraryOpen(false)}
+        onInsert={(content) => {
+          editor?.chain().focus().insertContent(content).run();
+        }}
+      />
+
+      {/* AI Writing Assistant Modal */}
+      <AIWritingAssistant
+        isOpen={isAIAssistantOpen}
+        onClose={() => setIsAIAssistantOpen(false)}
         onInsert={(content) => {
           editor?.chain().focus().insertContent(content).run();
         }}

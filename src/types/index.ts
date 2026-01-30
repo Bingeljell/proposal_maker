@@ -15,6 +15,17 @@ export type Currency = 'INR' | 'USD' | 'EUR' | 'GBP' | 'AUD' | 'CAD' | 'SGD' | '
 
 export type ProposalStatus = 'draft' | 'review' | 'final' | 'sent';
 
+export type ProposalOutcome = 'pending' | 'won' | 'lost' | 'on-hold';
+
+export interface OutcomeDetails {
+  dateDecided?: string;
+  valueWon?: number;
+  lossReason?: string;
+  lossReasonOther?: string;
+  notes?: string;
+  competitor?: string;
+}
+
 export interface StatusHistoryItem {
   status: ProposalStatus;
   timestamp: string;
@@ -46,6 +57,8 @@ export interface Proposal {
   pricingVariables: PricingVariable[];
   status: ProposalStatus;
   statusHistory?: StatusHistoryItem[];
+  outcome?: ProposalOutcome;
+  outcomeDetails?: OutcomeDetails;
 }
 
 export type CoverLayout = 'centered' | 'left-aligned' | 'split' | 'minimal';

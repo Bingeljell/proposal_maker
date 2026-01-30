@@ -3,27 +3,36 @@ import { useProposal } from '../../hooks/useProposal';
 import { useDarkMode } from '../../hooks/useDarkMode';
 import { StatusBadge } from '../ui/StatusBadge';
 import { StatusWorkflow } from '../ui/StatusWorkflow';
+import { OutcomeTracker } from '../ui/OutcomeTracker';
+import { OutcomeBadge } from '../ui/OutcomeBadge';
+import { ExportModal } from '../ui/ExportModal';
 import { Sidebar } from './Sidebar';
 import { SectionId } from '../../types';
 import { Preview } from '../preview/Preview';
-import { Download, Upload, Trash2, Eye, EyeOff, Edit3, Printer, Moon, Sun, GitBranch } from 'lucide-react';
+import { Download, Upload, Trash2, Eye, EyeOff, Edit3, FileOutput, Moon, Sun, GitBranch, Target } from 'lucide-react';
 
 interface LayoutProps {
   children: (activeSection: SectionId) => React.ReactNode;
 }
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const { proposal, saveToFile, loadFromFile, resetProposal, updateStatus } = useProposal();
+  const { proposal, saveToFile, loadFromFile, resetProposal, updateStatus, updateOutcome } = useProposal();
   const { isDarkMode, toggle } = useDarkMode();
   const [activeSection, setActiveSection] = useState<SectionId>('intro');
   const [viewMode, setViewMode] = useState<'edit' | 'preview'>('edit');
   const [isWorkflowOpen, setIsWorkflowOpen] = useState(false);
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+  const [isOutcomeTrackerOpen, setIsOutcomeTrackerOpen] = useState(false);
 
   // Update document title for PDF printing (browser uses this as default filename)
   useEffect(() => {
     const fileName = proposal.meta.proposalName.trim() || proposal.meta.title;
     document.title = fileName ? `${fileName} - Proposal` : 'Proposal Builder';
   }, [proposal.meta.proposalName, proposal.meta.title]);
+
+  const handleOpenExport = () => {
+    setIsExportModalOpen(true);
+  };
 
   const handlePrint = () => {
     window.print();
@@ -61,6 +70,18 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                 <GitBranch size={14} className="text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300" />
               </button>
             </div>
+            {/* Outcome Badge */}
+            {proposal.outcome && proposal.outcome !== 'pending' && (
+              <div className="border-l border-gray-200 dark:border-gray-600 pl-4">
+                <button
+                  onClick={() => setIsOutcomeTrackerOpen(true)}
+                  className="group flex items-center gap-2 px-2 py-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                  title="Click to view outcome details"
+                >
+                  <OutcomeBadge outcome={proposal.outcome} size="sm" />
+                </button>
+              </div>
+            )}
           </div>
 
           <div className="flex items-center gap-2">
@@ -100,13 +121,23 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
 
             {viewMode === 'preview' && (
               <button
-                onClick={handlePrint}
-                className="flex items-center gap-2 px-4 py-1.5 bg-gray-900 text-white rounded-md text-xs font-semibold hover:bg-black transition-colors mr-4"
+                onClick={handleOpenExport}
+                className="flex items-center gap-2 px-4 py-1.5 bg-gray-900 dark:bg-blue-600 text-white rounded-md text-xs font-semibold hover:bg-black dark:hover:bg-blue-700 transition-colors mr-4"
               >
-                <Printer size={14} />
-                Print PDF
+                <FileOutput size={14} />
+                Export
               </button>
             )}
+
+            {/* Track Outcome Button */}
+            <button
+              onClick={() => setIsOutcomeTrackerOpen(true)}
+              className="flex items-center gap-2 px-3 py-1.5 text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 rounded-md text-xs font-semibold transition-colors"
+              title="Track proposal outcome"
+            >
+              <Target size={14} />
+              Track Outcome
+            </button>
 
             <div className="flex gap-2 border-l pl-4 border-gray-200 dark:border-gray-600">
               <button 
@@ -165,6 +196,24 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         currentStatus={proposal.status}
         statusHistory={proposal.statusHistory}
         onStatusChange={updateStatus}
+      />
+
+      {/* Outcome Tracker Modal */}
+      <OutcomeTracker
+        isOpen={isOutcomeTrackerOpen}
+        onClose={() => setIsOutcomeTrackerOpen(false)}
+        currentOutcome={proposal.outcome}
+        outcomeDetails={proposal.outcomeDetails}
+        currency={proposal.meta.currency || 'INR'}
+        onOutcomeChange={updateOutcome}
+      />
+
+      {/* Export Modal */}
+      <ExportModal
+        isOpen={isExportModalOpen}
+        onClose={() => setIsExportModalOpen(false)}
+        onPrint={handlePrint}
+        onExportJSON={saveToFile}
       />
     </div>
   );

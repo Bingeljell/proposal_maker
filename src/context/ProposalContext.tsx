@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { Proposal, PackageTemplate, ProposalTemplate, CostItem, ProposalStatus } from '../types';
+import { Proposal, PackageTemplate, ProposalTemplate, CostItem, ProposalStatus, ProposalOutcome, OutcomeDetails } from '../types';
 import { initialProposal } from '../data/initialProposal';
 import { calculateItemRate } from '../utils/pricingEngine';
 
@@ -17,6 +17,7 @@ interface ProposalContextType {
   updatePricingVariable: (variableId: string, value: number) => void;
   getCalculatedItemRate: (item: CostItem) => number;
   updateStatus: (newStatus: ProposalStatus) => void;
+  updateOutcome: (outcome: ProposalOutcome, details?: OutcomeDetails) => void;
 }
 
 const ProposalContext = createContext<ProposalContextType | undefined>(undefined);
@@ -63,6 +64,10 @@ export const ProposalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
             accentColor: '#2563eb',
             fontSize: 'normal',
           };
+        }
+        // Migration: Add outcome fields for existing proposals
+        if (!migrated.outcome) {
+          migrated.outcome = 'pending';
         }
         return migrated;
       }
@@ -202,6 +207,10 @@ export const ProposalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
             fontSize: 'normal',
           };
         }
+        // Migration: Add outcome fields for imported files
+        if (!migrated.outcome) {
+          migrated.outcome = 'pending';
+        }
         setProposal(migrated);
       } catch (err) {
         console.error('Failed to parse proposal file', err);
@@ -272,6 +281,21 @@ export const ProposalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         ...prev,
         status: newStatus,
         statusHistory: [...(prev.statusHistory || []), historyItem],
+      };
+    });
+  }, []);
+
+  /**
+   * Update the proposal outcome and details
+   */
+  const updateOutcome = useCallback((outcome: ProposalOutcome, details?: OutcomeDetails) => {
+    setProposal((prev) => {
+      console.log(`[Proposal Outcome] Changed from "${prev.outcome || 'pending'}" to "${outcome}"`);
+
+      return {
+        ...prev,
+        outcome,
+        outcomeDetails: details,
       };
     });
   }, []);
@@ -423,6 +447,7 @@ export const ProposalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         updatePricingVariable,
         getCalculatedItemRate,
         updateStatus,
+        updateOutcome,
       }}
     >
       {children}

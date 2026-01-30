@@ -35,7 +35,7 @@ Allow users to quickly populate proposal sections using pre-defined templates. T
 | Feature | Description | Priority | Status |
 |---------|-------------|----------|--------|
 | ~~Content Library~~ | ~~Save reusable snippets (boilerplate text, case studies, testimonials)~~ | ✅ | **Completed 2026-01-28** |
-| AI Writing Assistant | Auto-generate scope descriptions, executive summaries, or rewrite content for different tones | Medium | Client-side |
+| ~~AI Writing Assistant~~ | ~~Auto-generate scope descriptions, executive summaries, or rewrite content for different tones~~ | ✅ | **Completed 2026-01-30** |
 | Grammar/Spell Check | Integrated proofreading throughout the proposal | Low | Client-side |
 | Smart Suggestions | Recommend services based on client industry or project type | Low | Client-side |
 
@@ -47,7 +47,7 @@ Allow users to quickly populate proposal sections using pre-defined templates. T
 |---------|-------------|----------|--------|
 | ~~Dark Mode~~ | ~~Toggle between light and dark themes for the builder~~ | ✅ | **Completed 2026-01-28** |
 | ~~Theme Presets~~ | ~~Multiple visual styles (Modern, Classic, Minimal, Bold)~~ | ⏸️ | **Deferred - see note below** |
-| Cover Page Designer | Visual editor for the intro page | Medium | Client-side |
+| ~~Cover Page Designer~~ | ~~Visual editor for the intro page~~ | ✅ | **Completed 2026-01-30** |
 | Multi-brand Support | Switch between different agency brands | Low | Client-side |
 | Custom CSS | Advanced users can add their own styles | Low | Client-side |
 
@@ -57,7 +57,7 @@ Allow users to quickly populate proposal sections using pre-defined templates. T
 
 | Feature | Description | Priority | Status |
 |---------|-------------|----------|--------|
-| Approval Workflow | Mark proposals as Draft → Review → Final → Sent | Medium | Client-side |
+| ~~Approval Workflow~~ | ~~Mark proposals as Draft → Review → Final → Sent~~ | ✅ | **Completed 2026-01-30** |
 | E-signature Integration | Built-in signing (DocuSign, HelloSign) | Medium | Requires backend |
 | Shareable Preview Links | Send clients a view-only link | High | ⚠️ **Requires backend/hosting** |
 | Comments/Annotations | Add internal notes to sections | Low | Client-side |
@@ -70,8 +70,8 @@ Allow users to quickly populate proposal sections using pre-defined templates. T
 |---------|-------------|----------|--------|
 | Expiration Dates | Auto-expire proposals after a set date | Medium | Client-side |
 | Proposal Analytics | Track when clients view proposals, time spent per section | Medium | ⚠️ Requires backend |
-| Win/Loss Tracking | Record outcomes to calculate conversion rates | Low | Client-side |
-| Revenue Dashboard | Total pipeline value, won revenue, average deal size | Low | Client-side |
+| ~~Win/Loss Tracking~~ | ~~Record outcomes to calculate conversion rates~~ | ✅ | **Completed 2026-01-30** |
+| ~~Revenue Dashboard~~ | ~~Total pipeline value, won revenue, average deal size~~ | ✅ | **Completed 2026-01-30** |
 
 ---
 
@@ -90,7 +90,7 @@ Allow users to quickly populate proposal sections using pre-defined templates. T
 
 | Feature | Description | Priority | Status |
 |---------|-------------|----------|--------|
-| Multiple Export Formats | Word, PowerPoint, Excel (for costing) | Medium | Client-side |
+| ~~Multiple Export Formats~~ | ~~Word, PowerPoint, Excel (for costing)~~ | ✅ | **Completed 2026-01-30** |
 | Email Templates | Pre-written emails to send with proposals | Low | Client-side |
 | Password Protection | Secure sensitive proposals | Low | Client-side |
 | QR Code Generation | For easy mobile access | Low | Client-side |
@@ -105,7 +105,7 @@ Allow users to quickly populate proposal sections using pre-defined templates. T
 | ~~Package Builder~~ | ~~Bundle services into tiered packages (Basic/Standard/Premium)~~ | ✅ | **Completed 2026-01-28** |
 | ~~Questionnaire Mode~~ | ~~Send clients a form to auto-populate the proposal~~ | ✅ | **Completed 2026-01-28** |
 | ~~Duplicate/Clone~~ | ~~Copy existing proposals as starting points~~ | ✅ | **Completed 2026-01-28** |
-| Dynamic Pricing | Formulas based on quantities (e.g., "Price per video × number of videos") | Medium | Client-side |
+| ~~Dynamic Pricing~~ | ~~Formulas based on quantities (e.g., "Price per video × number of videos")~~ | ✅ | **Completed 2026-01-30** |
 | Version Control | Built-in versioning with diff view between proposal versions | Low | Client-side |
 | Multi-language Support | Support for proposals in multiple languages | Low | Client-side |
 

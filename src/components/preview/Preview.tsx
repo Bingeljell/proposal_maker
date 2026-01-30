@@ -1,6 +1,6 @@
 import React from 'react';
 import { useProposal } from '../../hooks/useProposal';
-import { SectionId, ProposalStatus } from '../../types';
+import { SectionId, ProposalStatus, ProposalOutcome } from '../../types';
 import {
   CoverPage,
   VersionHistory,
@@ -60,7 +60,35 @@ export const Preview: React.FC = () => {
     return watermarks[status];
   };
 
+  // Outcome watermark styles
+  const getOutcomeWatermark = (outcome: ProposalOutcome | undefined) => {
+    if (!outcome || outcome === 'pending') return null;
+    
+    const watermarks: Record<Exclude<ProposalOutcome, 'pending'>, { text: string; className: string; stampClass: string; stampTextClass: string }> = {
+      won: {
+        text: 'WON',
+        className: 'text-green-300/20 dark:text-green-600/20',
+        stampClass: 'border-green-500/50 bg-green-50/10',
+        stampTextClass: 'text-green-500/60',
+      },
+      lost: {
+        text: 'LOST',
+        className: 'text-red-300/20 dark:text-red-600/20',
+        stampClass: 'border-red-500/50 bg-red-50/10',
+        stampTextClass: 'text-red-500/60',
+      },
+      'on-hold': {
+        text: 'ON HOLD',
+        className: 'text-amber-300/20 dark:text-amber-600/20',
+        stampClass: 'border-amber-500/50 bg-amber-50/10',
+        stampTextClass: 'text-amber-500/60',
+      },
+    };
+    return watermarks[outcome];
+  };
+
   const watermark = getStatusWatermark(proposal.status);
+  const outcomeWatermark = getOutcomeWatermark(proposal.outcome);
 
   return (
     <div className="print:m-0 print:p-0 relative">
@@ -102,6 +130,44 @@ export const Preview: React.FC = () => {
             </span>
           </div>
         </div>
+      )}
+
+      {/* Outcome Watermark - Shows over status watermark when set */}
+      {outcomeWatermark && (
+        <>
+          <div
+            className={`
+              fixed pointer-events-none select-none z-0
+              text-6xl md:text-8xl font-black tracking-widest uppercase
+              rotate-45 origin-center
+              ${outcomeWatermark.className}
+              top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+              print:hidden
+            `}
+          >
+            {outcomeWatermark.text}
+          </div>
+          <div
+            className={`
+              fixed pointer-events-none select-none z-50
+              print:fixed print:z-50 print:block
+              bottom-8 right-8 print:bottom-4 print:right-4
+            `}
+          >
+            <div
+              className={`
+                border-4 ${outcomeWatermark.stampClass} rounded-lg
+                px-4 py-2
+                transform -rotate-12
+                backdrop-blur-sm
+              `}
+            >
+              <span className={`text-3xl md:text-4xl font-black ${outcomeWatermark.stampTextClass} tracking-widest uppercase`}>
+                {outcomeWatermark.text}
+              </span>
+            </div>
+          </div>
+        </>
       )}
 
       {/* 1. Cover Page */}

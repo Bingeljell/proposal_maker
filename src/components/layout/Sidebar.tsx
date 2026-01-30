@@ -16,7 +16,8 @@ import {
   Copy,
   BookOpen,
   Package,
-  ClipboardList
+  ClipboardList,
+  BarChart3
 } from 'lucide-react';
 import { SectionId, PackageTemplate, ProposalTemplate } from '../../types';
 import { useProposal } from '../../hooks/useProposal';
@@ -25,6 +26,8 @@ import { ContentLibraryManager } from '../ui/ContentLibraryManager';
 import { PackageSelector } from '../ui/PackageSelector';
 import { TemplateSelector } from '../ui/TemplateSelector';
 import { QuestionnaireModal } from '../ui/QuestionnaireModal';
+import { RevenueDashboard } from '../ui/RevenueDashboard';
+import { useQuickStats } from '../../hooks/useProposalAnalytics';
 
 interface SidebarProps {
   activeSection: SectionId;
@@ -48,10 +51,12 @@ const sections: { id: SectionId; label: string; icon: React.ElementType }[] = [
 export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange }) => {
   const { proposal, updateProposal } = useProposal();
   const { duplicateProposal, applyPackage, applyTemplate } = useProposalContext();
+  const { totalProposals, winRate } = useQuickStats(proposal);
   const [isLibraryManagerOpen, setIsLibraryManagerOpen] = useState(false);
   const [isPackageSelectorOpen, setIsPackageSelectorOpen] = useState(false);
   const [isTemplateSelectorOpen, setIsTemplateSelectorOpen] = useState(false);
   const [isQuestionnaireOpen, setIsQuestionnaireOpen] = useState(false);
+  const [isDashboardOpen, setIsDashboardOpen] = useState(false);
 
   const toggleVisibility = (e: React.MouseEvent, sectionId: SectionId) => {
     e.stopPropagation(); // Prevent navigating when clicking the eye
@@ -151,6 +156,24 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
         </button>
       </div>
 
+      {/* Revenue Dashboard Button */}
+      <div className="p-3 border-t border-gray-200 dark:border-gray-700">
+        <button
+          onClick={() => setIsDashboardOpen(true)}
+          className="flex flex-col w-full px-3 py-3 text-sm font-medium text-gray-900 dark:text-gray-100 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 hover:from-blue-100 hover:to-indigo-100 dark:hover:from-blue-900/30 dark:hover:to-indigo-900/30 border border-blue-200 dark:border-blue-800 rounded-lg transition-all"
+          title="View revenue analytics dashboard"
+        >
+          <div className="flex items-center gap-2 mb-2">
+            <BarChart3 size={18} className="text-blue-600 dark:text-blue-400" />
+            <span className="font-semibold">Revenue Dashboard</span>
+          </div>
+          <div className="flex items-center justify-between text-xs text-gray-600 dark:text-gray-400">
+            <span>{totalProposals} proposals</span>
+            <span>{winRate.toFixed(0)}% win rate</span>
+          </div>
+        </button>
+      </div>
+
       {/* Content Library Manager Modal */}
       <ContentLibraryManager
         isOpen={isLibraryManagerOpen}
@@ -186,6 +209,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
           applyPackage(pkg);
           alert(`Package "${pkg.name}" has been applied based on your responses!`);
         }}
+      />
+
+      {/* Revenue Dashboard Modal */}
+      <RevenueDashboard
+        isOpen={isDashboardOpen}
+        onClose={() => setIsDashboardOpen(false)}
+        proposal={proposal}
       />
     </div>
   );
