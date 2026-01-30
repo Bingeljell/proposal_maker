@@ -332,9 +332,18 @@ export const Team: React.FC<{ proposal: Proposal; index: number }> = ({ proposal
   );
 };
 
-export const Commercials: React.FC<{ proposal: Proposal; index: number }> = ({ proposal, index }) => {
+export const Commercials: React.FC<{ proposal: Proposal; index: number }> = ({ proposal }) => {
+  const calculateItemTotal = (item: any) => {
+    if (item.optional) return 0;
+    const subtotal = item.quantity * item.rate;
+    const discountAmount = item.discount ? subtotal * (item.discount / 100) : 0;
+    const taxableAmount = subtotal - discountAmount;
+    const taxAmount = item.taxRate ? taxableAmount * (item.taxRate / 100) : 0;
+    return taxableAmount + taxAmount;
+  };
+
   const grandTotal = proposal.costing.reduce(
-    (acc, section) => acc + section.items.reduce((sAcc, item) => sAcc + item.quantity * item.rate, 0),
+    (acc, section) => acc + section.items.reduce((sAcc, item) => sAcc + calculateItemTotal(item), 0),
     0
   );
 
@@ -353,6 +362,7 @@ export const Commercials: React.FC<{ proposal: Proposal; index: number }> = ({ p
                     <th className="py-1.5 px-3 text-left rounded-l-md">Item</th>
                     <th className="py-1.5 px-3 text-right">Qty</th>
                     <th className="py-1.5 px-3 text-right">Rate</th>
+                    <th className="py-1.5 px-3 text-right">Details</th>
                     <th className="py-1.5 px-3 text-right rounded-r-md">Total</th>
                   </tr>
                 </thead>
@@ -361,16 +371,25 @@ export const Commercials: React.FC<{ proposal: Proposal; index: number }> = ({ p
                     <React.Fragment key={item.id}>
                       {hasBreakBefore(proposal, 'costing-item', item.id) && (
                         <tr className="page-break-row">
-                          <td colSpan={4} className="p-0">
+                          <td colSpan={5} className="p-0">
                             <PageBreakMarker />
                           </td>
                         </tr>
                       )}
-                      <tr className="break-inside-avoid print:break-inside-avoid">
-                        <td className="py-2 px-3 text-gray-700 text-xs">{item.description}</td>
+                      <tr className={`break-inside-avoid print:break-inside-avoid ${item.optional ? 'opacity-50 italic' : ''}`}>
+                        <td className="py-2 px-3 text-gray-700 text-xs">
+                            {item.description}
+                            {item.optional && <span className="ml-2 text-[10px] bg-gray-200 px-1 rounded">OPTIONAL</span>}
+                        </td>
                         <td className="py-2 px-3 text-right text-gray-500 text-xs">{item.quantity}</td>
                         <td className="py-2 px-3 text-right text-gray-500 text-xs font-mono">{item.rate.toLocaleString('en-IN')}</td>
-                        <td className="py-2 px-3 text-right text-gray-900 font-bold text-xs font-mono">{(item.quantity * item.rate).toLocaleString('en-IN')}</td>
+                        <td className="py-2 px-3 text-right text-gray-500 text-[10px]">
+                            {item.discount ? <div className="text-green-600">-{item.discount}% Disc</div> : null}
+                            {item.taxRate ? <div className="text-gray-400">+{item.taxRate}% Tax</div> : null}
+                        </td>
+                        <td className="py-2 px-3 text-right text-gray-900 font-bold text-xs font-mono">
+                            {item.optional ? 'Excl.' : calculateItemTotal(item).toLocaleString('en-IN')}
+                        </td>
                       </tr>
                     </React.Fragment>
                   ))}
@@ -388,7 +407,7 @@ export const Commercials: React.FC<{ proposal: Proposal; index: number }> = ({ p
             <IndianRupee size={28} />
             {grandTotal.toLocaleString('en-IN')}
           </div>
-          <p className="text-[10px] text-gray-400 mt-1">* Exclusive of applicable taxes</p>
+          <p className="text-[10px] text-gray-400 mt-1">* Inclusive of taxes where applicable</p>
         </div>
       </div>
     </div>

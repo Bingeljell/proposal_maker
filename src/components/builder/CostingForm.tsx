@@ -58,7 +58,7 @@ export const CostingForm: React.FC = () => {
     sectionId: string,
     itemId: string,
     field: string,
-    value: string | number
+    value: string | number | boolean
   ) => {
     const updated = proposal.costing.map((s) => {
       if (s.id === sectionId) {
@@ -87,8 +87,17 @@ export const CostingForm: React.FC = () => {
     updateSection('costing', updated);
   };
 
+  const calculateItemTotal = (item: any) => {
+    if (item.optional) return 0;
+    const subtotal = item.quantity * item.rate;
+    const discountAmount = item.discount ? subtotal * (item.discount / 100) : 0;
+    const taxableAmount = subtotal - discountAmount;
+    const taxAmount = item.taxRate ? taxableAmount * (item.taxRate / 100) : 0;
+    return taxableAmount + taxAmount;
+  };
+
   const calculateSectionTotal = (section: typeof proposal.costing[0]) => {
-    return section.items.reduce((acc, item) => acc + item.quantity * item.rate, 0);
+    return section.items.reduce((acc, item) => acc + calculateItemTotal(item), 0);
   };
 
   const grandTotal = proposal.costing.reduce(
@@ -142,42 +151,72 @@ export const CostingForm: React.FC = () => {
               <thead>
                 <tr>
                   <th className="py-2 text-left text-xs font-bold text-gray-500 uppercase">Item Description</th>
-                  <th className="px-3 py-2 text-right text-xs font-bold text-gray-500 uppercase w-24">Qty</th>
-                  <th className="px-3 py-2 text-right text-xs font-bold text-gray-500 uppercase w-32">Rate (INR)</th>
-                  <th className="px-3 py-2 text-right text-xs font-bold text-gray-500 uppercase w-32">Total</th>
+                  <th className="px-2 py-2 text-right text-xs font-bold text-gray-500 uppercase w-16">Qty</th>
+                  <th className="px-2 py-2 text-right text-xs font-bold text-gray-500 uppercase w-24">Rate</th>
+                  <th className="px-2 py-2 text-right text-xs font-bold text-gray-500 uppercase w-16">Disc%</th>
+                  <th className="px-2 py-2 text-right text-xs font-bold text-gray-500 uppercase w-16">Tax%</th>
+                  <th className="px-2 py-2 text-right text-xs font-bold text-gray-500 uppercase w-24">Total</th>
+                  <th className="pl-2 py-2 w-10">Opt</th>
                   <th className="pl-3 py-2 w-10"></th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {section.items.map((item) => (
-                  <tr key={item.id} className="group">
+                  <tr key={item.id} className={`group ${item.optional ? 'opacity-60 bg-gray-50' : ''}`}>
                     <td className="py-3">
                       <input
                         type="text"
                         value={item.description}
                         onChange={(e) => updateItem(section.id, item.id, 'description', e.target.value)}
                         placeholder="Item name or description"
-                        className="w-full text-sm border-0 p-0 focus:ring-0 text-gray-700 placeholder:text-gray-300"
+                        className="w-full text-sm border-0 p-0 focus:ring-0 text-gray-700 placeholder:text-gray-300 bg-transparent"
                       />
                     </td>
-                    <td className="px-3 py-3 text-right">
+                    <td className="px-2 py-3 text-right">
                       <input
                         type="number"
                         value={item.quantity}
                         onChange={(e) => updateItem(section.id, item.id, 'quantity', parseInt(e.target.value) || 0)}
-                        className="w-full text-sm border-0 p-0 text-right focus:ring-0 text-gray-700"
+                        className="w-full text-sm border-0 p-0 text-right focus:ring-0 text-gray-700 bg-transparent"
                       />
                     </td>
-                    <td className="px-3 py-3 text-right">
+                    <td className="px-2 py-3 text-right">
                       <input
                         type="number"
                         value={item.rate}
                         onChange={(e) => updateItem(section.id, item.id, 'rate', parseInt(e.target.value) || 0)}
-                        className="w-full text-sm border-0 p-0 text-right focus:ring-0 text-gray-700 font-mono"
+                        className="w-full text-sm border-0 p-0 text-right focus:ring-0 text-gray-700 font-mono bg-transparent"
                       />
                     </td>
-                    <td className="px-3 py-3 text-right text-sm font-semibold text-gray-900 font-mono">
-                      {(item.quantity * item.rate).toLocaleString('en-IN')}
+                    <td className="px-2 py-3 text-right">
+                      <input
+                        type="number"
+                        value={item.discount || ''}
+                        onChange={(e) => updateItem(section.id, item.id, 'discount', parseFloat(e.target.value) || 0)}
+                        placeholder="0"
+                        className="w-full text-sm border-0 p-0 text-right focus:ring-0 text-gray-500 font-mono bg-transparent"
+                      />
+                    </td>
+                    <td className="px-2 py-3 text-right">
+                      <input
+                        type="number"
+                        value={item.taxRate || ''}
+                        onChange={(e) => updateItem(section.id, item.id, 'taxRate', parseFloat(e.target.value) || 0)}
+                        placeholder="0"
+                        className="w-full text-sm border-0 p-0 text-right focus:ring-0 text-gray-500 font-mono bg-transparent"
+                      />
+                    </td>
+                    <td className="px-2 py-3 text-right text-sm font-semibold text-gray-900 font-mono">
+                      {calculateItemTotal(item).toLocaleString('en-IN')}
+                    </td>
+                    <td className="pl-2 py-3 text-center">
+                        <input
+                            type="checkbox"
+                            checked={item.optional || false}
+                            onChange={(e) => updateItem(section.id, item.id, 'optional', e.target.checked)}
+                            className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                            title="Mark as Optional (Excluded from Total)"
+                        />
                     </td>
                     <td className="pl-3 py-3 text-right">
                       <button

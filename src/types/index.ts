@@ -93,6 +93,9 @@ export interface CostItem {
   description: string;
   quantity: number;
   rate: number;
+  discount?: number; // Percentage 0-100
+  taxRate?: number; // Percentage e.g. 18 for GST
+  optional?: boolean; // If true, excluded from total
 }
 
 export interface RateCardSection {
