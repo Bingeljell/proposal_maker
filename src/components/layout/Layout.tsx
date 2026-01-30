@@ -210,6 +210,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
 
       {/* Export Modal */}
       <ExportModal
+        proposal={proposal}
         isOpen={isExportModalOpen}
         onClose={() => setIsExportModalOpen(false)}
         onPrint={handlePrint}

@@ -1,20 +1,24 @@
 import React, { useState } from 'react';
+import { Proposal } from '../../types';
+import { exportToWord } from '../../utils/exportWord';
 import { 
   X, 
   Printer, 
+  FileText,
   Download, 
   FileJson,
   CheckCircle
 } from 'lucide-react';
 
 interface ExportModalProps {
+  proposal: Proposal;
   isOpen: boolean;
   onClose: () => void;
   onPrint: () => void;
   onExportJSON: () => void;
 }
 
-type ExportFormat = 'pdf' | 'json';
+type ExportFormat = 'pdf' | 'word' | 'json';
 
 interface ExportOption {
   id: ExportFormat;
@@ -43,6 +47,18 @@ const exportOptions: ExportOption[] = [
     darkBorderColor: 'dark:border-gray-700',
   },
   {
+    id: 'word',
+    label: 'Word Document',
+    description: 'Editable .docx format with all proposal content.',
+    icon: <FileText size={24} />,
+    color: 'text-blue-700',
+    bgColor: 'bg-blue-50',
+    borderColor: 'border-blue-200',
+    darkColor: 'dark:text-blue-300',
+    darkBgColor: 'dark:bg-blue-900/20',
+    darkBorderColor: 'dark:border-blue-800',
+  },
+  {
     id: 'json',
     label: 'JSON Data',
     description: 'Raw proposal data for backup or import.',
@@ -57,6 +73,7 @@ const exportOptions: ExportOption[] = [
 ];
 
 export const ExportModal: React.FC<ExportModalProps> = ({
+  proposal,
   isOpen,
   onClose,
   onPrint,
@@ -74,6 +91,8 @@ export const ExportModal: React.FC<ExportModalProps> = ({
     try {
       if (selectedFormat === 'pdf') {
         onPrint();
+      } else if (selectedFormat === 'word') {
+        await exportToWord(proposal);
       } else if (selectedFormat === 'json') {
         onExportJSON();
       }
@@ -147,7 +166,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
           {/* Coming Soon Note */}
           <div className="mt-4 p-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg">
             <p className="text-xs text-amber-700 dark:text-amber-300">
-              <strong>Coming Soon:</strong> Word (.docx), PowerPoint (.pptx), and Excel (.xlsx) exports
+              <strong>Coming Soon:</strong> PowerPoint (.pptx) and Excel (.xlsx) exports
             </p>
           </div>
         </div>

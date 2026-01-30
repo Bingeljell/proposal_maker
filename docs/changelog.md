@@ -207,7 +207,7 @@
 7. AI Writing Assistant - Template-based content generation for Executive Summary, Scope, Objectives, Team
 8. Win/Loss Tracking - Track proposal outcomes with reasons and deal values
 9. Revenue Dashboard - Pipeline analytics, win rates, deal values, monthly trends
-10. Export Modal - Unified export UI (PDF and JSON, with Word/PPTX/XLSX coming soon)
+10. Export Modal - Unified export UI (PDF, Word .docx, and JSON)
 
 **Summary:** Implemented all high and medium priority client-side features from the roadmap.
 
