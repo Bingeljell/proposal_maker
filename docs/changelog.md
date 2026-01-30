@@ -1,5 +1,7 @@
 2026-01-30
 
+- Added: **Landing Page** (`src/pages/Landing.tsx`) with product marketing content, feature highlights, and a gallery of starter templates.
+- Added: **Client-side Routing** using `react-router-dom`. The app now has a dedicated Landing Page at `/` and the Builder at `/builder`.
 - Added: **Advanced Cover Patterns** (`src/data/patterns.ts`) allowing users to apply CSS-based patterns (Dots, Grid, Lines, Waves) to the simple cover layout.
 - Added: **Smart Suggestions** for Scope of Work. Typing in a deliverable field now triggers an autocomplete dropdown powered by `src/data/smartSuggestions.ts`, categorizing deliverables by service type (Social, Video, Web, SEO).
 - Added: **Export to Word (.docx)** feature. Implemented `generateDocx` utility using `docx` library to create editable proposal documents matching the JSON structure.

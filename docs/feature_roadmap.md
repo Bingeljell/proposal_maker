@@ -123,6 +123,7 @@ Allow users to quickly populate proposal sections using pre-defined templates. T
 
 | Feature | Completion Date |
 |---------|-----------------|
+| **Landing Page & Routing** | 2026-01-30 |
 | **Export to Word (.docx)** | 2026-01-30 |
 | **Smart Suggestions** | 2026-01-30 |
 | **Advanced Cover Patterns** | 2026-01-30 |
