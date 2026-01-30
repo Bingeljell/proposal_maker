@@ -1,3 +1,7 @@
+2026-01-30
+
+- Added: Project handover to Gemini CLI agent.
+
 2026-01-28
 
 - Fixed: Added missing `break-before-page` class to `ScopeOfWork` component in `ProposalSections.tsx` to ensure it starts on a new page when printing to PDF.
