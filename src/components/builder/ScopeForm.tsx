@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useProposal } from '../../hooks/useProposal';
 import { RichTextEditor } from '../ui/RichTextEditor';
 import { Plus, Trash2, ArrowUp, ArrowDown } from 'lucide-react';
 import { PageBreakTargetType } from '../../types';
+import { getSuggestions } from '../../data/smartSuggestions';
 
 export const ScopeForm: React.FC = () => {
   const { proposal, updateSection, updateProposal } = useProposal();
+  const [activeSuggestionId, setActiveSuggestionId] = useState<string | null>(null);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
 
   const hasPageBreak = (targetType: PageBreakTargetType, targetId: string) =>
     proposal.pageBreaks?.some((b) => b.targetType === targetType && b.targetId === targetId);
@@ -84,6 +87,22 @@ export const ScopeForm: React.FC = () => {
       return s;
     });
     updateSection('scope', updated);
+  };
+
+  const handleSuggestionFocus = (sectionName: string, delId: string) => {
+    const suggs = getSuggestions(sectionName);
+    setSuggestions(suggs);
+    setActiveSuggestionId(delId);
+  };
+
+  const handleSuggestionSelect = (sectionId: string, delId: string, value: string) => {
+    updateDeliverable(sectionId, delId, 'description', value);
+    setActiveSuggestionId(null);
+  };
+
+  const handleBlur = () => {
+    // Small delay to allow click event to register
+    setTimeout(() => setActiveSuggestionId(null), 200);
   };
 
     const moveDeliverable = (sectionIndex: number, delIndex: number, direction: 'up' | 'down') => {
@@ -368,19 +387,32 @@ export const ScopeForm: React.FC = () => {
 
                         </div>
 
-                        <input
-
-                          type="text"
-
-                          value={del.description}
-
-                          onChange={(e) => updateDeliverable(section.id, del.id, 'description', e.target.value)}
-
-                          placeholder="e.g. Social Media Posts"
-
-                          className="flex-1 rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-1.5 border"
-
-                        />
+                        <div className="relative flex-1">
+                            <input
+                            type="text"
+                            value={del.description}
+                            onFocus={() => handleSuggestionFocus(section.name, del.id)}
+                            onBlur={handleBlur}
+                            onChange={(e) => updateDeliverable(section.id, del.id, 'description', e.target.value)}
+                            placeholder="e.g. Social Media Posts"
+                            className="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-1.5 border"
+                            />
+                            
+                            {activeSuggestionId === del.id && suggestions.length > 0 && (
+                                <ul className="absolute z-10 w-full bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-md shadow-lg mt-1 max-h-48 overflow-y-auto">
+                                    <li className="px-3 py-1 text-xs font-bold text-gray-400 bg-gray-50 dark:bg-gray-800 uppercase tracking-wider">Suggestions</li>
+                                    {suggestions.map((sugg, i) => (
+                                        <li 
+                                            key={i}
+                                            onMouseDown={() => handleSuggestionSelect(section.id, del.id, sugg)}
+                                            className="px-3 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 cursor-pointer"
+                                        >
+                                            {sugg}
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
 
                         <input
 
