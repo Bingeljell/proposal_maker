@@ -1,7 +1,8 @@
 import React from 'react';
 import { useProposal } from '../../hooks/useProposal';
-import { Plus, Trash2, IndianRupee } from 'lucide-react';
+import { Plus, Trash2 } from 'lucide-react';
 import { PageBreakTargetType } from '../../types';
+import { formatCurrency, currencySymbols } from '../../utils/currency';
 
 export const CostingForm: React.FC = () => {
   const { proposal, updateSection, updateProposal } = useProposal();
@@ -152,7 +153,7 @@ export const CostingForm: React.FC = () => {
                 <tr>
                   <th className="py-2 text-left text-xs font-bold text-gray-500 uppercase">Item Description</th>
                   <th className="px-2 py-2 text-right text-xs font-bold text-gray-500 uppercase w-16">Qty</th>
-                  <th className="px-2 py-2 text-right text-xs font-bold text-gray-500 uppercase w-24">Rate</th>
+                  <th className="px-2 py-2 text-right text-xs font-bold text-gray-500 uppercase w-24">Rate ({currencySymbols[proposal.meta.currency]})</th>
                   <th className="px-2 py-2 text-right text-xs font-bold text-gray-500 uppercase w-16">Disc%</th>
                   <th className="px-2 py-2 text-right text-xs font-bold text-gray-500 uppercase w-16">Tax%</th>
                   <th className="px-2 py-2 text-right text-xs font-bold text-gray-500 uppercase w-24">Total</th>
@@ -207,7 +208,7 @@ export const CostingForm: React.FC = () => {
                       />
                     </td>
                     <td className="px-2 py-3 text-right text-sm font-semibold text-gray-900 font-mono">
-                      {calculateItemTotal(item).toLocaleString('en-IN')}
+                      {formatCurrency(calculateItemTotal(item), proposal.meta.currency)}
                     </td>
                     <td className="pl-2 py-3 text-center">
                         <input
@@ -250,7 +251,7 @@ export const CostingForm: React.FC = () => {
                 <tr>
                   <td colSpan={3} className="pt-4 text-right text-sm font-bold text-gray-500 uppercase">Category Total</td>
                   <td className="pt-4 text-right text-sm font-bold text-blue-600 font-mono">
-                    {calculateSectionTotal(section).toLocaleString('en-IN')}
+                    {formatCurrency(calculateSectionTotal(section), proposal.meta.currency)}
                   </td>
                   <td></td>
                 </tr>
@@ -265,8 +266,7 @@ export const CostingForm: React.FC = () => {
           <div>
             <h4 className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-1">Cost</h4>
             <p className="text-3xl font-extrabold flex items-center gap-2">
-              <IndianRupee size={24} className="text-blue-400" />
-              {grandTotal.toLocaleString('en-IN')}
+              {formatCurrency(grandTotal, proposal.meta.currency)}
             </p>
           </div>
           <div className="text-right text-xs text-gray-400">

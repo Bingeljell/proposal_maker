@@ -49,7 +49,7 @@ Allow users to quickly populate proposal sections using pre-defined templates. T
 | ~~Theme Presets~~ | ~~Multiple visual styles (Modern, Classic, Minimal, Bold)~~ | ✅ **Completed 2026-01-30** |
 | Custom CSS | Advanced users can add their own styles | Low |
 | Multi-brand Support | Switch between different agency brands | Low |
-| Cover Page Designer | Visual editor for the intro page | Medium |
+| ~~Cover Page Designer~~ | ~~Visual editor for the intro page~~ | ✅ **Completed 2026-01-30** |
 
 ---
 
@@ -82,7 +82,7 @@ Allow users to quickly populate proposal sections using pre-defined templates. T
 | CRM Integration | Pull client data from HubSpot, Salesforce, Pipedrive | Medium |
 | Calendar Integration | Add project timelines with Gantt-style visuals | Low |
 | Cloud Sync | Auto-save to Google Drive/Dropbox | Low |
-| Currency Support | Multi-currency with automatic conversion | Medium |
+| ~~Currency Support~~ | ~~Multi-currency with automatic conversion~~ | ✅ **Completed 2026-01-30** |
 
 ---
 
@@ -101,7 +101,7 @@ Allow users to quickly populate proposal sections using pre-defined templates. T
 
 | Feature | Description | Priority |
 |---------|-------------|----------|
-| Dynamic Pricing | Formulas based on quantities (e.g., "Price per video × number of videos") | Medium |
+| ~~Dynamic Pricing~~ | ~~Formulas based on quantities, discounts, and taxes~~ | ✅ **Completed 2026-01-30** |
 | ~~Package Builder~~ | ~~Bundle services into tiered packages (Basic/Standard/Premium)~~ | ✅ **Completed 2026-01-28** |
 | ~~Questionnaire Mode~~ | ~~Send clients a form to auto-populate the proposal~~ | ✅ **Completed 2026-01-28** |
 | ~~Duplicate/Clone~~ | ~~Copy existing proposals as starting points~~ | ✅ **Completed 2026-01-28** |
@@ -124,6 +124,9 @@ Allow users to quickly populate proposal sections using pre-defined templates. T
 
 | Feature | Completion Date |
 |---------|-----------------|
+| **Currency Support** | 2026-01-30 |
+| **Dynamic Pricing** | 2026-01-30 |
+| **Cover Page Designer** | 2026-01-30 |
 | **AI Writing Assistant** | 2026-01-30 |
 | **Theme Presets** | 2026-01-30 |
 | **Load from Template** | 2026-01-30 |

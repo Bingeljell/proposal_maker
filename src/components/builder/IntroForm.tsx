@@ -2,8 +2,9 @@ import React, { useRef } from 'react';
 import { useProposal } from '../../hooks/useProposal';
 import { Upload, X, Layout, Image as ImageIcon } from 'lucide-react';
 import { ThemeSelector } from '../ui/ThemeSelector';
-import { ThemeConfig } from '../../types';
+import { ThemeConfig, CurrencyCode } from '../../types';
 import { predefinedThemes } from '../../data/themes';
+import { currencySymbols } from '../../utils/currency';
 
 export const IntroForm: React.FC = () => {
   const { proposal, updateSection } = useProposal();
@@ -106,6 +107,22 @@ export const IntroForm: React.FC = () => {
               onChange={handleChange}
               className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border"
             />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Currency</label>
+            <select
+              name="currency"
+              value={proposal.meta.currency}
+              onChange={handleChange}
+              className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border"
+            >
+                {Object.keys(currencySymbols).map((code) => (
+                    <option key={code} value={code}>
+                        {code} ({currencySymbols[code as CurrencyCode]})
+                    </option>
+                ))}
+            </select>
           </div>
         </div>
       </div>

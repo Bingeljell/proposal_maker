@@ -1,6 +1,7 @@
 import React from 'react';
 import { Proposal, PageBreakTargetType } from '../../types';
-import { IndianRupee, Globe, MapPin } from 'lucide-react';
+import { Globe, MapPin } from 'lucide-react';
+import { formatCurrency } from '../../utils/currency';
 
 // --- Helper Components ---
 
@@ -332,7 +333,7 @@ export const Team: React.FC<{ proposal: Proposal; index: number }> = ({ proposal
   );
 };
 
-export const Commercials: React.FC<{ proposal: Proposal; index: number }> = ({ proposal }) => {
+export const Commercials: React.FC<{ proposal: Proposal; index: number }> = ({ proposal, index }) => {
   const calculateItemTotal = (item: any) => {
     if (item.optional) return 0;
     const subtotal = item.quantity * item.rate;
@@ -382,13 +383,13 @@ export const Commercials: React.FC<{ proposal: Proposal; index: number }> = ({ p
                             {item.optional && <span className="ml-2 text-[10px] bg-gray-200 px-1 rounded">OPTIONAL</span>}
                         </td>
                         <td className="py-2 px-3 text-right text-gray-500 text-xs">{item.quantity}</td>
-                        <td className="py-2 px-3 text-right text-gray-500 text-xs font-mono">{item.rate.toLocaleString('en-IN')}</td>
+                        <td className="py-2 px-3 text-right text-gray-500 text-xs font-mono">{formatCurrency(item.rate, proposal.meta.currency)}</td>
                         <td className="py-2 px-3 text-right text-gray-500 text-[10px]">
                             {item.discount ? <div className="text-green-600">-{item.discount}% Disc</div> : null}
                             {item.taxRate ? <div className="text-gray-400">+{item.taxRate}% Tax</div> : null}
                         </td>
                         <td className="py-2 px-3 text-right text-gray-900 font-bold text-xs font-mono">
-                            {item.optional ? 'Excl.' : calculateItemTotal(item).toLocaleString('en-IN')}
+                            {item.optional ? 'Excl.' : formatCurrency(calculateItemTotal(item), proposal.meta.currency)}
                         </td>
                       </tr>
                     </React.Fragment>
@@ -404,8 +405,7 @@ export const Commercials: React.FC<{ proposal: Proposal; index: number }> = ({ p
         <div className="text-right">
           <p className="text-gray-500 text-[10px] uppercase tracking-widest font-bold mb-0.5">Total Investment</p>
           <div className="text-3xl font-extrabold text-blue-600 flex items-center justify-end gap-1">
-            <IndianRupee size={28} />
-            {grandTotal.toLocaleString('en-IN')}
+            {formatCurrency(grandTotal, proposal.meta.currency)}
           </div>
           <p className="text-[10px] text-gray-400 mt-1">* Inclusive of taxes where applicable</p>
         </div>
@@ -452,7 +452,7 @@ export const RateCard: React.FC<{ proposal: Proposal; index: number }> = ({ prop
                         <td className="py-2 px-3 text-gray-800 font-medium text-xs">{item.description}</td>
                         <td className="py-2 px-3 text-gray-500 text-xs italic">{item.comment}</td>
                         <td className="py-2 px-3 text-right text-gray-700 text-xs">{item.quantity}</td>
-                        <td className="py-2 px-3 text-right text-gray-700 font-mono text-xs">{item.unitCost.toLocaleString('en-IN')}</td>
+                        <td className="py-2 px-3 text-right text-gray-700 font-mono text-xs">{formatCurrency(item.unitCost, proposal.meta.currency)}</td>
                       </tr>
                     </React.Fragment>
                   ))}

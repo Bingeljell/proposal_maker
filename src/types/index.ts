@@ -28,6 +28,8 @@ export interface Proposal {
   signOff: SignOff;
 }
 
+export type CurrencyCode = 'INR' | 'USD' | 'EUR' | 'GBP' | 'AUD' | 'CAD' | 'SGD';
+
 export interface ProposalMeta {
   title: string;
   clientName: string;
@@ -37,6 +39,7 @@ export interface ProposalMeta {
   theme: ThemeConfig;
   coverLayout: 'simple' | 'split' | 'full' | 'minimal';
   coverImage: string | null; // Base64 or URL for background
+  currency: CurrencyCode;
 }
 
 export interface ThemeConfig {

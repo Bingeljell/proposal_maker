@@ -1,5 +1,12 @@
 2026-01-30
 
+- Added: **Currency Support** with global selector (INR, USD, EUR, GBP, AUD, CAD, SGD) that updates all financial values and formatting across the proposal.
+- Added: **Dynamic Pricing** features in Commercials section, including per-item Discounts (%), Tax Rates (%), and Optional item toggles (excluded from total).
+- Added: **Cover Page Designer** with 4 layout options (Simple, Split, Full, Minimal) and support for custom background images.
+- Added: `coverLayout`, `coverImage`, `currency` fields to `ProposalMeta` and `discount`, `taxRate`, `optional` to `CostItem`.
+- Changed: Updated `Commercials` preview to calculate and display taxes, discounts, and optional items correctly.
+- Changed: Updated `CostingForm` to support new advanced pricing inputs.
+- Changed: Updated `project_plan.md` to reflect the shift to a "Hybrid Architecture" for future backend features.
 - Added: **AI Writing Assistant** integration in Rich Text Editor. Users can configure their own Google Gemini API Key (`Settings` in sidebar) and generate content (`Sparkles` icon in editor) directly within the app.
 - Added: **Theme Presets** feature (`src/data/themes.ts`, `ThemeSelector.tsx`). Users can now choose from 5 visual themes (Modern, Classic, Bold, Creative, Forest) which dynamically update fonts and colors in the Preview.
 - Added: **Load from Template** functionality. Added `src/data/templates.ts` with 3 full proposal templates (Video Production, Website Dev, Social Retainer) and a new `TemplateModal` to browse and apply them.

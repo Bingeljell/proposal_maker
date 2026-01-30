@@ -42,6 +42,9 @@ export const ProposalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         if (migrated.meta.coverImage === undefined) {
           migrated.meta.coverImage = null;
         }
+        if (!migrated.meta.currency) {
+          migrated.meta.currency = 'INR';
+        }
         return migrated;
       }
       return initialProposal;
@@ -86,6 +89,9 @@ export const ProposalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         }
         if (migrated.meta.coverImage === undefined) {
           migrated.meta.coverImage = null;
+        }
+        if (!migrated.meta.currency) {
+          migrated.meta.currency = 'INR';
         }
         setProposal(migrated);
       } catch (err) {
