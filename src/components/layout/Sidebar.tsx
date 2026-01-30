@@ -17,7 +17,8 @@ import {
   BookOpen,
   Package,
   ClipboardList,
-  Settings
+  Settings,
+  FileDown
 } from 'lucide-react';
 import { SectionId, PackageTemplate, ProposalTemplate } from '../../types';
 import { useProposal } from '../../hooks/useProposal';
@@ -27,6 +28,7 @@ import { PackageSelector } from '../ui/PackageSelector';
 import { QuestionnaireModal } from '../ui/QuestionnaireModal';
 import { TemplateModal } from '../ui/TemplateModal';
 import { AISettingsModal } from '../ui/AISettingsModal';
+import { generateDocx } from '../../utils/docxExport';
 
 interface SidebarProps {
   activeSection: SectionId;
@@ -151,6 +153,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
         >
           <ClipboardList size={16} />
           Questionnaire
+        </button>
+        <button
+          onClick={() => generateDocx(proposal)}
+          className="flex items-center gap-2 w-full px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md transition-colors"
+          title="Download as Word Document"
+        >
+          <FileDown size={16} />
+          Export DOCX
         </button>
         <button
           onClick={() => setIsSettingsOpen(true)}
