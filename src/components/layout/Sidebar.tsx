@@ -18,11 +18,15 @@ import {
   Package,
   ClipboardList,
   Settings,
-  FileDown
+  FileDown,
+  LogIn,
+  LogOut,
+  User as UserIcon
 } from 'lucide-react';
 import { SectionId, PackageTemplate, ProposalTemplate } from '../../types';
 import { useProposal } from '../../hooks/useProposal';
 import { useProposalContext } from '../../context/ProposalContext';
+import { useAuth } from '../../context/AuthContext';
 import { ContentLibraryManager } from '../ui/ContentLibraryManager';
 import { PackageSelector } from '../ui/PackageSelector';
 import { QuestionnaireModal } from '../ui/QuestionnaireModal';
@@ -52,6 +56,7 @@ const sections: { id: SectionId; label: string; icon: React.ElementType }[] = [
 export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange }) => {
   const { proposal, updateProposal } = useProposal();
   const { duplicateProposal, applyPackage, loadTemplate } = useProposalContext();
+  const { user, signInWithGoogle, signOut } = useAuth();
   const [isLibraryManagerOpen, setIsLibraryManagerOpen] = useState(false);
   const [isPackageSelectorOpen, setIsPackageSelectorOpen] = useState(false);
   const [isQuestionnaireOpen, setIsQuestionnaireOpen] = useState(false);
@@ -70,6 +75,46 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
 
   return (
     <div className="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col h-full">
+      {/* Auth Section */}
+      <div className="p-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
+        {user ? (
+          <div className="flex items-center justify-between group">
+            <div className="flex items-center gap-2 overflow-hidden">
+              <div className="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-blue-600 dark:text-blue-300 flex-shrink-0">
+                {user.user_metadata.avatar_url ? (
+                  <img src={user.user_metadata.avatar_url} alt="" className="w-full h-full rounded-full" />
+                ) : (
+                  <UserIcon size={16} />
+                )}
+              </div>
+              <div className="overflow-hidden">
+                <p className="text-xs font-bold text-gray-900 dark:text-gray-100 truncate">
+                  {user.user_metadata.full_name || user.email}
+                </p>
+                <p className="text-[10px] text-gray-500 dark:text-gray-400 truncate">
+                  {user.email}
+                </p>
+              </div>
+            </div>
+            <button 
+              onClick={() => signOut()}
+              className="p-1.5 text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100"
+              title="Sign Out"
+            >
+              <LogOut size={14} />
+            </button>
+          </div>
+        ) : (
+          <button
+            onClick={() => signInWithGoogle()}
+            className="flex items-center justify-center gap-2 w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg text-xs font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all shadow-sm"
+          >
+            <LogIn size={14} />
+            Sign in with Google
+          </button>
+        )}
+      </div>
+
       <div className="p-4 border-b border-gray-200 dark:border-gray-700">
         <h2 className="font-semibold text-gray-900 dark:text-gray-100">Sections</h2>
       </div>

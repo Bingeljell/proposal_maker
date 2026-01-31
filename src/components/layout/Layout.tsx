@@ -4,7 +4,9 @@ import { useDarkMode } from '../../hooks/useDarkMode';
 import { Sidebar } from './Sidebar';
 import { SectionId } from '../../types';
 import { Preview } from '../preview/Preview'; // Import the new Preview component
-import { Download, Upload, Trash2, Eye, EyeOff, Edit3, Printer, Moon, Sun } from 'lucide-react';
+import { Download, Upload, Trash2, Eye, EyeOff, Edit3, Printer, Moon, Sun, Cloud, Share2 } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
+import { useProposalContext } from '../../context/ProposalContext';
 
 interface LayoutProps {
   children: (activeSection: SectionId) => React.ReactNode;
@@ -12,9 +14,12 @@ interface LayoutProps {
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const { proposal, saveToFile, loadFromFile, resetProposal } = useProposal();
+  const { saveToCloud } = useProposalContext();
+  const { user } = useAuth();
   const { isDarkMode, toggle } = useDarkMode();
   const [activeSection, setActiveSection] = useState<SectionId>('intro');
   const [viewMode, setViewMode] = useState<'edit' | 'preview'>('edit');
+  const [isSaving, setIsSaving] = useState(false);
 
   // Update document title for PDF printing (browser uses this as default filename)
   useEffect(() => {
@@ -24,6 +29,28 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   const handlePrint = () => {
     window.print();
+  };
+
+  const handleCloudSave = async () => {
+    if (!user) return;
+    setIsSaving(true);
+    await saveToCloud(user.id);
+    setIsSaving(false);
+  };
+
+  const handleShare = async () => {
+    if (!user) {
+        alert("Please sign in to share your proposal via cloud.");
+        return;
+    }
+    setIsSaving(true);
+    const id = await saveToCloud(user.id);
+    setIsSaving(false);
+    if (id) {
+        const shareUrl = `${window.location.origin}/view/${id}`;
+        navigator.clipboard.writeText(shareUrl);
+        alert(`Link copied to clipboard: ${shareUrl}`);
+    }
   };
 
   return (
@@ -98,6 +125,27 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             )}
 
             <div className="flex gap-2 border-l pl-4 border-gray-200 dark:border-gray-600">
+              {user && (
+                <>
+                  <button 
+                    onClick={handleCloudSave}
+                    disabled={isSaving}
+                    className="flex items-center gap-2 px-3 py-1.5 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md text-xs font-semibold transition-colors disabled:opacity-50"
+                    title="Save to Cloud"
+                  >
+                    <Cloud size={14} className={isSaving ? 'animate-pulse' : ''} />
+                    {isSaving ? 'Saving...' : 'Cloud Save'}
+                  </button>
+                  <button 
+                    onClick={handleShare}
+                    className="flex items-center gap-2 px-3 py-1.5 text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 rounded-md text-xs font-semibold transition-colors"
+                    title="Share Link"
+                  >
+                    <Share2 size={14} />
+                    Share
+                  </button>
+                </>
+              )}
               <button 
                 onClick={resetProposal}
                 className="flex items-center gap-2 px-3 py-1.5 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md text-xs font-semibold transition-colors mr-2"

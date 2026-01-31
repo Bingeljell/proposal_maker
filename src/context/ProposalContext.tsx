@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Proposal, PackageTemplate, ProposalTemplate } from '../types';
 import { initialProposal } from '../data/initialProposal';
+import { supabase } from '../lib/supabase';
 
 interface ProposalContextType {
   proposal: Proposal;
@@ -12,6 +13,8 @@ interface ProposalContextType {
   duplicateProposal: () => void;
   applyPackage: (pkg: PackageTemplate) => void;
   loadTemplate: (template: ProposalTemplate) => void;
+  saveToCloud: (userId: string) => Promise<string | null>;
+  loadFromCloud: (id: string) => Promise<void>;
 }
 
 const ProposalContext = createContext<ProposalContextType | undefined>(undefined);
@@ -204,6 +207,46 @@ export const ProposalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
   };
 
+  const saveToCloud = async (userId: string) => {
+    try {
+      const { data, error } = await supabase
+        .from('proposals')
+        .upsert({
+          id: proposal.id,
+          user_id: userId,
+          data: proposal,
+          updated_at: new Date().toISOString(),
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
+      return data.id;
+    } catch (err) {
+      console.error('Failed to save to cloud', err);
+      alert('Failed to save to cloud');
+      return null;
+    }
+  };
+
+  const loadFromCloud = async (id: string) => {
+    try {
+      const { data, error } = await supabase
+        .from('proposals')
+        .select('data')
+        .eq('id', id)
+        .single();
+
+      if (error) throw error;
+      if (data) {
+        setProposal(data.data);
+      }
+    } catch (err) {
+      console.error('Failed to load from cloud', err);
+      alert('Failed to load proposal');
+    }
+  };
+
   return (
     <ProposalContext.Provider
       value={{
@@ -216,6 +259,8 @@ export const ProposalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         duplicateProposal,
         applyPackage,
         loadTemplate,
+        saveToCloud,
+        loadFromCloud,
       }}
     >
       {children}
