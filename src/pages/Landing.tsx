@@ -15,127 +15,155 @@ import { templates } from '../data/templates';
 
 export const Landing = () => {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 font-sans text-gray-900 dark:text-gray-100 selection:bg-blue-100 selection:text-blue-900">
+    <div className="min-h-screen bg-white dark:bg-gray-900 font-sans text-gray-900 dark:text-gray-100 selection:bg-brand-mint/30 selection:text-gray-900 scroll-smooth">
       
+      {/* Background Blobs */}
+      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-[-10%] -left-[10%] w-[40%] h-[40%] bg-brand-mint/20 blur-[120px] rounded-full animate-pulse"></div>
+        <div className="absolute bottom-[10%] -right-[10%] w-[30%] h-[30%] bg-brand-aqua/20 blur-[100px] rounded-full animate-pulse" style={{ animationDelay: '2s' }}></div>
+      </div>
+
       {/* Navbar */}
-      <nav className="fixed w-full z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">
-              <FileText size={20} />
+      <nav className="fixed w-full z-50 bg-white/70 dark:bg-gray-900/70 backdrop-blur-xl border-b border-gray-100 dark:border-gray-800">
+        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-gray-900 dark:bg-white rounded-2xl flex items-center justify-center text-white dark:text-gray-900 font-bold shadow-lg">
+              <FileText size={22} />
             </div>
-            <span className="font-bold text-lg tracking-tight">The Decent Proposal</span>
+            <span className="font-bold text-xl tracking-tight">The Decent Proposal</span>
           </div>
-          <div className="flex items-center gap-6">
-            <a href="#features" className="text-sm font-medium hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Features</a>
-            <a href="#templates" className="text-sm font-medium hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Templates</a>
+          <div className="flex items-center gap-8">
+            <a href="#features" className="text-sm font-semibold hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Features</a>
+            <a href="#templates" className="text-sm font-semibold hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Templates</a>
             <Link 
               to="/builder" 
-              className="bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-5 py-2 rounded-full text-sm font-semibold hover:bg-gray-800 dark:hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl"
+              className="bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-6 py-2.5 rounded-2xl text-sm font-bold hover:scale-105 transition-all shadow-xl hover:shadow-gray-900/20 dark:hover:shadow-white/10"
             >
-              Start Building Free
+              Start Building
             </Link>
           </div>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <header className="pt-32 pb-20 px-6">
+      <header className="relative pt-40 pb-24 px-6 z-10">
         <div className="max-w-5xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-semibold mb-8 border border-blue-100 dark:border-blue-800">
-            <Zap size={12} fill="currentColor" />
-            <span>v2.0 Now Live with AI Writer</span>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-mint/30 dark:bg-brand-mint/10 text-gray-900 dark:text-brand-mint text-xs font-bold mb-10 border border-brand-mint/50 dark:border-brand-mint/20 backdrop-blur-sm">
+            <Zap size={14} className="fill-current" />
+            <span className="uppercase tracking-wider">v2.0 Now Live with AI Writer</span>
           </div>
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 leading-tight">
-            Because Demi Moore won't <br className="hidden md:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">win you the business.</span>
+          <h1 className="text-6xl md:text-8xl font-black tracking-tight mb-10 leading-[1.1]">
+            Because Demi Moore <br className="hidden md:block" />
+            won't <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-brand-aqua to-brand-mint">win you the business.</span>
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-            Create professional, winning proposals in minutes, not hours. 
-            No design skills required. Just decent proposals that sell.
+          <p className="text-xl md:text-2xl text-gray-500 dark:text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed font-medium">
+            The lightweight document builder for winning proposals. 
+            No complexity, just decent design and high-converting structure.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
             <Link 
               to="/builder" 
-              className="w-full sm:w-auto px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold text-lg transition-all shadow-blue-500/30 shadow-lg flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-10 py-5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-3xl font-black text-xl transition-all shadow-2xl hover:scale-105 flex items-center justify-center gap-3"
             >
-              Create Proposal <ArrowRight size={20} />
+              Get Started <ArrowRight size={24} strokeWidth={3} />
             </Link>
             <a 
-              href="#features" 
-              className="w-full sm:w-auto px-8 py-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 text-gray-700 dark:text-gray-200 rounded-xl font-bold text-lg transition-all"
+              href="#templates" 
+              className="w-full sm:w-auto px-10 py-5 bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 hover:border-brand-aqua dark:hover:border-brand-aqua/50 text-gray-900 dark:text-gray-200 rounded-3xl font-bold text-xl transition-all"
             >
-              View Examples
+              Browse Templates
             </a>
           </div>
-          <div className="mt-12 flex items-center justify-center gap-8 text-gray-400 text-sm font-medium">
-            <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-green-500" /> No Signup Required</span>
-            <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-green-500" /> Free Forever</span>
-            <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-green-500" /> Print-Ready PDF</span>
+          <div className="mt-16 flex flex-wrap items-center justify-center gap-x-10 gap-y-4 text-gray-400 text-sm font-bold uppercase tracking-widest">
+            <span className="flex items-center gap-2"><CheckCircle2 size={18} className="text-brand-mint" /> No Signup</span>
+            <span className="flex items-center gap-2"><CheckCircle2 size={18} className="text-brand-mint" /> 100% Free</span>
+            <span className="flex items-center gap-2"><CheckCircle2 size={18} className="text-brand-mint" /> Print-Ready</span>
           </div>
         </div>
       </header>
 
       {/* Product Preview */}
-      <section className="px-6 mb-32">
-        <div className="max-w-6xl mx-auto bg-gray-900 rounded-2xl p-2 sm:p-4 shadow-2xl ring-1 ring-gray-900/5">
-          <div className="relative rounded-lg overflow-hidden bg-gray-800 aspect-[16/9] border border-gray-700 group">
+      <section className="px-6 mb-40 relative z-10">
+        <div className="max-w-6xl mx-auto bg-gray-900/5 dark:bg-white/5 p-4 rounded-[2.5rem] shadow-sm backdrop-blur-3xl border border-white/20">
+          <div className="relative rounded-[2rem] overflow-hidden bg-gray-900 aspect-[16/10] border border-gray-800 group shadow-2xl">
              {/* Abstract UI Representation */}
-             <div className="absolute inset-0 flex">
+             <div className="absolute inset-0 flex opacity-40">
                 {/* Sidebar */}
-                <div className="w-64 bg-gray-900 border-r border-gray-800 hidden md:flex flex-col p-4 gap-4">
-                    <div className="h-8 w-32 bg-gray-800 rounded animate-pulse"></div>
-                    <div className="space-y-2 mt-4">
-                        {[1,2,3,4,5,6].map(i => (
-                            <div key={i} className="h-8 w-full bg-gray-800/50 rounded flex items-center px-3 gap-3">
-                                <div className="w-4 h-4 bg-gray-700 rounded"></div>
-                                <div className="h-2 w-20 bg-gray-700 rounded"></div>
+                <div className="w-64 bg-black/40 border-r border-white/5 hidden md:flex flex-col p-6 gap-6">
+                    <div className="h-10 w-32 bg-white/10 rounded-xl"></div>
+                    <div className="space-y-3 mt-4">
+                        {[1,2,3,4,5,6,7].map(i => (
+                            <div key={i} className="h-10 w-full bg-white/5 rounded-xl flex items-center px-4 gap-4">
+                                <div className="w-5 h-5 bg-white/10 rounded-lg"></div>
+                                <div className="h-2 w-24 bg-white/10 rounded-full"></div>
                             </div>
                         ))}
                     </div>
                 </div>
                 {/* Main */}
-                <div className="flex-1 bg-gray-800 p-8 relative overflow-hidden">
-                    {/* Floating Cards */}
-                    <div className="absolute top-10 right-10 w-64 bg-white/10 backdrop-blur-lg rounded-lg p-4 border border-white/10 shadow-xl transform rotate-3 transition-transform group-hover:rotate-0 duration-500">
-                        <div className="flex items-center gap-3 mb-3">
-                            <div className="p-2 bg-blue-500/20 rounded text-blue-400"><Wand2 size={16}/></div>
-                            <div className="text-sm font-bold text-white">AI Writing Assistant</div>
+                <div className="flex-1 bg-gradient-to-br from-gray-900 to-black p-12 relative overflow-hidden">
+                    <div className="max-w-2xl mx-auto space-y-8">
+                        <div className="h-12 w-3/4 bg-white/10 rounded-2xl"></div>
+                        <div className="space-y-4">
+                            <div className="h-3 w-full bg-white/5 rounded-full"></div>
+                            <div className="h-3 w-full bg-white/5 rounded-full"></div>
+                            <div className="h-3 w-2/3 bg-white/5 rounded-full"></div>
                         </div>
-                        <div className="space-y-2">
-                            <div className="h-2 w-full bg-white/20 rounded"></div>
-                            <div className="h-2 w-3/4 bg-white/20 rounded"></div>
+                        <div className="grid grid-cols-2 gap-6 mt-12">
+                            <div className="h-32 bg-white/5 rounded-3xl border border-white/5"></div>
+                            <div className="h-32 bg-white/5 rounded-3xl border border-white/5"></div>
                         </div>
                     </div>
+                </div>
+             </div>
+             
+             {/* Dynamic Overlays */}
+             <div className="absolute inset-0 z-20 pointer-events-none">
+                <div className="absolute top-[15%] right-[10%] w-72 bg-white/10 backdrop-blur-2xl rounded-3xl p-6 border border-white/20 shadow-2xl transform rotate-3 transition-transform group-hover:rotate-0 duration-700 pointer-events-auto">
+                    <div className="flex items-center gap-4 mb-4">
+                        <div className="p-3 bg-brand-mint rounded-2xl text-gray-900 shadow-lg shadow-brand-mint/20"><Wand2 size={20}/></div>
+                        <div className="text-base font-black text-white">AI Assistant</div>
+                    </div>
+                    <div className="space-y-3">
+                        <div className="h-2.5 w-full bg-white/20 rounded-full"></div>
+                        <div className="h-2.5 w-full bg-white/20 rounded-full"></div>
+                        <div className="h-2.5 w-4/5 bg-white/20 rounded-full"></div>
+                    </div>
+                </div>
 
-                    <div className="absolute bottom-10 left-20 w-80 bg-white rounded-lg p-6 shadow-xl transform -rotate-2 transition-transform group-hover:rotate-0 duration-500 z-10 text-gray-900">
-                        <div className="flex justify-between items-end border-b border-gray-100 pb-4 mb-4">
-                            <div>
-                                <div className="text-xs text-gray-500 uppercase font-bold">Total Estimate</div>
-                                <div className="text-2xl font-extrabold text-blue-600">$12,500</div>
-                            </div>
-                            <div className="text-right">
-                                <div className="text-xs text-gray-400">Includes Taxes</div>
-                            </div>
+                <div className="absolute bottom-[15%] left-[8%] w-96 bg-white rounded-[2.5rem] p-8 shadow-2xl transform -rotate-2 transition-transform group-hover:rotate-0 duration-700 z-30 text-gray-900 pointer-events-auto border border-gray-100">
+                    <div className="flex justify-between items-end border-b border-gray-100 pb-6 mb-6">
+                        <div>
+                            <div className="text-xs text-gray-400 uppercase font-black tracking-widest mb-1">Total Project Fee</div>
+                            <div className="text-4xl font-black text-gray-900">$12,500<span className="text-gray-300 ml-1 text-xl font-medium">.00</span></div>
                         </div>
-                        <div className="space-y-3">
-                            <div className="flex justify-between text-sm">
-                                <span className="font-medium">Web Development</span>
-                                <span>$8,000</span>
-                            </div>
-                            <div className="flex justify-between text-sm">
-                                <span className="font-medium">SEO Setup</span>
-                                <span>$2,500</span>
-                            </div>
+                        <div className="text-right">
+                            <div className="px-3 py-1 bg-brand-mint rounded-full text-[10px] font-black uppercase">Approved</div>
+                        </div>
+                    </div>
+                    <div className="space-y-4">
+                        <div className="flex justify-between text-sm items-center">
+                            <span className="font-bold text-gray-500 flex items-center gap-2">
+                                <div className="w-2 h-2 bg-brand-aqua rounded-full"></div>
+                                Social Strategy
+                            </span>
+                            <span className="font-mono font-bold">$8,000</span>
+                        </div>
+                        <div className="flex justify-between text-sm items-center">
+                            <span className="font-bold text-gray-500 flex items-center gap-2">
+                                <div className="w-2 h-2 bg-brand-mint rounded-full"></div>
+                                Creative Production
+                            </span>
+                            <span className="font-mono font-bold">$4,500</span>
                         </div>
                     </div>
                 </div>
              </div>
              
              {/* Center Callout */}
-             <div className="absolute inset-0 flex items-center justify-center">
-                <Link to="/builder" className="bg-blue-600/90 hover:bg-blue-600 backdrop-blur text-white px-8 py-3 rounded-full font-bold shadow-lg transform scale-100 hover:scale-105 transition-all">
-                    Launch Editor
+             <div className="absolute inset-0 z-40 flex items-center justify-center pointer-events-none">
+                <Link to="/builder" className="bg-white text-gray-900 px-10 py-4 rounded-3xl font-black text-xl shadow-2xl transform scale-100 hover:scale-110 transition-all pointer-events-auto ring-8 ring-white/10">
+                    Launch Free Builder
                 </Link>
              </div>
           </div>
@@ -143,103 +171,108 @@ export const Landing = () => {
       </section>
 
       {/* Features Grid */}
-      <section id="features" className="py-24 bg-white dark:bg-gray-800/50">
+      <section id="features" className="py-32 bg-white dark:bg-gray-800/20 relative z-10 border-y border-gray-100 dark:border-gray-800">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4">Everything you need to win</h2>
-            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-              We stripped away the bloat and kept the essentials. No complex pipelines, 
-              just a powerful document builder.
+          <div className="text-center mb-24">
+            <h2 className="text-4xl md:text-5xl font-black mb-6">Everything you need to win</h2>
+            <p className="text-xl text-gray-500 dark:text-gray-400 max-w-3xl mx-auto font-medium">
+              We stripped away the corporate bloat. No complex pipelines, 
+              just a powerful, designer-grade builder.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-10">
             <FeatureCard 
               icon={Wand2}
+              color="bg-brand-mint"
               title="AI Writing Assistant"
-              description="Stuck on the Executive Summary? Let our integrated AI draft compelling copy for you in seconds."
+              description="Stop staring at a blank screen. Our Gemini-powered AI drafts compelling copy for your summaries and objectives in seconds."
             />
             <FeatureCard 
               icon={LayoutTemplate}
-              title="Smart Templates"
-              description="Don't start from scratch. Load industry-standard templates for Video, Web, Social, and SEO projects."
+              color="bg-brand-aqua"
+              title="Starter Templates"
+              description="Get a head start with field-tested structures for Video, Web, Branding, and Social Media projects. Proven to convert."
             />
             <FeatureCard 
               icon={Layers}
+              color="bg-purple-200"
               title="Dynamic Costing"
-              description="Calculate totals, add optional upsells, apply discounts, and handle taxes automatically."
+              description="Automate your math. Itemized tables with auto-calculated totals, optional line items, discounts, and multi-currency support."
             />
             <FeatureCard 
               icon={Download}
+              color="bg-orange-200"
               title="Export Anywhere"
-              description="Download as a polished PDF for the client, or an editable Word doc (.docx) for legal redlining."
+              description="Present a beautiful, print-ready PDF to the client, or download an editable Word doc (.docx) for legal and procurement teams."
             />
             <FeatureCard 
               icon={Globe}
-              title="Multi-Currency"
-              description="Work with global clients? Switch between USD, EUR, GBP, INR, and more with one click."
+              color="bg-blue-200"
+              title="Global Branding"
+              description="Choose from curated themes, fonts, and patterns. Match your agency’s identity with cover page designs that make an impact."
             />
             <FeatureCard 
-              icon={FileText}
-              title="Cover Designer"
-              description="Make a great first impression with beautiful, customizable cover pages and background patterns."
+              icon={CheckCircle2}
+              color="bg-green-200"
+              title="Stateless & Private"
+              description="Your data stays in your browser. No accounts, no trackers, and total privacy until you decide to export or share."
             />
           </div>
         </div>
       </section>
 
       {/* Templates Section */}
-      <section id="templates" className="py-24 bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
+      <section id="templates" className="py-32 bg-white dark:bg-gray-900 relative z-10">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-xs font-semibold mb-4 border border-purple-100 dark:border-purple-800">
-              <LayoutTemplate size={12} fill="currentColor" />
-              <span>Get Started Faster</span>
+          <div className="text-center mb-20">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-aqua/30 dark:bg-brand-aqua/10 text-gray-900 dark:text-brand-aqua text-xs font-bold mb-6 border border-brand-aqua/50 dark:border-brand-aqua/20">
+              <LayoutTemplate size={14} className="fill-current" />
+              <span className="uppercase tracking-widest">Speed up your workflow</span>
             </div>
-            <h2 className="text-3xl font-bold mb-4">Start with a professional template</h2>
-            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-              Choose from our library of pre-built proposals for common agency services.
-              Customize them to fit your brand in seconds.
+            <h2 className="text-4xl md:text-5xl font-black mb-6">Choose your starting point</h2>
+            <p className="text-xl text-gray-500 dark:text-gray-400 max-w-2xl mx-auto font-medium">
+              Don't reinvent the wheel. Use our pre-built proposal skeletons.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-10">
             {templates.map((template) => (
-              <div key={template.id} className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all group flex flex-col">
-                <div className="h-40 bg-gray-100 dark:bg-gray-700 relative overflow-hidden flex items-center justify-center">
+              <div key={template.id} className="bg-gray-50 dark:bg-gray-800/50 rounded-[2.5rem] overflow-hidden border-2 border-transparent hover:border-brand-aqua dark:hover:border-brand-aqua transition-all group flex flex-col hover:shadow-2xl">
+                <div className="h-56 bg-white dark:bg-gray-800 relative overflow-hidden flex items-center justify-center border-b border-gray-100 dark:border-gray-700">
                    {/* Abstract Preview */}
-                   <div className="w-3/4 h-3/4 bg-white dark:bg-gray-800 shadow-md rounded-md flex flex-col p-3 transform group-hover:scale-105 transition-transform duration-500">
-                      <div className="h-2 w-1/2 bg-gray-200 dark:bg-gray-600 rounded mb-2"></div>
-                      <div className="h-1 w-full bg-gray-100 dark:bg-gray-700 rounded mb-1"></div>
-                      <div className="h-1 w-2/3 bg-gray-100 dark:bg-gray-700 rounded mb-4"></div>
-                      <div className="flex-1 bg-blue-50 dark:bg-blue-900/20 rounded border border-blue-100 dark:border-blue-800/50"></div>
+                   <div className="w-2/3 h-3/4 bg-gray-50 dark:bg-gray-900 shadow-2xl rounded-3xl flex flex-col p-5 transform group-hover:scale-110 transition-transform duration-700 border border-gray-100 dark:border-gray-800">
+                      <div className="h-3 w-1/2 bg-gray-200 dark:bg-gray-700 rounded-full mb-3"></div>
+                      <div className="h-2 w-full bg-gray-100 dark:bg-gray-800 rounded-full mb-2"></div>
+                      <div className="h-2 w-2/3 bg-gray-100 dark:bg-gray-800 rounded-full mb-6"></div>
+                      <div className="flex-1 bg-brand-mint/20 dark:bg-brand-mint/5 rounded-2xl border border-brand-mint/30"></div>
                    </div>
-                   <div className="absolute top-3 right-3">
-                      <span className={`text-[10px] px-2 py-1 rounded-full border font-bold uppercase tracking-wider ${
-                        template.category === 'Creative' ? 'bg-purple-50 text-purple-700 border-purple-200' :
-                        template.category === 'Technical' ? 'bg-blue-50 text-blue-700 border-blue-200' :
-                        'bg-green-50 text-green-700 border-green-200'
+                   <div className="absolute top-6 right-6">
+                      <span className={`text-xs px-3 py-1.5 rounded-2xl border-2 font-black uppercase tracking-widest ${
+                        template.category === 'Creative' ? 'bg-purple-50 text-purple-700 border-purple-100' :
+                        template.category === 'Technical' ? 'bg-blue-50 text-blue-700 border-blue-100' :
+                        'bg-brand-mint text-gray-900 border-brand-mint'
                       }`}>
                         {template.category}
                       </span>
                    </div>
                 </div>
-                <div className="p-6 flex-1 flex flex-col">
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">{template.name}</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-6 flex-1">
+                <div className="p-10 flex-1 flex flex-col">
+                  <h3 className="text-2xl font-black text-gray-900 dark:text-gray-100 mb-4">{template.name}</h3>
+                  <p className="text-lg text-gray-500 dark:text-gray-400 mb-8 flex-1 leading-relaxed font-medium">
                     {template.description}
                   </p>
                   
-                  <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400 mb-6 border-t border-gray-100 dark:border-gray-700 pt-4">
-                    <span className="flex items-center gap-1"><Layers size={14} /> {template.data.scope.length} Services</span>
-                    <span className="flex items-center gap-1"><Briefcase size={14} /> {template.data.team.length} Roles</span>
+                  <div className="flex items-center gap-6 text-sm font-bold text-gray-400 mb-10 border-t border-gray-100 dark:border-gray-700 pt-8">
+                    <span className="flex items-center gap-2 px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-lg"><Layers size={16} /> {template.data.scope.length} Services</span>
+                    <span className="flex items-center gap-2 px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-lg"><Briefcase size={16} /> {template.data.team.length} Roles</span>
                   </div>
 
                   <Link 
                     to="/builder" 
-                    className="w-full py-2.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-lg font-semibold text-sm hover:bg-blue-600 dark:hover:bg-gray-200 hover:text-white dark:hover:text-gray-900 transition-colors text-center"
+                    className="w-full py-4 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-2xl font-black text-lg hover:bg-brand-aqua dark:hover:bg-brand-aqua hover:text-gray-900 transition-all text-center shadow-lg"
                   >
-                    Use Template
+                    Start with this
                   </Link>
                 </div>
               </div>
@@ -248,36 +281,69 @@ export const Landing = () => {
         </div>
       </section>
 
+      {/* CTA Footer */}
+      <section className="py-32 px-6 relative z-10">
+        <div className="max-w-5xl mx-auto bg-gradient-to-br from-brand-aqua to-brand-mint rounded-[3rem] p-12 md:p-20 text-center shadow-2xl relative overflow-hidden">
+            <div className="absolute inset-0 opacity-20 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px) 0 0 / 20px 20px' }}></div>
+            <h2 className="text-4xl md:text-6xl font-black text-gray-900 mb-8 relative z-10 leading-tight">Ready to send <br/>your best proposal?</h2>
+            <Link 
+                to="/builder" 
+                className="inline-flex items-center gap-3 px-12 py-6 bg-gray-900 text-white rounded-3xl font-black text-2xl hover:scale-105 transition-all shadow-2xl relative z-10"
+            >
+                Get Started Now <ArrowRight size={28} strokeWidth={3} />
+            </Link>
+        </div>
+      </section>
+
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12 border-t border-gray-800">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-blue-600 rounded flex items-center justify-center">
-              <FileText size={14} />
+      <footer className="bg-white dark:bg-gray-900 text-gray-500 py-20 relative z-10">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-start gap-12">
+          <div className="space-y-6">
+            <div className="flex items-center gap-3">
+                <div className="w-8 h-8 bg-gray-900 dark:bg-white rounded-xl flex items-center justify-center text-white dark:text-gray-900 font-bold">
+                <FileText size={18} />
+                </div>
+                <span className="font-black text-xl text-gray-900 dark:text-white">The Decent Proposal</span>
             </div>
-            <span className="font-bold">The Decent Proposal</span>
+            <p className="max-w-xs font-medium leading-relaxed">
+                Empowering creative teams to win more business with less effort.
+            </p>
           </div>
-          <div className="text-gray-400 text-sm">
-            &copy; {new Date().getFullYear()} The Decent Proposal. All rights reserved.
+          
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-16 font-bold uppercase tracking-widest text-xs">
+            <div className="flex flex-col gap-4">
+                <span className="text-gray-900 dark:text-white mb-2">Product</span>
+                <a href="#features" className="hover:text-brand-aqua transition-colors">Features</a>
+                <a href="#templates" className="hover:text-brand-aqua transition-colors">Templates</a>
+                <Link to="/builder" className="hover:text-brand-aqua transition-colors">Builder</Link>
+            </div>
+            <div className="flex flex-col gap-4">
+                <span className="text-gray-900 dark:text-white mb-2">Social</span>
+                <a href="https://github.com/Bingeljell/proposal_maker" className="hover:text-brand-aqua transition-colors">GitHub</a>
+                <a href="#" className="hover:text-brand-aqua transition-colors">Twitter</a>
+            </div>
+            <div className="flex flex-col gap-4">
+                <span className="text-gray-900 dark:text-white mb-2">Legal</span>
+                <a href="#" className="hover:text-brand-aqua transition-colors">Privacy</a>
+                <a href="#" className="hover:text-brand-aqua transition-colors">Terms</a>
+            </div>
           </div>
-          <div className="flex gap-6">
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">Privacy</a>
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">Terms</a>
-            <a href="https://github.com/Bingeljell/proposal_maker" className="text-gray-400 hover:text-white transition-colors">GitHub</a>
-          </div>
+        </div>
+        <div className="max-w-7xl mx-auto px-6 mt-20 pt-8 border-t border-gray-100 dark:border-gray-800 text-xs font-bold uppercase tracking-[0.2em] text-gray-400">
+            &copy; {new Date().getFullYear()} The Decent Proposal. Crafted for winners.
         </div>
       </footer>
     </div>
   );
 };
 
-const FeatureCard = ({ icon: Icon, title, description }: { icon: any, title: string, description: string }) => (
-  <div className="bg-gray-50 dark:bg-gray-900 p-8 rounded-xl border border-gray-100 dark:border-gray-800 hover:border-blue-200 dark:hover:border-blue-900 transition-colors">
-    <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg flex items-center justify-center mb-6">
-      <Icon size={24} />
+const FeatureCard = ({ icon: Icon, color, title, description }: { icon: any, color: string, title: string, description: string }) => (
+  <div className="bg-white dark:bg-gray-900 p-10 rounded-[2.5rem] border border-gray-100 dark:border-gray-800 hover:border-brand-aqua dark:hover:border-brand-aqua/50 transition-all shadow-sm hover:shadow-2xl group">
+    <div className={`w-16 h-16 ${color} rounded-2xl flex items-center justify-center mb-8 shadow-inner transform group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500`}>
+      <Icon size={32} className="text-gray-900" />
     </div>
-    <h3 className="text-xl font-bold mb-3 text-gray-900 dark:text-gray-100">{title}</h3>
-    <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+    <h3 className="text-2xl font-black mb-4 text-gray-900 dark:text-gray-100">{title}</h3>
+    <p className="text-lg text-gray-500 dark:text-gray-400 leading-relaxed font-medium">
       {description}
     </p>
   </div>

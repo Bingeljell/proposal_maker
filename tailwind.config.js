@@ -6,7 +6,14 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'brand': {
+          mint: '#B6FCD5',
+          aqua: '#AFEEEE',
+        }
+      }
+    },
   },
   plugins: [
     require('@tailwindcss/typography'),
